@@ -1,0 +1,4 @@
+title: Uva
+modelClass: Andresalice\Winelivery\Models\Uva
+toolbar:
+    buttons: reorder_toolbar

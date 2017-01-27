@@ -1,0 +1,106 @@
+1485499781a:1:{s:13:"checkout2.htm";a:9:{s:8:"fileName";s:13:"checkout2.htm";s:7:"content";s:2061:"title = "Checkout2"
+url = "/checkout2"
+layout = "layout"
+is_hidden = 0
+==
+<!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+        <div class="title"><span>recibo de pago</span></div>
+        <div class="alert alert-success" role="alert">tu pedido fue realizado correctamente</div>
+        <!-- Shopping Cart List -->
+        <div class="col-md-8">
+
+          <div class="table-responsive">
+            <table class="table table-cart">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
+
+                  <th>Precio</th>
+                  <th>SubTotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="img-cart">
+                    <a href="detail.html">
+                      <img alt="Product" src="images/demo/wine-1.png" class="img-thumbnail">
+                    </a>
+                  </td>
+                  <td>
+                    <p><a href="detail.html" class="d-block">Marques de Murrieta Blanco Reserva 2000-Roja</a></p>
+                  </td>
+                  <td class="unit">$13.50</td>
+                  <td class="sub">$13.50</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- End Shopping Cart List -->
+        <div class="col-md-3 cart-detailbox">
+          <h4>orden de compra</h4>
+          <p class="detailbox-items">direccion:<span class="detailbox-content">  8400 NW 25TH ST STE 100
+          DORAL, FL 33198-1534
+          United States</span></p>
+          <p class="detailbox-items">Total items:<span class="detailbox-content">  4</span></p>
+          <p class="detailbox-items">costo:<span class="detailbox-content" ></span></p>
+          <p class="detailbox-items">costo de envio:<span class="detailbox-content"> $90</span></p>
+          <p class="detailbox-items">costo total:<span class="detailbox-content"></span></p>
+
+        </div>
+
+      </div>
+    </div>";s:5:"mtime";i:1484835667;s:6:"markup";s:1987:"<!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+        <div class="title"><span>recibo de pago</span></div>
+        <div class="alert alert-success" role="alert">tu pedido fue realizado correctamente</div>
+        <!-- Shopping Cart List -->
+        <div class="col-md-8">
+
+          <div class="table-responsive">
+            <table class="table table-cart">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
+
+                  <th>Precio</th>
+                  <th>SubTotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="img-cart">
+                    <a href="detail.html">
+                      <img alt="Product" src="images/demo/wine-1.png" class="img-thumbnail">
+                    </a>
+                  </td>
+                  <td>
+                    <p><a href="detail.html" class="d-block">Marques de Murrieta Blanco Reserva 2000-Roja</a></p>
+                  </td>
+                  <td class="unit">$13.50</td>
+                  <td class="sub">$13.50</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- End Shopping Cart List -->
+        <div class="col-md-3 cart-detailbox">
+          <h4>orden de compra</h4>
+          <p class="detailbox-items">direccion:<span class="detailbox-content">  8400 NW 25TH ST STE 100
+          DORAL, FL 33198-1534
+          United States</span></p>
+          <p class="detailbox-items">Total items:<span class="detailbox-content">  4</span></p>
+          <p class="detailbox-items">costo:<span class="detailbox-content" ></span></p>
+          <p class="detailbox-items">costo de envio:<span class="detailbox-content"> $90</span></p>
+          <p class="detailbox-items">costo total:<span class="detailbox-content"></span></p>
+
+        </div>
+
+      </div>
+    </div>";s:4:"code";N;s:5:"title";s:9:"Checkout2";s:3:"url";s:10:"/checkout2";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}

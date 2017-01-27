@@ -1,0 +1,11 @@
+columns:
+    title:
+        label: PRODUCTO
+        type: text
+        searchable: true
+        sortable: true
+    price:
+        label: PRECIO
+        type: number
+        searchable: true
+        sortable: true

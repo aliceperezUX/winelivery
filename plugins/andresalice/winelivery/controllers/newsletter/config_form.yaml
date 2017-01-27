@@ -1,0 +1,10 @@
+name: Newsletter
+form: $/andresalice/winelivery/models/newsletter/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Newsletter
+defaultRedirect: andresalice/winelivery/newsletter
+create:
+    redirect: 'andresalice/winelivery/newsletter/update/:id'
+    redirectClose: andresalice/winelivery/newsletter
+update:
+    redirect: andresalice/winelivery/newsletter
+    redirectClose: andresalice/winelivery/newsletter

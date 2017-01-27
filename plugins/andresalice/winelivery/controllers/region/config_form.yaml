@@ -1,0 +1,10 @@
+name: Region
+form: $/andresalice/winelivery/models/region/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Region
+defaultRedirect: andresalice/winelivery/region
+create:
+    redirect: 'andresalice/winelivery/region/update/:id'
+    redirectClose: andresalice/winelivery/region
+update:
+    redirect: andresalice/winelivery/region
+    redirectClose: andresalice/winelivery/region

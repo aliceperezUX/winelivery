@@ -1,0 +1,10 @@
+name: Country
+form: $/andresalice/winelivery/models/country/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Country
+defaultRedirect: andresalice/winelivery/country
+create:
+    redirect: 'andresalice/winelivery/country/update/:id'
+    redirectClose: andresalice/winelivery/country
+update:
+    redirect: andresalice/winelivery/country
+    redirectClose: andresalice/winelivery/country

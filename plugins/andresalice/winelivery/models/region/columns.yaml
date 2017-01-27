@@ -1,0 +1,6 @@
+columns:
+    title:
+        label: REGION
+        type: text
+        searchable: true
+        sortable: true

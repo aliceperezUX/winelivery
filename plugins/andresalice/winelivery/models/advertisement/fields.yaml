@@ -1,0 +1,24 @@
+fields:
+    title:
+        label: TITULO
+        oc.commentPosition: ''
+        span: full
+        disabled: 1
+        type: text
+    url:
+        label: URL
+        oc.commentPosition: ''
+        span: full
+        type: text
+    featured_image:
+        label: 'ANUNCIO 1'
+        oc.commentPosition: ''
+        mode: image
+        imageWidth: 100
+        imageHeight: 100
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: full
+        type: fileupload

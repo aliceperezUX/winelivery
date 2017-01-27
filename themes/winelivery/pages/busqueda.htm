@@ -1,0 +1,64 @@
+title = "Busqueda"
+url = "/busqueda"
+layout = "layout"
+is_hidden = 0
+==
+<?php
+use Andresalice\Winelivery\Models\Product;
+
+function onStart()
+{
+    $this['products_search'] = Product::where('title', 'LIKE', '%'.Input::get('search').'%')->take(4)->get();
+}
+?>
+==
+<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+    <!-- Product List -->
+    <div class="col-sm-12">
+      <div class="title"><span>Coincidencias de busqueda</span></div>
+      <!-- End Product Sorting Bar -->
+
+      <!-- Collection -->
+      {% for p in products_search %}
+          <div class="col-sm-4 col-lg-2 box-product-outer">
+              <div class="box-product">
+                  <div class="img-wrapper">
+                      <a href="detail.html">
+                          <img alt="Product" src="{{p.featured_image.getPath}}">
+                      </a>
+                  </div>
+                  <h6><a href="{{"producto-detalle"|page({id:p.id})}}">{{p.title}}</a></h6>
+                  <div class="rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-half-o"></i>
+                      <a href="#">(5 reviews)</a>
+                  </div>
+                  <div style="background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 0px">
+                      <div style="color:#fff" class="price col-lg-6 ">
+                          <div>RD${{ p.price|number_format}}<span class="label-tags"></span></div>
+                      </div>
+                      <div class="col-lg-6">
+                          <a href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                          <a href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
+      <!-- End Collection -->
+      <div class="col-xs-12 text-center">
+        <nav aria-label="Page navigation">
+          {{ products_search.render|raw }}
+        </nav>
+      </div>
+    </div>
+    <!-- End Product List -->
+
+  </div>
+</div>
+<!-- End Main Content -->

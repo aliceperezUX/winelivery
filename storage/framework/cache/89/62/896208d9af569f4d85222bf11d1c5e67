@@ -1,0 +1,84 @@
+1485499781a:1:{s:9:"login.htm";a:9:{s:8:"fileName";s:9:"login.htm";s:7:"content";s:1542:"title = "Login"
+url = "/login"
+layout = "layout"
+is_hidden = 0
+==
+<?php
+function onLoginForm()
+{
+    $user = Auth::authenticate(['login' => post('email'),'password' => post('password')]);
+    Auth::login($user, true);
+    $loggedIn = Auth::check();
+    if($loggedIn){return Redirect::to('/');}
+}
+?>
+==
+<!-- Main Content -->
+<div style="width:40%; margin:0 auto;" class="container m-t-3">
+  <div style="border:1px solid #ccc;border-radius:5px;padding:20px" class=" row">
+    <!-- Login Form -->
+
+      <div class="">
+          <img alt="Logo" src="{{"assets/images/winelivery-01.png"|theme}}" style="width:50%;margin:0 auto;" class="img-responsive" />
+      </div>
+      <HR>
+        <h4>iniciar sesion</h4>
+      <form data-request="onLoginForm">
+        <div class="form-group">
+          <label for="emailInputLogin">correo</label>
+          <input name="email" type="email" class="form-control" >
+        </div>
+        <div class="form-group">
+          <label for="passwordInputLogin">contraseña</label>
+          <input name="password" type="password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-default btn-theme pull-right col-md-12">iniciar sesion</button>
+      </form>
+      <div style="margin-top:100px">
+        <HR>
+          <p>aun no tienes una cuenta?</p>
+          <button type="button" class="btn btn-default btn-theme1 col-md-12">Crear cuenta</button>
+      </div>
+    </div>
+    <!-- End Login Form -->
+
+  </div>
+</div>
+<!-- End Main Content -->";s:5:"mtime";i:1485488052;s:6:"markup";s:1234:"<!-- Main Content -->
+<div style="width:40%; margin:0 auto;" class="container m-t-3">
+  <div style="border:1px solid #ccc;border-radius:5px;padding:20px" class=" row">
+    <!-- Login Form -->
+
+      <div class="">
+          <img alt="Logo" src="{{"assets/images/winelivery-01.png"|theme}}" style="width:50%;margin:0 auto;" class="img-responsive" />
+      </div>
+      <HR>
+        <h4>iniciar sesion</h4>
+      <form data-request="onLoginForm">
+        <div class="form-group">
+          <label for="emailInputLogin">correo</label>
+          <input name="email" type="email" class="form-control" >
+        </div>
+        <div class="form-group">
+          <label for="passwordInputLogin">contraseña</label>
+          <input name="password" type="password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-default btn-theme pull-right col-md-12">iniciar sesion</button>
+      </form>
+      <div style="margin-top:100px">
+        <HR>
+          <p>aun no tienes una cuenta?</p>
+          <button type="button" class="btn btn-default btn-theme1 col-md-12">Crear cuenta</button>
+      </div>
+    </div>
+    <!-- End Login Form -->
+
+  </div>
+</div>
+<!-- End Main Content -->";s:4:"code";s:229:"function onLoginForm()
+{
+    $user = Auth::authenticate(['login' => post('email'),'password' => post('password')]);
+    Auth::login($user, true);
+    $loggedIn = Auth::check();
+    if($loggedIn){return Redirect::to('/');}
+}";s:5:"title";s:5:"Login";s:3:"url";s:6:"/login";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}

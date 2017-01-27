@@ -1,0 +1,88 @@
+title = "Registro"
+url = "/registro"
+layout = "layout"
+is_hidden = 0
+==
+<?php
+function onRegisterForm()
+{
+    $user = Auth::register([
+    'name' => post('name'),
+    'surname' => post('last_name'),
+    'email' => post('email'),
+    'password' => post('password'),
+    'password_confirmation' => post('password_confirmation')
+    ],true);
+    
+    Auth::login($user);
+    $loggedIn = Auth::check();
+    if($loggedIn){return Redirect::to('/');}
+}
+?>
+==
+<!-- Main Content -->
+<div style="width:40%; margin:0 auto;" class="container m-t-3">
+  <div style="border:1px solid #ccc;border-radius:5px;padding:20px" class=" row">
+    <!-- Login Form -->
+      <div class="">
+          <img alt="Logo" src="{{"assets/images/winelivery-01.png"|theme}}" style="width:50%;margin:0 auto;" class="img-responsive" />
+      </div>
+      <HR>
+        <h4>Crear cuenta</h4>
+      <form id="registerForm">
+        <div class="form-group">
+          <label >nombre</label>
+          <input name="name" type="text" class="form-control" >
+        </div>
+        <div class="form-group">
+          <label >apellido</label>
+          <input name="last_name" type="text" class="form-control" >
+        </div>
+        <div class="form-group">
+          <label >correo</label>
+          <input name="email" type="email" class="form-control" >
+        </div>
+        <div class="form-group">
+          <label >contraseña</label>
+          <input name="password" type="password" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>confirmar contraseña</label>
+          <input name="password_confirmation" type="password" class="form-control">
+        </div>
+        <button onClick="onRegisterForm();" type="button" class="btn btn-default btn-theme pull-right col-md-12">Crear cuenta</button>
+      </form>
+      <div style="margin-top:100px">
+        <HR>
+          <p>ya tienes una cuenta?</p>
+          <button type="button" class="btn btn-default btn-theme1 col-md-12">iniciar sesion</button>
+      </div>
+    </div>
+    <!-- End Login Form -->
+
+  </div>
+</div>
+<!-- End Main Content -->
+{% put scripts %}
+<script>
+    function onRegisterForm()
+    {
+        var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        
+    	if($('input[name=name]').val() === ''){$('input[name=name]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=name]').css('border', '');}
+    	
+    	if($('input[name=last_name]').val() === ''){$('input[name=last_name]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=last_name]').css('border', '');}
+    
+    	if(!regex.test($('input[name=email]').val())){$('input[name=email]').css('border', '1px solid red');error = false;} 
+    	else {$('input[name=email]').css('border', '');}
+    	
+    	if(error)
+    	{
+    		$('#registerForm').request('onRegisterForm', {data: $('#registerForm').serialize()});
+    	} 
+    	else { return false; }
+    }
+</script>
+{% endput %}

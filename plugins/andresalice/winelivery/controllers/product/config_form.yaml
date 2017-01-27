@@ -1,0 +1,10 @@
+name: Product
+form: $/andresalice/winelivery/models/product/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Product
+defaultRedirect: andresalice/winelivery/product
+create:
+    redirect: 'andresalice/winelivery/product/update/:id'
+    redirectClose: andresalice/winelivery/product
+update:
+    redirect: andresalice/winelivery/product
+    redirectClose: andresalice/winelivery/product

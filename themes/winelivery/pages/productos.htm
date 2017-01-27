@@ -1,0 +1,103 @@
+title = "Productos"
+url = "/productos/:cat/:reg"
+layout = "layout"
+is_hidden = 0
+==
+<?php
+use Andresalice\Winelivery\Models\Product;
+
+function onStart()
+{
+    $this['products_by_cat'] = Product::where("category_id",$this->param('cat'))->where("region_id","=", $this->param('reg'))->take(12)->get();
+}
+?>
+==
+<!-- Main Content -->
+    <div class="container m-t-3">
+      <div class="row">
+
+        <!-- Filter Sidebar -->
+        <div class="col-sm-3">
+          <div class="filter-sidebar">
+            <div class="title"><span>Regi&oacute;n</span></div>
+            <ul>
+              <li>
+                <select class="selectpicker" data-width="100%">
+                  <option value="0">All Options</option>
+                  <option value="1">Option 1</option>
+                  <option value="2">Option 2</option>
+                  <option value="3">Option 3</option>
+                </select>
+              </li>
+            </ul>
+          </div>
+          <div class="filter-sidebar">
+            <div class="title"><span>Price Range</span></div>
+            <div id="range-value">Range: <span id="min-price"></span> - <span id="max-price"></span></div>
+            <input type="hidden" name="min-price" value="">
+            <input type="hidden" name="max-price" value="">
+            <div class="price-range">
+              <div id="price"></div>
+            </div>
+          </div>
+          <div class="filter-sidebar">
+            <div class="title"><span>Ordenar por:</span></div>
+            <ul>
+              <li>
+                <select class="selectpicker" data-width="100%">
+                  <option selected value="1">Precio Ascendente</option>
+                  <option value="2">Precio Descendente</option>
+                </select>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- End Filter Sidebar -->
+
+        <!-- Product List -->
+        <div class="col-sm-9">
+          <div class="title"><span>{{products_by_cat.0.category.title}}/{{products_by_cat.0.region.title}}</span></div>
+          <!-- End Product Sorting Bar -->
+
+          <!-- Collection -->
+          {% for p in products_by_cat %}
+              <div class="col-sm-4 col-lg-3 box-product-outer">
+                  <div class="box-product">
+                      <div class="img-wrapper">
+                          <a href="{{"producto-detalle"|page({id:p.id})}}">
+                              <img alt="Product" src="{{p.featured_image.getPath}}">
+                          </a>
+                      </div>
+                      <h6><a href="{{"producto-detalle"|page({id:p.id})}}">{{p.title}}</a></h6>
+                      <div class="rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star-half-o"></i>
+                          <a href="#">(5 reviews)</a>
+                      </div>
+                      <div style="background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px">
+                          <div style="color:#fff" class="price col-lg-6 ">
+                              <div>RD${{p.price|number_format}} <span class="label-tags"></span></div>
+                          </div>
+                          <div class="col-lg-6">
+                              <a href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                              <a href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          {% endfor %}
+          <!-- End Collection -->
+          <div class="col-xs-12 text-center">
+            <nav aria-label="Page navigation">
+              {{ products_by_cat.render|raw }}
+            </nav>
+          </div>
+        </div>
+        <!-- End Product List -->
+
+      </div>
+    </div>
+    <!-- End Main Content -->

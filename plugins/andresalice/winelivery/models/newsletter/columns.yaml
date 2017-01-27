@@ -1,0 +1,6 @@
+columns:
+    email:
+        label: EMAIL
+        type: text
+        searchable: true
+        sortable: true

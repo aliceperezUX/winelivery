@@ -1,0 +1,6 @@
+columns:
+    title:
+        label: UVA
+        type: text
+        searchable: true
+        sortable: true

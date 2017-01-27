@@ -1,0 +1,10 @@
+name: Category
+form: $/andresalice/winelivery/models/category/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Category
+defaultRedirect: andresalice/winelivery/category
+create:
+    redirect: 'andresalice/winelivery/category/update/:id'
+    redirectClose: andresalice/winelivery/category
+update:
+    redirect: andresalice/winelivery/category
+    redirectClose: andresalice/winelivery/category

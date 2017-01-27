@@ -1,0 +1,10 @@
+name: Advertisement
+form: $/andresalice/winelivery/models/advertisement/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Advertisement
+defaultRedirect: andresalice/winelivery/advertisement
+create:
+    redirect: 'andresalice/winelivery/advertisement/update/:id'
+    redirectClose: andresalice/winelivery/advertisement
+update:
+    redirect: andresalice/winelivery/advertisement
+    redirectClose: andresalice/winelivery/advertisement

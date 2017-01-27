@@ -1,0 +1,4 @@
+title: Advertisement
+modelClass: Andresalice\Winelivery\Models\Advertisement
+toolbar:
+    buttons: reorder_toolbar

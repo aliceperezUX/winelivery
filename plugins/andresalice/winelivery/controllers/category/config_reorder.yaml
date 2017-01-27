@@ -1,0 +1,4 @@
+title: Category
+modelClass: Andresalice\Winelivery\Models\Category
+toolbar:
+    buttons: reorder_toolbar

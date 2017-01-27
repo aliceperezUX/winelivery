@@ -1,0 +1,86 @@
+1485499781a:1:{s:13:"historial.htm";a:9:{s:8:"fileName";s:13:"historial.htm";s:7:"content";s:1278:"title = "Historial"
+url = "/historial"
+layout = "layout"
+is_hidden = 0
+==
+<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+
+    {% partial "perfilmenu" %}
+    
+    <!-- End Account Sidebar -->
+
+    <!-- My Profile Content -->
+    <div class="col-sm-8 col-md-9">
+      <div class="title m-b-2"><span>Historial de compras</span></div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <td>Cantidad de productos</td>
+                  <td>Fecha</td>
+                  <td class="text-right">Monto total</td>
+                  <td class="text-center">Estatus</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2 items</td>
+                  <td>2016-12-19</td>
+                  <td class="text-right">$74.00</td>
+                  <td class="text-center"><span class="label label-warning">Processing</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End My Profile Content -->
+
+  </div>
+</div>
+<!-- End Main Content -->";s:5:"mtime";i:1485493173;s:6:"markup";s:1204:"<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+
+    {% partial "perfilmenu" %}
+    
+    <!-- End Account Sidebar -->
+
+    <!-- My Profile Content -->
+    <div class="col-sm-8 col-md-9">
+      <div class="title m-b-2"><span>Historial de compras</span></div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <td>Cantidad de productos</td>
+                  <td>Fecha</td>
+                  <td class="text-right">Monto total</td>
+                  <td class="text-center">Estatus</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2 items</td>
+                  <td>2016-12-19</td>
+                  <td class="text-right">$74.00</td>
+                  <td class="text-center"><span class="label label-warning">Processing</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End My Profile Content -->
+
+  </div>
+</div>
+<!-- End Main Content -->";s:4:"code";N;s:5:"title";s:9:"Historial";s:3:"url";s:10:"/historial";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}

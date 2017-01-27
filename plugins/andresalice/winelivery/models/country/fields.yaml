@@ -1,0 +1,6 @@
+fields:
+    name:
+        label: NOMBRE
+        oc.commentPosition: ''
+        span: full
+        type: text

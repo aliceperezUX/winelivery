@@ -1,0 +1,11 @@
+==
+<!-- Account Sidebar -->
+    <div class="col-sm-4 col-md-3 m-b-3">
+      <ul class="nav nav-pills nav-stacked">
+        <li role="presentation" {% if this.page.title == "Perfil" %}class="active"{% endif %}><a href="{{"perfil"|page}}">Mi perfil</a></li>
+        <li role="presentation" {% if this.page.title == "Direcciones" %}class="active"{% endif %}><a href="{{"direcciones"|page}}">Informaci&oacute;n de envio</a></li>
+        <li role="presentation" {% if this.page.title == "Password" %}class="active"{% endif %}><a href="{{"password"|page}}">Cambiar contraseña</a></li>
+        <li role="presentation" {% if this.page.title == "Historial" %}class="active"{% endif %}><a href="{{"historial"|page}}">Historial de compras</a></li>
+      </ul>
+    </div>
+<!-- End Account Sidebar -->

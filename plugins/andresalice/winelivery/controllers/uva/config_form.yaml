@@ -1,0 +1,10 @@
+name: Uva
+form: $/andresalice/winelivery/models/uva/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Uva
+defaultRedirect: andresalice/winelivery/uva
+create:
+    redirect: 'andresalice/winelivery/uva/update/:id'
+    redirectClose: andresalice/winelivery/uva
+update:
+    redirect: andresalice/winelivery/uva
+    redirectClose: andresalice/winelivery/uva

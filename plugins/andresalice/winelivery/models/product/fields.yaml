@@ -1,0 +1,85 @@
+fields:
+    title:
+        label: TITULO
+        oc.commentPosition: ''
+        span: full
+        type: text
+    price:
+        label: PRECIO
+        oc.commentPosition: ''
+        span: full
+        type: number
+    description:
+        label: 'NOTA DE CATA'
+        size: large
+        oc.commentPosition: ''
+        span: full
+        type: richeditor
+    productor:
+        label: PRODUCTOR
+        oc.commentPosition: ''
+        span: full
+        type: text
+    maridaje:
+        label: MARIDAJE
+        oc.commentPosition: ''
+        span: full
+        type: text
+    capacity:
+        label: CAPACIDAD
+        oc.commentPosition: ''
+        span: full
+        type: text
+    volume:
+        label: 'VOLUMEN %'
+        oc.commentPosition: ''
+        span: full
+        type: text
+    category:
+        label: CATEGORIA
+        oc.commentPosition: ''
+        nameFrom: title
+        descriptionFrom: description
+        span: full
+        type: relation
+    region:
+        label: REGION
+        oc.commentPosition: ''
+        nameFrom: title
+        descriptionFrom: description
+        span: full
+        type: relation
+    uvas:
+        label: UVAS
+        oc.commentPosition: ''
+        nameFrom: title
+        descriptionFrom: description
+        span: full
+        type: relation
+    country:
+        label: PAIS
+        oc.commentPosition: ''
+        nameFrom: name
+        descriptionFrom: description
+        span: full
+        type: relation
+    featured_image:
+        label: 'IMAGEN PRINCIPAL'
+        oc.commentPosition: ''
+        mode: image
+        imageWidth: 100
+        imageHeight: 100
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: full
+        type: fileupload
+    offer:
+        label: OFERTA
+        span: full
+        type: switch
+    month:
+        label: 'VINO DEL MES'
+        span: auto
+        type: switch

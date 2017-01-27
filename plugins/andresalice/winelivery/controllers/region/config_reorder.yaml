@@ -1,0 +1,4 @@
+title: Region
+modelClass: Andresalice\Winelivery\Models\Region
+toolbar:
+    buttons: reorder_toolbar

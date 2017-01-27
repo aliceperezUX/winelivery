@@ -1,0 +1,13 @@
+fields:
+    title:
+        label: 'TITULO DE LA CATEGORIA'
+        oc.commentPosition: ''
+        span: full
+        type: text
+    regions:
+        label: REGIONES
+        oc.commentPosition: ''
+        nameFrom: title
+        descriptionFrom: description
+        span: full
+        type: relation

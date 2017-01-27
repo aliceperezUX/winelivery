@@ -1,0 +1,40 @@
+plugin:
+    name: 'andresalice.winelivery::lang.plugin.name'
+    description: 'andresalice.winelivery::lang.plugin.description'
+    author: AndresAlice
+    icon: oc-icon-adjust
+    homepage: ''
+permissions:
+    all:
+        tab: all
+        label: all
+navigation:
+    content:
+        label: Contenido
+        url: andresalice/winelivery/region
+        icon: icon-asterisk
+        sideMenu:
+            regions:
+                label: Regiones
+                url: andresalice/winelivery/region
+                icon: icon-map-marker
+            categories:
+                label: Categoria
+                url: andresalice/winelivery/category
+                icon: icon-certificate
+            products:
+                label: Productos
+                url: andresalice/winelivery/product
+                icon: icon-cart-plus
+            uvas:
+                label: Uvas
+                url: andresalice/winelivery/uva
+                icon: icon-heartbeat
+            advertisements:
+                label: 'Anuncios (Publicidad)'
+                url: andresalice/winelivery/advertisement
+                icon: icon-image
+            Newsletter:
+                label: Newsletter
+                url: andresalice/winelivery/newsletter
+                icon: icon-newspaper-o

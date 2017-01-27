@@ -1,0 +1,6 @@
+fields:
+    title:
+        label: 'TITULO DE LA UVA'
+        oc.commentPosition: ''
+        span: full
+        type: text

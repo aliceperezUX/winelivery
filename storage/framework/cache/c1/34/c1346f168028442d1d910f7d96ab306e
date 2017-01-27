@@ -1,0 +1,164 @@
+1485499781a:1:{s:15:"direcciones.htm";a:9:{s:8:"fileName";s:15:"direcciones.htm";s:7:"content";s:3027:"title = "Direcciones"
+url = "/direcciones"
+layout = "layout"
+is_hidden = 0
+==
+<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+
+   {% partial "perfilmenu" %}
+   
+    <!-- My Address Content -->
+    <div class="col-sm-8 col-md-9">
+      <div class="title m-b-2"><span>Nueva direcci&oacute;n</span></div>
+      <div class="row">
+        <div class="col-xs-12">
+          <form>
+            <div class="form-group">
+              <label >Sector</label>
+              <select class="form-control">
+                <option>Ens. Naco</option>
+                <option>Piantini</option>
+                <option>Gazcue</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Calle</label>
+              <input type="text" class="form-control" id="">
+            </div>
+            <div class="form-group">
+              <label>Apto/No</label>
+              <input type="email" class="form-control" id="">
+            </div>
+            <div class="form-group">
+              <label>Telefono</label>
+              <input type="email" class="form-control" id="">
+            </div>
+            <div class="form-group">
+              <label>Proximo a</label>
+              <textarea class="form-control" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> Guardar direcci&oacute;n</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End My Address Content -->
+    <!-- My Address Content -->
+    <div class="col-sm-8 col-md-12">
+      <div class="title m-b-2"><span>Direcciones guardadas</span></div>
+      <div class="row">
+        <div class="col-xs-12 col-md-4">
+          <form>
+            <p>8400 NW 25TH ST STE 100
+            DORAL, FL 33198-1534
+            United States</p>
+            <button style="width: 150px" type="submit" class="btn btn-theme">Editar</button>
+            <button style="width: 150px" type="submit" class="btn  pull-right">Eliminar</button>
+          </form>
+        </div>
+        <div class="col-xs-12 col-md-4" >
+          <form>
+            <p>8400 NW 25TH ST STE 100
+            DORAL, FL 33198-1534
+            United States</p>
+            <button style="width: 150px" type="submit" class="btn btn-theme">Editar</button>
+            <button style="width: 150px" type="submit" class="btn  pull-right">Eliminar</button>
+          </form>
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <form>
+            <p>8400 NW 25TH ST STE 100
+            DORAL, FL 33198-1534
+            United States</p>
+            <button style="width: 150px" type="submit" class="btn btn-theme">Editar</button>
+            <button style="width: 150px" type="submit" class="btn pull-right">Eliminar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End My Address Content -->
+
+  </div>
+</div>
+<!-- End Main Content -->";s:5:"mtime";i:1485493156;s:6:"markup";s:2949:"<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+
+   {% partial "perfilmenu" %}
+   
+    <!-- My Address Content -->
+    <div class="col-sm-8 col-md-9">
+      <div class="title m-b-2"><span>Nueva direcci&oacute;n</span></div>
+      <div class="row">
+        <div class="col-xs-12">
+          <form>
+            <div class="form-group">
+              <label >Sector</label>
+              <select class="form-control">
+                <option>Ens. Naco</option>
+                <option>Piantini</option>
+                <option>Gazcue</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Calle</label>
+              <input type="text" class="form-control" id="">
+            </div>
+            <div class="form-group">
+              <label>Apto/No</label>
+              <input type="email" class="form-control" id="">
+            </div>
+            <div class="form-group">
+              <label>Telefono</label>
+              <input type="email" class="form-control" id="">
+            </div>
+            <div class="form-group">
+              <label>Proximo a</label>
+              <textarea class="form-control" rows="5"></textarea>
+            </div>
+            <button type="submit" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> Guardar direcci&oacute;n</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End My Address Content -->
+    <!-- My Address Content -->
+    <div class="col-sm-8 col-md-12">
+      <div class="title m-b-2"><span>Direcciones guardadas</span></div>
+      <div class="row">
+        <div class="col-xs-12 col-md-4">
+          <form>
+            <p>8400 NW 25TH ST STE 100
+            DORAL, FL 33198-1534
+            United States</p>
+            <button style="width: 150px" type="submit" class="btn btn-theme">Editar</button>
+            <button style="width: 150px" type="submit" class="btn  pull-right">Eliminar</button>
+          </form>
+        </div>
+        <div class="col-xs-12 col-md-4" >
+          <form>
+            <p>8400 NW 25TH ST STE 100
+            DORAL, FL 33198-1534
+            United States</p>
+            <button style="width: 150px" type="submit" class="btn btn-theme">Editar</button>
+            <button style="width: 150px" type="submit" class="btn  pull-right">Eliminar</button>
+          </form>
+        </div>
+        <div class="col-xs-12 col-md-4">
+          <form>
+            <p>8400 NW 25TH ST STE 100
+            DORAL, FL 33198-1534
+            United States</p>
+            <button style="width: 150px" type="submit" class="btn btn-theme">Editar</button>
+            <button style="width: 150px" type="submit" class="btn pull-right">Eliminar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End My Address Content -->
+
+  </div>
+</div>
+<!-- End Main Content -->";s:4:"code";N;s:5:"title";s:11:"Direcciones";s:3:"url";s:12:"/direcciones";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}

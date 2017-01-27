@@ -1,0 +1,4 @@
+title: Newsletter
+modelClass: Andresalice\Winelivery\Models\Newsletter
+toolbar:
+    buttons: reorder_toolbar

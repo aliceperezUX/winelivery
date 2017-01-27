@@ -1,0 +1,4 @@
+title: Country
+modelClass: Andresalice\Winelivery\Models\Country
+toolbar:
+    buttons: reorder_toolbar

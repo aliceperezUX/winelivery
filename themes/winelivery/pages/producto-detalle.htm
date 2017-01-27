@@ -1,0 +1,184 @@
+title = "Producto Detalle"
+url = "/producto/:id"
+layout = "layout"
+is_hidden = 0
+==
+<?php
+use Andresalice\Winelivery\Models\Product;
+
+function onStart()
+{
+    $this['product'] = Product::find($this->param('id'));
+    $this['products'] = Product::where("category_id",$this['product']->category_id)->where("id","!=", $this['product']->id)->take(12)->get();
+}
+?>
+==
+<!-- Main Content -->
+<div class="container m-t-3">
+
+    <div class="row">
+        <!-- Image List -->
+        <div class="col-sm-4 col-md-4 ">
+            <div style="width: 350px; height:500px" class="image-detail">
+                <img src="{{product.featured_image.getPath}}" data-zoom-image="{{product.featured_image.getPath}}" alt="">
+            </div>
+        </div>
+        <!-- End Image List -->
+        <div class="col-sm-8 col-md-8">
+            <div class="title"><span>{{product.title}}</span></div>
+            <p>Precio: <span style="color: #c1272d;font-size:20px;font-weight:400" >RD${{product.price|number_format}} </span></p>
+            <p class="detail">Tipo: <span class="detail-content">{{product.category.title}}</span></p>
+            <p class="detail">Productor: <span class="detail-content">{{product.productor}}</span></p>
+            <p class="detail">Pais: <span class="detail-content">{{product.country.name}}</span></p>
+            <p class="detail">Uvas: <span class="detail-content">{% for u in product.uvas %}{{u.title}}{% if loop.last %}.{% else %},&nbsp;{% endif %}{% endfor %}
+            </span></p>
+            <p class="detail">Capacidad: <span class="detail-content">{{product.capacity}}</span></p>
+            <p class="detail">Volumen de alcohol: <span class="detail-content">{{product.volume}}%</span></p>
+            <p class="detail">Maridaje: <span class="detail-content">{{product.maridaje}}</span></p>
+            <button class="btn btn-theme m-b-1" type="button">
+       <i class="fa fa-shopping-cart" aria-hidden="true"></i>  Agregar al carrito</button>
+            <button class="btn btn-theme1 m-b-1" type="button"><i class="fa fa-heart" aria-hidden="true"></i> Agregar a la lista de deseos</button>
+        </div>
+</div>
+<div class="row">
+        <div class="col-md-12">
+            <div class="">
+                <!-- Description Tab Content -->
+                <div id="desc">
+                    <div class="well">
+                        <h4>Nota de cata</h4>
+                        <p>
+                            {{product.description|raw}}
+                        </p>
+                    </div>
+                </div>
+                <!-- End Description Tab Content -->
+                <!-- Review Tab Content -->
+                <div class="">
+                    <div class="title"><span>Review de catadores</span></div>
+                    <div class="well">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img class="media-object img-thumbnail" alt="64x64" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+">
+                                </a>
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-o"></i>
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <h5 class="media-heading"><strong>John Thor</strong></h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
+                                Donec lacinia congue felis in faucibus.
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img class="media-object img-thumbnail" alt="64x64" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+">
+                                </a>
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <h5 class="media-heading"><strong>Michael</strong></h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
+                                Donec lacinia congue felis in faucibus.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Review Tab Content -->
+
+            </div>
+            <!-- End Tab panes -->
+
+        </div>
+    </div>
+    <div>
+        <div class="title"><span>Evalua este vino</span></div>
+        <form role="form">
+            <div class="form-group col-md-12">
+                <label>Rating</label>
+                <div class="clearfix"></div>
+                <div class="input-rating"></div>
+            </div>
+            <div class="col-md-4">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-warning" style="width: 50%"><p >50% (50 review)</p></div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-warning" style="width: 20%"><p >20% (50 review)</p></div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-warning" style="width: 20%"><p >20% (50 review)</p></div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-warning" style="width: 5%"><p >5% (50 review)</p></div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-warning" style="width: 5%"><p >5% (50 review)</p></div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+                <label for="Review">Deja tu comentario</label>
+                <textarea id="Review" class="form-control" rows="5"></textarea>
+            </div>
+            <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-theme">Enviar review</button>
+            </div>
+        </form>
+    </div>
+    <!-- Related Products -->
+    <div class="row m-t-3">
+        <div class="col-xs-12">
+            <div class="title"><span>Productos relacionados</span></div>
+            <div class="related-product-slider owl-controls-top-offset">
+                {% for p in products %}
+                    <div class="box-product-outer">
+                        <div class="box-product">
+                            <div class="img-wrapper">
+                                <a href="detail.html">
+                                    <img alt="Product" src="{{p.featured_image.getPath}}">
+                                </a>
+                                <div class="tags">
+                                    <span class="label-tags"><span class="label label-danger arrowed">-10%</span></span>
+                                </div>
+                            </div>
+                            <h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></a></h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half-o"></i>
+                                <a href="#">(5 reviews)</a>
+                            </div>
+                            <div style="background-color:#c1272d; margin-top:10px; padding:10px 2px 30px 5px">
+                                <div style="color:#fff" class="price col-lg-6 ">
+                                    <div>RD${{ p.price|number_format}}<span class="label-tags"></span></div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a href="#" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                                    <a href="#" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Related Products -->
+
+</div>
+<!-- End Main Content -->
