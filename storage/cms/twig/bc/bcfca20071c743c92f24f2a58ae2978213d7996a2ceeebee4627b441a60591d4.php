@@ -95,7 +95,7 @@ class __TwigTemplate_f746ab97a14571a5b48a9fea1799755696550582724e6450f0e13650419
             // line 54
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
             echo "\">
-                                <img class=\"wine-box\" alt=\"Product\" src=\"";
+                                <img class=\"wine-box wine-thumbnail\" alt=\"Product\" src=\"";
             // line 55
             echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["p"], "featured_image", array()), "getPath", array()), "html", null, true);
             echo "\">
@@ -450,7 +450,7 @@ class __TwigTemplate_f746ab97a14571a5b48a9fea1799755696550582724e6450f0e13650419
                     <div class=\"box-product\">
                         <div class=\"img-wrapper\">
                             <a href=\"{{\"producto-detalle\"|page({id: p.id})}}\">
-                                <img class=\"wine-box\" alt=\"Product\" src=\"{{p.featured_image.getPath}}\">
+                                <img class=\"wine-box wine-thumbnail\" alt=\"Product\" src=\"{{p.featured_image.getPath}}\">
                             </a>
                         </div>
                         <h6><a href=\"{{\"producto-detalle\"|page({id: p.id})}}\">{{p.title}}</a></h6>

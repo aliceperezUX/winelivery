@@ -1,5 +1,13 @@
 <?php 
-class Cms5894281e5ba3f426941727_3023783201Class extends \Cms\Classes\PageCode
+use RainLab\User\Models\User;class Cms589fb98ad623d545716880_284122676Class extends \Cms\Classes\PageCode
 {
 
+public function onProfileForm()
+{
+    $user = User::find(Auth::getUser()->id);
+    $user->name = post("name");
+    $user->surname = post("surname");
+    $user->email = post("email");
+    $user->save();
+}
 }

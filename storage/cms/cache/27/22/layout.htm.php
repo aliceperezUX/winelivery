@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Advertisement;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;class Cms589faa105c60e909961107_1479211701Class extends \Cms\Classes\LayoutCode
+use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Advertisement;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;class Cms589fdc90df068057425454_3615034186Class extends \Cms\Classes\LayoutCode
 {
 
 
@@ -33,42 +33,6 @@ public function onStart()
       $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
     }
 }
-public function onAddToWishlist()
-{
-    $product_id = Input::get("product_id");
-    $user = Auth::getUser();
-    if(!Wishlist::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
-    {
-        $w = new Wishlist();
-        $w->user_id =  $user->id;
-        $w->product_id  = $product_id;
-        $w->save();
-    }
-}
-public function onDeleteFromWishlist()
-{
-    $user = Auth::getUser();
-    $wishlist_id = Input::get("wishlist_id");
-    if(Wishlist::where("id","=",$wishlist_id)->where("user_id","=",$user->id)->exists())
-    {
-        $w = Wishlist::find($wishlist_id);
-        $w->delete();
-    }
-    $wishlist = Wishlist::where("user_id","=",$user->id)->get();
-    return ['#wishlist_partial' => $this->renderPartial('wishlist', ['wishlist' => $wishlist])];
-}
-public function onDeleteFromCart()
-{
-    $user = Auth::getUser();
-    $cart_id = Input::get("cart_id");
-    if(Cart::where("id","=",$cart_id)->where("user_id","=",$user->id)->exists())
-    {
-        $w = Cart::find($cart_id);
-        $w->delete();
-    }
-    $cart = Cart::where("user_id","=",$user->id)->get();
-    return ['#cart_partial' => $this->renderPartial('cart', ['cart' => $cart])];
-}
 public function onAddToCart()
 {
     $product_id = Input::get("product_id");
@@ -88,6 +52,48 @@ public function onAddToCart()
         $w->quantity = 1;
         $w->save();
     }
+    $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+    return ['#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
+}
+public function onDeleteFromCart()
+{
+    $user = Auth::getUser();
+    $cart_id = Input::get("cart_id");
+    if(Cart::where("id","=",$cart_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = Cart::find($cart_id);
+        $w->delete();
+    }
+    $cart = Cart::where("user_id","=",$user->id)->get();
+    $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+    return ['#cart_partial' => $this->renderPartial('cart', ['cart' => $cart]), '#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
+}
+public function onAddToWishlist()
+{
+    $product_id = Input::get("product_id");
+    $user = Auth::getUser();
+    if(!Wishlist::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = new Wishlist();
+        $w->user_id =  $user->id;
+        $w->product_id  = $product_id;
+        $w->save();
+    }
+    $wishlist_counter = Wishlist::where("user_id","=",$user->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+    return ['#wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter])];
+}
+public function onDeleteFromWishlist()
+{
+    $user = Auth::getUser();
+    $wishlist_id = Input::get("wishlist_id");
+    if(Wishlist::where("id","=",$wishlist_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = Wishlist::find($wishlist_id);
+        $w->delete();
+    }
+    $wishlist = Wishlist::where("user_id","=",$user->id)->get();
+    $wishlist_counter = Wishlist::where("user_id","=",$user->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+    return ['#wishlist_partial' => $this->renderPartial('wishlist', ['wishlist' => $wishlist]), '#wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter])];
 }
 public function onNewsletterForm()
 {

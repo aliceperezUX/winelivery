@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Region;use Andresalice\Winelivery\Models\Category;class Cms589fa3d97bc63963734957_3459584030Class extends \Cms\Classes\PageCode
+use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Region;use Andresalice\Winelivery\Models\Category;class Cms589fd7d98801b131898845_787393978Class extends \Cms\Classes\PageCode
 {
 
 
@@ -12,7 +12,7 @@ public function onStart()
     $products = array();
     foreach($regions as $r)
     {
-        $products = Product::where('region_id','=',$r->id)->where('category_id','=',$category_id)->get();
+        $products[] = Product::where('region_id','=',$r->id)->where('category_id','=',$category_id)->get();
     }
     $this['products_by_cat'] = $products;
     $this['category'] = Category::find($category_id);

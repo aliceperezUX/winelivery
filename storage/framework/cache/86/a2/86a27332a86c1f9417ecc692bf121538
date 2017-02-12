@@ -1,4 +1,4 @@
-1486860333a:1:{s:13:"productos.htm";a:9:{s:8:"fileName";s:13:"productos.htm";s:7:"content";s:4368:"title = "Productos"
+1486881755a:1:{s:13:"productos.htm";a:9:{s:8:"fileName";s:13:"productos.htm";s:7:"content";s:4423:"title = "Productos"
 url = "/productos/:country/:category"
 layout = "layout"
 is_hidden = 0
@@ -16,7 +16,7 @@ function onStart()
     $products = array();
     foreach($regions as $r)
     {
-        $products = Product::where('region_id','=',$r->id)->where('category_id','=',$category_id)->get();
+        $products[] = Product::where('region_id','=',$r->id)->where('category_id','=',$category_id)->get();
     }
     $this['products_by_cat'] = $products;
     $this['category'] = Category::find($category_id);
@@ -71,7 +71,8 @@ function onStart()
           <!-- End Product Sorting Bar -->
 
           <!-- Collection -->
-          {% for p in products_by_cat %}
+          {% for pp in products_by_cat %}
+          {% for p in pp%}
               <div class="col-sm-4 col-lg-3 box-product-outer">
                   <div class="box-product">
                       <div class="img-wrapper">
@@ -99,6 +100,7 @@ function onStart()
                   </div>
               </div>
           {% endfor %}
+          {% endfor %}
           <!-- End Collection -->
           <div class="col-xs-12 text-center">
             <nav aria-label="Page navigation">
@@ -110,7 +112,7 @@ function onStart()
 
       </div>
     </div>
-    <!-- End Main Content -->";s:5:"mtime";i:1486857174;s:6:"markup";s:3671:"<!-- Main Content -->
+    <!-- End Main Content -->";s:5:"mtime";i:1486867521;s:6:"markup";s:3724:"<!-- Main Content -->
     <div class="container m-t-3">
       <div class="row">
 
@@ -158,7 +160,8 @@ function onStart()
           <!-- End Product Sorting Bar -->
 
           <!-- Collection -->
-          {% for p in products_by_cat %}
+          {% for pp in products_by_cat %}
+          {% for p in pp%}
               <div class="col-sm-4 col-lg-3 box-product-outer">
                   <div class="box-product">
                       <div class="img-wrapper">
@@ -186,6 +189,7 @@ function onStart()
                   </div>
               </div>
           {% endfor %}
+          {% endfor %}
           <!-- End Collection -->
           <div class="col-xs-12 text-center">
             <nav aria-label="Page navigation">
@@ -197,7 +201,7 @@ function onStart()
 
       </div>
     </div>
-    <!-- End Main Content -->";s:4:"code";s:591:"use Andresalice\Winelivery\Models\Product;
+    <!-- End Main Content -->";s:4:"code";s:593:"use Andresalice\Winelivery\Models\Product;
 use Andresalice\Winelivery\Models\Region;
 use Andresalice\Winelivery\Models\Category;
 
@@ -209,7 +213,7 @@ function onStart()
     $products = array();
     foreach($regions as $r)
     {
-        $products = Product::where('region_id','=',$r->id)->where('category_id','=',$category_id)->get();
+        $products[] = Product::where('region_id','=',$r->id)->where('category_id','=',$category_id)->get();
     }
     $this['products_by_cat'] = $products;
     $this['category'] = Category::find($category_id);

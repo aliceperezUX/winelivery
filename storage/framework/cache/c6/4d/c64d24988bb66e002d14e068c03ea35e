@@ -1,4 +1,4 @@
-1486860333a:1:{s:10:"inicio.htm";a:9:{s:8:"fileName";s:10:"inicio.htm";s:7:"content";s:10516:"title = "Inicio"
+1486881755a:1:{s:10:"inicio.htm";a:9:{s:8:"fileName";s:10:"inicio.htm";s:7:"content";s:10531:"title = "Inicio"
 url = "/"
 layout = "layout"
 is_hidden = 0
@@ -57,7 +57,7 @@ is_hidden = 0
                     <div class="box-product">
                         <div class="img-wrapper">
                             <a href="{{"producto-detalle"|page({id: p.id})}}">
-                                <img class="wine-box" alt="Product" src="{{p.featured_image.getPath}}">
+                                <img class="wine-box wine-thumbnail" alt="Product" src="{{p.featured_image.getPath}}">
                             </a>
                         </div>
                         <h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6>
@@ -213,7 +213,7 @@ is_hidden = 0
 </div>
 
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1486857206;s:6:"markup";s:10454:"<!-- Full Slider -->
+<!-- End Main Content -->";s:5:"mtime";i:1486871817;s:6:"markup";s:10469:"<!-- Full Slider -->
 <div class="container-fluid">
     <div class="row">
         <div class="home-slider" style="position:relative">
@@ -267,7 +267,7 @@ is_hidden = 0
                     <div class="box-product">
                         <div class="img-wrapper">
                             <a href="{{"producto-detalle"|page({id: p.id})}}">
-                                <img class="wine-box" alt="Product" src="{{p.featured_image.getPath}}">
+                                <img class="wine-box wine-thumbnail" alt="Product" src="{{p.featured_image.getPath}}">
                             </a>
                         </div>
                         <h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6>

@@ -73,27 +73,32 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
         // line 49
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["products_by_cat"]) ? $context["products_by_cat"] : null));
-        foreach ($context['_seq'] as $context["_key"] => $context["p"]) {
+        foreach ($context['_seq'] as $context["_key"] => $context["pp"]) {
             // line 50
-            echo "              <div class=\"col-sm-4 col-lg-3 box-product-outer\">
+            echo "          ";
+            $context['_parent'] = $context;
+            $context['_seq'] = twig_ensure_traversable($context["pp"]);
+            foreach ($context['_seq'] as $context["_key"] => $context["p"]) {
+                // line 51
+                echo "              <div class=\"col-sm-4 col-lg-3 box-product-outer\">
                   <div class=\"box-product\">
                       <div class=\"img-wrapper\">
                           <a href=\"";
-            // line 53
-            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
-            echo "\">
+                // line 54
+                echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
+                echo "\">
                               <img alt=\"Product\" src=\"";
-            // line 54
-            echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["p"], "featured_image", array()), "getPath", array()), "html", null, true);
-            echo "\">
+                // line 55
+                echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["p"], "featured_image", array()), "getPath", array()), "html", null, true);
+                echo "\">
                           </a>
                       </div>
                       <h6><a href=\"";
-            // line 57
-            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
-            echo "\">";
-            echo twig_escape_filter($this->env, $this->getAttribute($context["p"], "title", array()), "html", null, true);
-            echo "</a></h6>
+                // line 58
+                echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
+                echo "\">";
+                echo twig_escape_filter($this->env, $this->getAttribute($context["p"], "title", array()), "html", null, true);
+                echo "</a></h6>
                       <div class=\"rating\">
                           <i class=\"fa fa-star\"></i>
                           <i class=\"fa fa-star\"></i>
@@ -105,33 +110,39 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
                       <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px\">
                           <div style=\"color:#fff\" class=\"price col-lg-6 \">
                               <div>RD\$";
-            // line 68
-            echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute($context["p"], "price", array())), "html", null, true);
-            echo " <span class=\"label-tags\"></span></div>
+                // line 69
+                echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute($context["p"], "price", array())), "html", null, true);
+                echo " <span class=\"label-tags\"></span></div>
                           </div>
                           <div class=\"col-lg-6\">
                               ";
-            // line 71
-            $context['__cms_partial_params'] = [];
-            $context['__cms_partial_params']['p'] = $context["p"]            ;
-            echo $this->env->getExtension('CMS')->partialFunction("botones"            , $context['__cms_partial_params']            );
-            unset($context['__cms_partial_params']);
-            // line 72
-            echo "                          </div>
+                // line 72
+                $context['__cms_partial_params'] = [];
+                $context['__cms_partial_params']['p'] = $context["p"]                ;
+                echo $this->env->getExtension('CMS')->partialFunction("botones"                , $context['__cms_partial_params']                );
+                unset($context['__cms_partial_params']);
+                // line 73
+                echo "                          </div>
                       </div>
                   </div>
               </div>
           ";
+            }
+            $_parent = $context['_parent'];
+            unset($context['_seq'], $context['_iterated'], $context['_key'], $context['p'], $context['_parent'], $context['loop']);
+            $context = array_intersect_key($context, $_parent) + $_parent;
+            // line 78
+            echo "          ";
         }
         $_parent = $context['_parent'];
-        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['p'], $context['_parent'], $context['loop']);
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['pp'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 77
+        // line 79
         echo "          <!-- End Collection -->
           <div class=\"col-xs-12 text-center\">
             <nav aria-label=\"Page navigation\">
               ";
-        // line 80
+        // line 82
         echo $this->getAttribute((isset($context["products_by_cat"]) ? $context["products_by_cat"] : null), "render", array());
         echo "
             </nav>
@@ -156,7 +167,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
 
     public function getDebugInfo()
     {
-        return array (  135 => 80,  130 => 77,  120 => 72,  115 => 71,  109 => 68,  93 => 57,  87 => 54,  83 => 53,  78 => 50,  74 => 49,  65 => 45,  19 => 1,);
+        return array (  146 => 82,  141 => 79,  135 => 78,  125 => 73,  120 => 72,  114 => 69,  98 => 58,  92 => 55,  88 => 54,  83 => 51,  78 => 50,  74 => 49,  65 => 45,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -217,7 +228,8 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
           <!-- End Product Sorting Bar -->
 
           <!-- Collection -->
-          {% for p in products_by_cat %}
+          {% for pp in products_by_cat %}
+          {% for p in pp%}
               <div class=\"col-sm-4 col-lg-3 box-product-outer\">
                   <div class=\"box-product\">
                       <div class=\"img-wrapper\">
@@ -244,6 +256,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
                       </div>
                   </div>
               </div>
+          {% endfor %}
           {% endfor %}
           <!-- End Collection -->
           <div class=\"col-xs-12 text-center\">

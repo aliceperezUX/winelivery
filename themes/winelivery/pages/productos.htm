@@ -16,7 +16,7 @@ function onStart()
     $products = array();
     foreach($regions as $r)
     {
-        $products = Product::where('region_id','=',$r->id)->where('category_id','=',$category_id)->get();
+        $products[] = Product::where('region_id','=',$r->id)->where('category_id','=',$category_id)->get();
     }
     $this['products_by_cat'] = $products;
     $this['category'] = Category::find($category_id);
@@ -71,7 +71,8 @@ function onStart()
           <!-- End Product Sorting Bar -->
 
           <!-- Collection -->
-          {% for p in products_by_cat %}
+          {% for pp in products_by_cat %}
+          {% for p in pp%}
               <div class="col-sm-4 col-lg-3 box-product-outer">
                   <div class="box-product">
                       <div class="img-wrapper">
@@ -98,6 +99,7 @@ function onStart()
                       </div>
                   </div>
               </div>
+          {% endfor %}
           {% endfor %}
           <!-- End Collection -->
           <div class="col-xs-12 text-center">

@@ -1,0 +1,2 @@
+==
+<a {% if loggedIn %}href="{{"deseos"|page}}"{% else %}href="{{"login"|page}}"{% endif %}><i class="fa fa-heart white"></i> ({% if wishlist_counter %}{{wishlist_counter}}{% else %} 0 {% endif %})</a>

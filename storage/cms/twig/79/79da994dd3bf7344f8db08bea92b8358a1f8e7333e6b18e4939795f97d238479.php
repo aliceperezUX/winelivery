@@ -32,9 +32,29 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
     <title>Home - Winelivery</title>
     <link href=\"";
         // line 12
-        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter(array(0 => "assets/bootstrap/css/bootstrap.css", 1 => "assets/css/font-awesome.css", 2 => "assets/css/bootstrap-select.css", 3 => "assets/css/owl.carousel.css", 4 => "assets/css/owl.theme.default.css", 5 => "assets/css/style.teal.flat.css"));
-        // line 19
+        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter(array(0 => "assets/bootstrap/css/bootstrap.css", 1 => "assets/css/font-awesome.css", 2 => "assets/css/bootstrap-select.css", 3 => "assets/css/owl.carousel.css", 4 => "assets/css/owl.theme.default.css", 5 => "assets/css/style.teal.flat.css", 6 => "assets/css/animate.css"));
+        // line 20
         echo "\" rel=\"stylesheet\">
+    <style>
+        Size para miniatura
+        .wine-thumbnail
+        {
+        \twidth: 160px; 
+        \theight: 200px;
+        }
+        
+        Size para detail
+        .wine-detail-box
+        {
+        \tmargin-bottom: 50px; 
+        \tpadding: 20px;
+        }
+        .size-img-detail
+        {
+        \twidth: 350px; 
+        \theight:500px;
+        }
+    </style>
 </head>
 
 <body>
@@ -44,7 +64,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
             <div class=\"row\">
                 <div class=\"col-md-2 \">
                     <a href=\"";
-        // line 28
+        // line 49
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("inicio");
         echo "\"><img alt=\"Logo\" src=\"";
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/winelivery-01.png");
@@ -52,7 +72,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                 </div>
                 <div class=\"col-sm-8 col-md-6 search-box m-t-2\">
                   <form method=\"POST\" action=\"";
-        // line 31
+        // line 52
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("busqueda");
         echo "\">
                     <div class=\"input-group\">
@@ -66,15 +86,15 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                 <div class=\"col-sm-4 col-md-4  hidden-xs m-t-2\">
                     <ul class=\"list-unstyled; list-inline\" style=\"font-size:12px;\">
                         <li><a href=\"";
-        // line 42
+        // line 63
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("nosotros");
         echo "\">Sobre nosotros</a></li>
                         <li><a href=\"";
-        // line 43
+        // line 64
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("terminos");
         echo "\">Terminos y condiciones</a></li>
                         <li ";
-        // line 44
+        // line 65
         if ((isset($context["user"]) ? $context["user"] : null)) {
             echo " class=\"hidden\" ";
         }
@@ -102,23 +122,23 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
             <div class=\"collapse navbar-collapse col-md-6\" id=\"navbar-ex1-collapse\">
                 <ul class=\"nav navbar-nav\">
                     ";
-        // line 65
+        // line 86
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["categories"]) ? $context["categories"] : null));
         foreach ($context['_seq'] as $context["_key"] => $context["c"]) {
-            // line 66
+            // line 87
             echo "                        <li class=\"dropdown\">
                             <a href=\"javascript:;\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">";
-            // line 67
+            // line 88
             echo twig_escape_filter($this->env, $this->getAttribute($context["c"], "title", array()), "html", null, true);
             echo "<span class=\"caret\"></span></a>
                             <ul class=\"dropdown-menu\">
                                 ";
-            // line 69
+            // line 90
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable($this->getAttribute($context["c"], "countries", array()));
             foreach ($context['_seq'] as $context["_key"] => $context["r"]) {
-                // line 70
+                // line 91
                 echo "                                    <li><a href=\"";
                 echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("productos", array("country" => $this->getAttribute($context["r"], "id", array()), "category" => $this->getAttribute($context["c"], "id", array())));
                 echo "\">";
@@ -129,7 +149,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['r'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 72
+            // line 93
             echo "                            </ul>
                         </li>
                     ";
@@ -137,38 +157,38 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['c'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 75
+        // line 96
         echo "                </ul>
             </div>
             <div style=\"float:right;\" class=\"col-md-6\">
                 <ul class=\"list-inline nav navbar-nav\">
                     ";
-        // line 79
+        // line 100
         if ((isset($context["loggedIn"]) ? $context["loggedIn"] : null)) {
-            // line 80
+            // line 101
             echo "                    <li class=\"dropdown\">
                         <a href=\"javascript:;\" class=\"dropdown-toggle white\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">
                             <i class=\"fa fa-user\"></i> Hola, ";
-            // line 82
+            // line 103
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : null), "name", array()), "html", null, true);
             echo " ";
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : null), "surname", array()), "html", null, true);
             echo " <span class=\"caret\"></span></a>
                         <ul class=\"dropdown-menu white\">
                             <li><a href=\"";
-            // line 84
+            // line 105
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("perfil");
             echo "\">Editar mi perfil</a></li>
                             <li><a href=\"";
-            // line 85
+            // line 106
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("password");
             echo "\">Cambiar contrase&ntilde;a</a></li>
                             <li><a href=\"";
-            // line 86
+            // line 107
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("direcciones");
             echo "\">Editar informacion de envio</a></li>
                             <li><a href=\"";
-            // line 87
+            // line 108
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("historial");
             echo "\">Historial de compras</a></li>
                             <li><a data-request=\"onLogout\" data-request-data=\"redirect: '/good-bye'\">Salir</a></li>
@@ -176,58 +196,36 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                     </li>
                     ";
         } else {
-            // line 92
+            // line 113
             echo "                       <li>
                            <a style=\"border-color:transparent;color:#fff;padding:3px 15px; margin-top:5px; hover:color:#c1272d;\" href=\"";
-            // line 93
+            // line 114
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
             echo "\"> Iniciar Sesi&oacute;n</a>
                        </li>
                     ";
         }
-        // line 96
+        // line 117
         echo "
                     <!-- <li class=\"club\"><a style=\"background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;\" href=\"\">¡Unete al club de vinos!</a></li> -->
-                    <li class=\"white\">
-                        <a ";
-        // line 99
-        if ((isset($context["loggedIn"]) ? $context["loggedIn"] : null)) {
-            echo "href=\"";
-            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("deseos");
-            echo "\"";
-        } else {
-            echo "href=\"";
-            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
-            echo "\"";
-        }
-        echo "><i class=\"fa fa-heart white\"></i> (";
-        if ((isset($context["wishlist_counter"]) ? $context["wishlist_counter"] : null)) {
-            echo twig_escape_filter($this->env, (isset($context["wishlist_counter"]) ? $context["wishlist_counter"] : null), "html", null, true);
-        } else {
-            echo " 0 ";
-        }
-        echo ")</a>
-                    </li>
-                    <li class=\"white\">
-                        <a ";
-        // line 102
-        if ((isset($context["loggedIn"]) ? $context["loggedIn"] : null)) {
-            echo "href=\"";
-            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("carrito");
-            echo "\"";
-        } else {
-            echo "href=\"";
-            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
-            echo "\"";
-        }
-        echo "><i class=\"fa fa-shopping-cart white\" aria-hidden=\"true\"></i> (";
-        if ((isset($context["cart_counter"]) ? $context["cart_counter"] : null)) {
-            echo twig_escape_filter($this->env, (isset($context["cart_counter"]) ? $context["cart_counter"] : null), "html", null, true);
-        } else {
-            echo " 0 ";
-        }
-        echo ")</a>
-                    </li>
+                    <li id=\"wishlist_update_quantity\" class=\"white\">
+                        ";
+        // line 120
+        $context['__cms_partial_params'] = [];
+        $context['__cms_partial_params']['wishlist_counter'] = (isset($context["wishlist_counter"]) ? $context["wishlist_counter"] : null)        ;
+        echo $this->env->getExtension('CMS')->partialFunction("quantity_wishlist"        , $context['__cms_partial_params']        );
+        unset($context['__cms_partial_params']);
+        // line 121
+        echo "                    </li>
+                    <li id=\"cart_update_quantity\" class=\"white\">
+                        ";
+        // line 123
+        $context['__cms_partial_params'] = [];
+        $context['__cms_partial_params']['cart_counter'] = (isset($context["cart_counter"]) ? $context["cart_counter"] : null)        ;
+        echo $this->env->getExtension('CMS')->partialFunction("quantity_cart"        , $context['__cms_partial_params']        );
+        unset($context['__cms_partial_params']);
+        // line 124
+        echo "                    </li>
                 </ul>
             </div>
         </div>
@@ -235,9 +233,9 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
     <!-- End Navigation Bar -->
 
     ";
-        // line 110
+        // line 131
         echo $this->env->getExtension('CMS')->pageFunction();
-        // line 111
+        // line 132
         echo "
     <!-- Footer -->
     <div class=\"footer\">
@@ -265,11 +263,11 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                     <div class=\"title-footer\"><span>Categorias</span></div>
                     <ul>
                         ";
-        // line 137
+        // line 158
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["categories"]) ? $context["categories"] : null));
         foreach ($context['_seq'] as $context["_key"] => $context["c"]) {
-            // line 138
+            // line 159
             echo "                            <li><i class=\"fa fa-angle-double-right\"></i> <a href=\"#\">";
             echo twig_escape_filter($this->env, $this->getAttribute($context["c"], "title", array()), "html", null, true);
             echo "</a></li>
@@ -278,7 +276,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['c'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 140
+        // line 161
         echo "                    </ul>
                 </div>
                 <div class=\"col-md-3 col-sm-6\">
@@ -309,15 +307,15 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                     <div class=\"title-footer\"><span>M&eacute;todos de pago</span></div>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, soluta, tempora, ipsa voluptatibus porro vel laboriosam</p>
                     <img src=\"";
-        // line 169
+        // line 190
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/payment-1.png");
         echo "\" alt=\"Payment-1\">
                     <img src=\"";
-        // line 170
+        // line 191
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/payment-2.png");
         echo "\" alt=\"Payment-2\">
                     <img src=\"";
-        // line 171
+        // line 192
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/payment-4.png");
         echo "\" alt=\"Payment-4\">
                 </div>
@@ -334,7 +332,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
         </div>
         <div class=\"text-center copyright\">
             Copyright &copy; ";
-        // line 185
+        // line 206
         echo twig_escape_filter($this->env, twig_date_format_filter($this->env, (isset($context["date"]) ? $context["date"] : null), "Y"), "html", null, true);
         echo " Winelivery All right reserved
         </div>
@@ -346,59 +344,74 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
     </a>
 
     <script src=\"";
-        // line 194
+        // line 215
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter(array(0 => "@jquery", 1 => "@framework", 2 => "@framework.extras"));
         echo "\"></script>
     <script src=\"";
-        // line 195
+        // line 216
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/bootstrap/js/bootstrap.js");
         echo "\"></script>
     <script src=\"";
-        // line 196
+        // line 217
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/bootstrap-select.js");
         echo "\"></script>
     <script src=\"";
-        // line 197
+        // line 218
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/owl.carousel.js");
         echo "\"></script>
     <script src=\"";
-        // line 198
+        // line 219
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/jquery.ez-plus.js");
         echo "\"></script>
     <script src=\"";
-        // line 199
+        // line 220
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/jquery.bootstrap-touchspin.js");
         echo "\"></script>
     <script src=\"";
-        // line 200
+        // line 221
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/jquery.raty-fa.js");
         echo "\"></script>
     <script src=\"";
-        // line 201
+        // line 222
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/nouislider.js");
         echo "\"></script>
     <script src=\"";
-        // line 202
+        // line 223
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/mimity.js");
         echo "\"></script>
     <script src=\"";
-        // line 203
+        // line 224
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/mimity.detail.js");
         echo "\"></script>
     <script src=\"";
-        // line 204
+        // line 225
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/mimity.filter-sidebar.js");
         echo "\"></script>
     <script src=\"";
-        // line 205
+        // line 226
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/jqFunctions.js");
         echo "\"></script>
     ";
-        // line 206
+        // line 227
         echo $this->env->getExtension('CMS')->assetsFunction('js');
         echo $this->env->getExtension('CMS')->displayBlock('scripts');
-        // line 207
+        // line 228
         echo "    <script>
+    \$('.fa-shopping-cart').click(function(){
+        \$(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function() {
+          \$(this).removeClass('animated bounceIn');
+        
+        });;
+    });
+    \$('.fa-heart').click(function(){
+        \$(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function() {
+          \$(this).removeClass('animated bounceIn');
+        
+        });;
+    });
+
     function onNewsletterForm()
     {
         var error = true; var regex = /^([a-zA-Z0-9_\\.\\-\\+])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+\$/;
@@ -430,7 +443,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
 
     public function getDebugInfo()
     {
-        return array (  401 => 207,  398 => 206,  394 => 205,  390 => 204,  386 => 203,  382 => 202,  378 => 201,  374 => 200,  370 => 199,  366 => 198,  362 => 197,  358 => 196,  354 => 195,  350 => 194,  338 => 185,  321 => 171,  317 => 170,  313 => 169,  282 => 140,  273 => 138,  269 => 137,  241 => 111,  239 => 110,  214 => 102,  194 => 99,  189 => 96,  183 => 93,  180 => 92,  172 => 87,  168 => 86,  164 => 85,  160 => 84,  153 => 82,  149 => 80,  147 => 79,  141 => 75,  133 => 72,  122 => 70,  118 => 69,  113 => 67,  110 => 66,  106 => 65,  78 => 44,  74 => 43,  70 => 42,  56 => 31,  48 => 28,  37 => 19,  35 => 12,  29 => 9,  19 => 1,);
+        return array (  399 => 228,  396 => 227,  392 => 226,  388 => 225,  384 => 224,  380 => 223,  376 => 222,  372 => 221,  368 => 220,  364 => 219,  360 => 218,  356 => 217,  352 => 216,  348 => 215,  336 => 206,  319 => 192,  315 => 191,  311 => 190,  280 => 161,  271 => 159,  267 => 158,  239 => 132,  237 => 131,  228 => 124,  223 => 123,  219 => 121,  214 => 120,  209 => 117,  203 => 114,  200 => 113,  192 => 108,  188 => 107,  184 => 106,  180 => 105,  173 => 103,  169 => 101,  167 => 100,  161 => 96,  153 => 93,  142 => 91,  138 => 90,  133 => 88,  130 => 87,  126 => 86,  98 => 65,  94 => 64,  90 => 63,  76 => 52,  68 => 49,  37 => 20,  35 => 12,  29 => 9,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -460,8 +473,29 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
         'assets/css/bootstrap-select.css',
         'assets/css/owl.carousel.css',
         'assets/css/owl.theme.default.css',
-        'assets/css/style.teal.flat.css'
+        'assets/css/style.teal.flat.css',
+        'assets/css/animate.css'
     ]|theme }}\" rel=\"stylesheet\">
+    <style>
+        Size para miniatura
+        .wine-thumbnail
+        {
+        \twidth: 160px; 
+        \theight: 200px;
+        }
+        
+        Size para detail
+        .wine-detail-box
+        {
+        \tmargin-bottom: 50px; 
+        \tpadding: 20px;
+        }
+        .size-img-detail
+        {
+        \twidth: 350px; 
+        \theight:500px;
+        }
+    </style>
 </head>
 
 <body>
@@ -540,11 +574,11 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                     {% endif %}
 
                     <!-- <li class=\"club\"><a style=\"background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;\" href=\"\">¡Unete al club de vinos!</a></li> -->
-                    <li class=\"white\">
-                        <a {% if loggedIn %}href=\"{{\"deseos\"|page}}\"{% else %}href=\"{{\"login\"|page}}\"{% endif %}><i class=\"fa fa-heart white\"></i> ({% if wishlist_counter %}{{wishlist_counter}}{% else %} 0 {% endif %})</a>
+                    <li id=\"wishlist_update_quantity\" class=\"white\">
+                        {% partial \"quantity_wishlist\" wishlist_counter = wishlist_counter %}
                     </li>
-                    <li class=\"white\">
-                        <a {% if loggedIn %}href=\"{{\"carrito\"|page}}\"{% else %}href=\"{{\"login\"|page}}\"{% endif %}><i class=\"fa fa-shopping-cart white\" aria-hidden=\"true\"></i> ({% if cart_counter %}{{cart_counter}}{% else %} 0 {% endif %})</a>
+                    <li id=\"cart_update_quantity\" class=\"white\">
+                        {% partial \"quantity_cart\"  cart_counter = cart_counter %}
                     </li>
                 </ul>
             </div>
@@ -650,6 +684,21 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
     <script src=\"{{\"assets/js/jqFunctions.js\"|theme}}\"></script>
     {% scripts %}
     <script>
+    \$('.fa-shopping-cart').click(function(){
+        \$(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function() {
+          \$(this).removeClass('animated bounceIn');
+        
+        });;
+    });
+    \$('.fa-heart').click(function(){
+        \$(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function() {
+          \$(this).removeClass('animated bounceIn');
+        
+        });;
+    });
+
     function onNewsletterForm()
     {
         var error = true; var regex = /^([a-zA-Z0-9_\\.\\-\\+])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+\$/;

@@ -1,0 +1,12 @@
+1486870785a:1:{s:12:"quantity.htm";a:6:{s:8:"fileName";s:12:"quantity.htm";s:7:"content";s:525:"==
+<li class="white cart_update_quantity">
+    <a {% if loggedIn %}href="{{"deseos"|page}}"{% else %}href="{{"login"|page}}"{% endif %}><i class="fa fa-heart white"></i> ({% if wishlist_counter %}{{wishlist_counter}}{% else %} 0 {% endif %})</a>
+</li>
+<li class="white cart_update_quantity">
+    <a {% if loggedIn %}href="{{"carrito"|page}}"{% else %}href="{{"login"|page}}"{% endif %}><i class="fa fa-shopping-cart white" aria-hidden="true"></i> ({% if cart_counter %}{{cart_counter}}{% else %} 0 {% endif %})</a>
+</li>";s:5:"mtime";i:1486870164;s:6:"markup";s:522:"<li class="white cart_update_quantity">
+    <a {% if loggedIn %}href="{{"deseos"|page}}"{% else %}href="{{"login"|page}}"{% endif %}><i class="fa fa-heart white"></i> ({% if wishlist_counter %}{{wishlist_counter}}{% else %} 0 {% endif %})</a>
+</li>
+<li class="white cart_update_quantity">
+    <a {% if loggedIn %}href="{{"carrito"|page}}"{% else %}href="{{"login"|page}}"{% endif %}><i class="fa fa-shopping-cart white" aria-hidden="true"></i> ({% if cart_counter %}{{cart_counter}}{% else %} 0 {% endif %})</a>
+</li>";s:4:"code";N;s:17:"_PARSER_ERROR_INI";s:0:"";}}

@@ -32,7 +32,7 @@ class __TwigTemplate_fb2e7c0cc00191eed372b364428bb6cf8d35e00c3cc48d90547172ea115
       <div class=\"title m-b-2\"><span>Mi perfil</span></div>
       <div class=\"row\">
         <div class=\"col-xs-12\">
-          <form>
+          <form id=\"profileForm\">
             <div class=\"form-group\">
               <label for=\"exampleInputEmail1\">Nombre</label>
               <input name=\"name\" value=\"";
@@ -54,16 +54,48 @@ class __TwigTemplate_fb2e7c0cc00191eed372b364428bb6cf8d35e00c3cc48d90547172ea115
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : null), "email", array()), "html", null, true);
         echo "\" type=\"email\" class=\"form-control\" id=\"\">
             </div>
-            <button type=\"button\" class=\"btn btn-theme pull-right\"><i class=\"fa fa-pencil\"></i> Editar perfil</button>
+            <button onClick=\"profileForm();\" type=\"button\" class=\"btn btn-theme pull-right\"><i class=\"fa fa-pencil\"></i> Editar perfil</button>
           </form>
         </div>
       </div>
+       <br>
+        <div id=\"profileFormMessage\" style=\"display:none;\" class=\"alert alert-success\">
+            LOS DATOS SE ACTUALIZARON CORRECTAMENTE.
+        </div>
     </div>
     <!-- End My Profile Content -->
-
   </div>
 </div>
-<!-- End Main Content -->";
+<!-- End Main Content -->
+";
+        // line 38
+        echo $this->env->getExtension('CMS')->startBlock('scripts'        );
+        // line 39
+        echo "<script>
+    function profileForm()
+    {
+        var error = true; var regex = /^([a-zA-Z0-9_\\.\\-\\+])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+\$/;
+        
+    \tif(\$('input[name=name]').val() === ''){\$('input[name=name]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=name]').css('border', '');}
+    \t
+    \tif(\$('input[name=surname]').val() === ''){\$('input[name=surname]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=surname]').css('border', '');}
+    
+    \tif(!regex.test(\$('input[name=email]').val())){\$('input[name=email]').css('border', '1px solid red');error = false;} 
+    \telse {\$('input[name=email]').css('border', '');}
+    \t
+    \tif(error)
+    \t{
+    \t\t\$('#profileForm').request('onProfileForm', {data: \$('#profileForm').serialize()});
+    \t\t\$(\"#profileFormMessage\").fadeIn(\"fast\");
+    \t} 
+    \telse { return false; }
+    }
+</script>
+";
+        // line 38
+        echo $this->env->getExtension('CMS')->endBlock(true        );
     }
 
     public function getTemplateName()
@@ -78,7 +110,7 @@ class __TwigTemplate_fb2e7c0cc00191eed372b364428bb6cf8d35e00c3cc48d90547172ea115
 
     public function getDebugInfo()
     {
-        return array (  54 => 23,  47 => 19,  40 => 15,  29 => 6,  25 => 5,  19 => 1,);
+        return array (  98 => 38,  74 => 39,  72 => 38,  54 => 23,  47 => 19,  40 => 15,  29 => 6,  25 => 5,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -102,7 +134,7 @@ class __TwigTemplate_fb2e7c0cc00191eed372b364428bb6cf8d35e00c3cc48d90547172ea115
       <div class=\"title m-b-2\"><span>Mi perfil</span></div>
       <div class=\"row\">
         <div class=\"col-xs-12\">
-          <form>
+          <form id=\"profileForm\">
             <div class=\"form-group\">
               <label for=\"exampleInputEmail1\">Nombre</label>
               <input name=\"name\" value=\"{{user.name}}\" type=\"text\" class=\"form-control\" id=\"\">
@@ -115,15 +147,42 @@ class __TwigTemplate_fb2e7c0cc00191eed372b364428bb6cf8d35e00c3cc48d90547172ea115
               <label for=\"exampleInputEmail1\">Correo</label>
               <input name=\"email\" value=\"{{user.email}}\" type=\"email\" class=\"form-control\" id=\"\">
             </div>
-            <button type=\"button\" class=\"btn btn-theme pull-right\"><i class=\"fa fa-pencil\"></i> Editar perfil</button>
+            <button onClick=\"profileForm();\" type=\"button\" class=\"btn btn-theme pull-right\"><i class=\"fa fa-pencil\"></i> Editar perfil</button>
           </form>
         </div>
       </div>
+       <br>
+        <div id=\"profileFormMessage\" style=\"display:none;\" class=\"alert alert-success\">
+            LOS DATOS SE ACTUALIZARON CORRECTAMENTE.
+        </div>
     </div>
     <!-- End My Profile Content -->
-
   </div>
 </div>
-<!-- End Main Content -->", "/home/winelivery/themes/winelivery/pages/perfil.htm", "");
+<!-- End Main Content -->
+{% put scripts %}
+<script>
+    function profileForm()
+    {
+        var error = true; var regex = /^([a-zA-Z0-9_\\.\\-\\+])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+\$/;
+        
+    \tif(\$('input[name=name]').val() === ''){\$('input[name=name]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=name]').css('border', '');}
+    \t
+    \tif(\$('input[name=surname]').val() === ''){\$('input[name=surname]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=surname]').css('border', '');}
+    
+    \tif(!regex.test(\$('input[name=email]').val())){\$('input[name=email]').css('border', '1px solid red');error = false;} 
+    \telse {\$('input[name=email]').css('border', '');}
+    \t
+    \tif(error)
+    \t{
+    \t\t\$('#profileForm').request('onProfileForm', {data: \$('#profileForm').serialize()});
+    \t\t\$(\"#profileFormMessage\").fadeIn(\"fast\");
+    \t} 
+    \telse { return false; }
+    }
+</script>
+{% endput %}", "/home/winelivery/themes/winelivery/pages/perfil.htm", "");
     }
 }

@@ -34,45 +34,6 @@ function onStart()
     }
 }
 
-function onAddToWishlist()
-{
-    $product_id = Input::get("product_id");
-    $user = Auth::getUser();
-    if(!Wishlist::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
-    {
-        $w = new Wishlist();
-        $w->user_id =  $user->id;
-        $w->product_id  = $product_id;
-        $w->save();
-    }
-}
-
-function onDeleteFromWishlist()
-{
-    $user = Auth::getUser();
-    $wishlist_id = Input::get("wishlist_id");
-    if(Wishlist::where("id","=",$wishlist_id)->where("user_id","=",$user->id)->exists())
-    {
-        $w = Wishlist::find($wishlist_id);
-        $w->delete();
-    }
-    $wishlist = Wishlist::where("user_id","=",$user->id)->get();
-    return ['#wishlist_partial' => $this->renderPartial('wishlist', ['wishlist' => $wishlist])];
-}
-
-function onDeleteFromCart()
-{
-    $user = Auth::getUser();
-    $cart_id = Input::get("cart_id");
-    if(Cart::where("id","=",$cart_id)->where("user_id","=",$user->id)->exists())
-    {
-        $w = Cart::find($cart_id);
-        $w->delete();
-    }
-    $cart = Cart::where("user_id","=",$user->id)->get();
-    return ['#cart_partial' => $this->renderPartial('cart', ['cart' => $cart])];
-}
-
 function onAddToCart()
 {
     $product_id = Input::get("product_id");
@@ -92,6 +53,51 @@ function onAddToCart()
         $w->quantity = 1;
         $w->save();
     }
+    $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+    return ['#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
+}
+
+function onDeleteFromCart()
+{
+    $user = Auth::getUser();
+    $cart_id = Input::get("cart_id");
+    if(Cart::where("id","=",$cart_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = Cart::find($cart_id);
+        $w->delete();
+    }
+    $cart = Cart::where("user_id","=",$user->id)->get();
+    $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+    return ['#cart_partial' => $this->renderPartial('cart', ['cart' => $cart]), '#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
+}
+
+function onAddToWishlist()
+{
+    $product_id = Input::get("product_id");
+    $user = Auth::getUser();
+    if(!Wishlist::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = new Wishlist();
+        $w->user_id =  $user->id;
+        $w->product_id  = $product_id;
+        $w->save();
+    }
+    $wishlist_counter = Wishlist::where("user_id","=",$user->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+    return ['#wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter])];
+}
+
+function onDeleteFromWishlist()
+{
+    $user = Auth::getUser();
+    $wishlist_id = Input::get("wishlist_id");
+    if(Wishlist::where("id","=",$wishlist_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = Wishlist::find($wishlist_id);
+        $w->delete();
+    }
+    $wishlist = Wishlist::where("user_id","=",$user->id)->get();
+    $wishlist_counter = Wishlist::where("user_id","=",$user->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+    return ['#wishlist_partial' => $this->renderPartial('wishlist', ['wishlist' => $wishlist]), '#wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter])];
 }
 
 function onNewsletterForm()
@@ -133,8 +139,29 @@ function onLogout()
         'assets/css/bootstrap-select.css',
         'assets/css/owl.carousel.css',
         'assets/css/owl.theme.default.css',
-        'assets/css/style.teal.flat.css'
+        'assets/css/style.teal.flat.css',
+        'assets/css/animate.css'
     ]|theme }}" rel="stylesheet">
+    <style>
+        Size para miniatura
+        .wine-thumbnail
+        {
+        	width: 160px; 
+        	height: 200px;
+        }
+        
+        Size para detail
+        .wine-detail-box
+        {
+        	margin-bottom: 50px; 
+        	padding: 20px;
+        }
+        .size-img-detail
+        {
+        	width: 350px; 
+        	height:500px;
+        }
+    </style>
 </head>
 
 <body>
@@ -213,11 +240,11 @@ function onLogout()
                     {% endif %}
 
                     <!-- <li class="club"><a style="background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="">¡Unete al club de vinos!</a></li> -->
-                    <li class="white">
-                        <a {% if loggedIn %}href="{{"deseos"|page}}"{% else %}href="{{"login"|page}}"{% endif %}><i class="fa fa-heart white"></i> ({% if wishlist_counter %}{{wishlist_counter}}{% else %} 0 {% endif %})</a>
+                    <li id="wishlist_update_quantity" class="white">
+                        {% partial "quantity_wishlist" wishlist_counter = wishlist_counter %}
                     </li>
-                    <li class="white">
-                        <a {% if loggedIn %}href="{{"carrito"|page}}"{% else %}href="{{"login"|page}}"{% endif %}><i class="fa fa-shopping-cart white" aria-hidden="true"></i> ({% if cart_counter %}{{cart_counter}}{% else %} 0 {% endif %})</a>
+                    <li id="cart_update_quantity" class="white">
+                        {% partial "quantity_cart"  cart_counter = cart_counter %}
                     </li>
                 </ul>
             </div>
@@ -323,6 +350,21 @@ function onLogout()
     <script src="{{"assets/js/jqFunctions.js"|theme}}"></script>
     {% scripts %}
     <script>
+    $('.fa-shopping-cart').click(function(){
+        $(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function() {
+          $(this).removeClass('animated bounceIn');
+        
+        });;
+    });
+    $('.fa-heart').click(function(){
+        $(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function() {
+          $(this).removeClass('animated bounceIn');
+        
+        });;
+    });
+
     function onNewsletterForm()
     {
         var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;

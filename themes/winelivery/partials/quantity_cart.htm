@@ -1,0 +1,2 @@
+==
+<a {% if loggedIn %}href="{{"carrito"|page}}"{% else %}href="{{"login"|page}}"{% endif %}><i class="fa fa-shopping-cart white" aria-hidden="true"></i> ({% if cart_counter %}{{cart_counter}}{% else %} 0 {% endif %})</a>

@@ -1,4 +1,4 @@
-1486860333a:1:{s:12:"registro.htm";a:9:{s:8:"fileName";s:12:"registro.htm";s:7:"content";s:3074:"title = "Registro"
+1486881755a:1:{s:12:"registro.htm";a:9:{s:8:"fileName";s:12:"registro.htm";s:7:"content";s:3072:"title = "Registro"
 url = "/registro"
 layout = "layout"
 is_hidden = 0
@@ -59,7 +59,6 @@ function onRegisterForm()
       </div>
     </div>
     <!-- End Login Form -->
-
   </div>
 </div>
 <!-- End Main Content -->
@@ -85,7 +84,7 @@ function onRegisterForm()
     	else { return false; }
     }
 </script>
-{% endput %}";s:5:"mtime";i:1486854902;s:6:"markup";s:2609:"<!-- Main Content -->
+{% endput %}";s:5:"mtime";i:1486860108;s:6:"markup";s:2607:"<!-- Main Content -->
 <div style="width:40%; margin:0 auto;" class="container m-t-3">
   <div style="border:1px solid #ccc;border-radius:5px;padding:20px" class=" row">
     <!-- Login Form -->
@@ -124,7 +123,6 @@ function onRegisterForm()
       </div>
     </div>
     <!-- End Login Form -->
-
   </div>
 </div>
 <!-- End Main Content -->
