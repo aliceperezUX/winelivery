@@ -54,7 +54,10 @@ class __TwigTemplate_1feefe5dd5d7437ce89831f145388c834f4bcb2c069e4c34c8e43e66ebe
       <div style=\"margin-top:100px\">
         <HR>
           <p>ya tienes una cuenta?</p>
-          <button type=\"button\" class=\"btn btn-default btn-theme1 col-md-12\">iniciar sesion</button>
+          <a href=\"";
+        // line 36
+        echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
+        echo "\" class=\"btn btn-default btn-theme1 col-md-12\">iniciar sesion</a>
       </div>
     </div>
     <!-- End Login Form -->
@@ -104,7 +107,7 @@ class __TwigTemplate_1feefe5dd5d7437ce89831f145388c834f4bcb2c069e4c34c8e43e66ebe
 
     public function getDebugInfo()
     {
-        return array (  92 => 44,  69 => 45,  67 => 44,  26 => 6,  19 => 1,);
+        return array (  95 => 44,  72 => 45,  70 => 44,  59 => 36,  26 => 6,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -152,7 +155,7 @@ class __TwigTemplate_1feefe5dd5d7437ce89831f145388c834f4bcb2c069e4c34c8e43e66ebe
       <div style=\"margin-top:100px\">
         <HR>
           <p>ya tienes una cuenta?</p>
-          <button type=\"button\" class=\"btn btn-default btn-theme1 col-md-12\">iniciar sesion</button>
+          <a href=\"{{\"login\"|page}}\" class=\"btn btn-default btn-theme1 col-md-12\">iniciar sesion</a>
       </div>
     </div>
     <!-- End Login Form -->

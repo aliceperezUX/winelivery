@@ -1,0 +1,10 @@
+name: Wishlist
+form: $/andresalice/winelivery/models/wishlist/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Wishlist
+defaultRedirect: andresalice/winelivery/wishlist
+create:
+    redirect: 'andresalice/winelivery/wishlist/update/:id'
+    redirectClose: andresalice/winelivery/wishlist
+update:
+    redirect: andresalice/winelivery/wishlist
+    redirectClose: andresalice/winelivery/wishlist

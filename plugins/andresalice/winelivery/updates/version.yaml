@@ -54,3 +54,21 @@
 1.0.19:
     - 'Created table andresalice_winelivery_newsletters'
     - builder_table_create_andresalice_winelivery_newsletters.php
+1.0.20:
+    - 'Updated table andresalice_winelivery_regions'
+    - builder_table_update_andresalice_winelivery_regions.php
+1.0.21:
+    - 'Updated table andresalice_winelivery_products'
+    - builder_table_update_andresalice_winelivery_products_10.php
+1.0.22:
+    - 'Updated table andresalice_winelivery_products'
+    - builder_table_update_andresalice_winelivery_products_11.php
+1.0.23:
+    - 'Created table andresalice_winelivery_carts'
+    - builder_table_create_andresalice_winelivery_carts.php
+1.0.24:
+    - 'Updated table andresalice_winelivery_carts'
+    - builder_table_update_andresalice_winelivery_carts.php
+1.0.25:
+    - 'Updated table andresalice_winelivery_wishlists'
+    - builder_table_update_andresalice_winelivery_wishlists.php

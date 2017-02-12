@@ -4,3 +4,10 @@ fields:
         oc.commentPosition: ''
         span: full
         type: text
+    country:
+        label: PAIS
+        oc.commentPosition: ''
+        nameFrom: name
+        descriptionFrom: description
+        span: full
+        type: relation

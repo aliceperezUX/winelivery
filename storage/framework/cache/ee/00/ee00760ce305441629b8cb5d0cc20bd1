@@ -1,4 +1,4 @@
-1485500274a:1:{s:12:"busqueda.htm";a:9:{s:8:"fileName";s:12:"busqueda.htm";s:7:"content";s:2503:"title = "Busqueda"
+1486860333a:1:{s:12:"busqueda.htm";a:9:{s:8:"fileName";s:12:"busqueda.htm";s:7:"content";s:2573:"title = "Busqueda"
 url = "/busqueda"
 layout = "layout"
 is_hidden = 0
@@ -43,8 +43,8 @@ function onStart()
                           <div>RD${{ p.price|number_format}}<span class="label-tags"></span></div>
                       </div>
                       <div class="col-lg-6">
-                          <a href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
-                          <a href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                          <a onClick="addToWishlist('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                          <a onClick="addToCart('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
                       </div>
                   </div>
               </div>
@@ -61,7 +61,7 @@ function onStart()
 
   </div>
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1485496997;s:6:"markup";s:2237:"<!-- Main Content -->
+<!-- End Main Content -->";s:5:"mtime";i:1486111973;s:6:"markup";s:2307:"<!-- Main Content -->
 <div class="container m-t-3">
   <div class="row">
     <!-- Product List -->
@@ -92,8 +92,8 @@ function onStart()
                           <div>RD${{ p.price|number_format}}<span class="label-tags"></span></div>
                       </div>
                       <div class="col-lg-6">
-                          <a href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
-                          <a href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                          <a onClick="addToWishlist('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                          <a onClick="addToCart('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
                       </div>
                   </div>
               </div>

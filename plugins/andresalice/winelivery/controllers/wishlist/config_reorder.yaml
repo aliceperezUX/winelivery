@@ -1,0 +1,4 @@
+title: Wishlist
+modelClass: Andresalice\Winelivery\Models\Wishlist
+toolbar:
+    buttons: reorder_toolbar

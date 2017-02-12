@@ -1,14 +1,25 @@
 title = "Productos"
-url = "/productos/:cat/:reg"
+url = "/productos/:country/:category"
 layout = "layout"
 is_hidden = 0
 ==
 <?php
 use Andresalice\Winelivery\Models\Product;
+use Andresalice\Winelivery\Models\Region;
+use Andresalice\Winelivery\Models\Category;
 
 function onStart()
 {
-    $this['products_by_cat'] = Product::where("category_id",$this->param('cat'))->where("region_id","=", $this->param('reg'))->take(12)->get();
+    $country_id = $this->param('country'); 
+    $category_id = $this->param('category');
+    $regions = Region::where('country_id',"=",$country_id)->get();
+    $products = array();
+    foreach($regions as $r)
+    {
+        $products = Product::where('region_id','=',$r->id)->where('category_id','=',$category_id)->get();
+    }
+    $this['products_by_cat'] = $products;
+    $this['category'] = Category::find($category_id);
 }
 ?>
 ==
@@ -56,7 +67,7 @@ function onStart()
 
         <!-- Product List -->
         <div class="col-sm-9">
-          <div class="title"><span>{{products_by_cat.0.category.title}}/{{products_by_cat.0.region.title}}</span></div>
+          <div class="title"><span>{{products_by_cat.0.region.country.name}} / {{category.title}}</span></div>
           <!-- End Product Sorting Bar -->
 
           <!-- Collection -->
@@ -82,8 +93,7 @@ function onStart()
                               <div>RD${{p.price|number_format}} <span class="label-tags"></span></div>
                           </div>
                           <div class="col-lg-6">
-                              <a href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
-                              <a href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                              {% partial "botones" p = p %}
                           </div>
                       </div>
                   </div>

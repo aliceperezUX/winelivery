@@ -56,13 +56,6 @@ fields:
         descriptionFrom: description
         span: full
         type: relation
-    country:
-        label: PAIS
-        oc.commentPosition: ''
-        nameFrom: name
-        descriptionFrom: description
-        span: full
-        type: relation
     featured_image:
         label: 'IMAGEN PRINCIPAL'
         oc.commentPosition: ''

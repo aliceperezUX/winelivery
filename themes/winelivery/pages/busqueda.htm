@@ -43,8 +43,8 @@ function onStart()
                           <div>RD${{ p.price|number_format}}<span class="label-tags"></span></div>
                       </div>
                       <div class="col-lg-6">
-                          <a href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
-                          <a href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                          <a onClick="addToWishlist('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                          <a onClick="addToCart('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
                       </div>
                   </div>
               </div>

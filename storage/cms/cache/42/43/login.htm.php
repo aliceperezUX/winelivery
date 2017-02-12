@@ -1,5 +1,5 @@
 <?php 
-class Cms588abfb4e434e528247938_3751676243Class extends \Cms\Classes\PageCode
+class Cms589f9b12ac568432593964_960849748Class extends \Cms\Classes\PageCode
 {
 public function onLoginForm()
 {

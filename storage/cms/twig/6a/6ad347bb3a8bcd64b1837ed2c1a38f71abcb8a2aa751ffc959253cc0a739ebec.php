@@ -43,7 +43,10 @@ class __TwigTemplate_77375bdbe43e8a869992e59249066c0008d65304d4a2ae749540823766d
       <div style=\"margin-top:100px\">
         <HR>
           <p>aun no tienes una cuenta?</p>
-          <button type=\"button\" class=\"btn btn-default btn-theme1 col-md-12\">Crear cuenta</button>
+          <a href=\"";
+        // line 25
+        echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("registro");
+        echo "\" class=\"btn btn-default btn-theme1 col-md-12\">Crear Cuenta</a>
       </div>
     </div>
     <!-- End Login Form -->
@@ -65,7 +68,7 @@ class __TwigTemplate_77375bdbe43e8a869992e59249066c0008d65304d4a2ae749540823766d
 
     public function getDebugInfo()
     {
-        return array (  27 => 7,  19 => 1,);
+        return array (  48 => 25,  27 => 7,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -102,7 +105,7 @@ class __TwigTemplate_77375bdbe43e8a869992e59249066c0008d65304d4a2ae749540823766d
       <div style=\"margin-top:100px\">
         <HR>
           <p>aun no tienes una cuenta?</p>
-          <button type=\"button\" class=\"btn btn-default btn-theme1 col-md-12\">Crear cuenta</button>
+          <a href=\"{{\"registro\"|page}}\" class=\"btn btn-default btn-theme1 col-md-12\">Crear Cuenta</a>
       </div>
     </div>
     <!-- End Login Form -->

@@ -1,0 +1,6 @@
+columns:
+    id:
+        label: id
+        type: number
+        searchable: true
+        sortable: true

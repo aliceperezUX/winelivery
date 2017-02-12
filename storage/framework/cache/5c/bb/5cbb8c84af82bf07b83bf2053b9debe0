@@ -1,0 +1,68 @@
+1486859042a:1:{s:12:"wishlist.htm";a:6:{s:8:"fileName";s:12:"wishlist.htm";s:7:"content";s:1542:"==
+<table class="table table-cart" id="wishlist_partial">
+    <thead>
+        <tr>
+          <th></th>
+          <th>Producto</th>
+          <th>Fecha</th>
+          <th>Disponibilidad</th>
+          <th>Precio</th>
+          <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for w in wishlist %}
+        <tr>
+            <td class="img-cart">
+            <a href="{{"producto-detalle"|page({id:w.product.id})}}">
+            <img alt="Product" src="{{w.product.featured_image.getPath}}" class="img-thumbnail">
+            </a>
+            </td>
+            <td>
+            <p><a href="{{"producto-detalle"|page({id:w.product.id})}}" class="d-block">{{w.product.title}}</a></p>
+            <p><small>{{w.product.description[:125]|raw}}</small></p>
+            </td>
+            <td>{{w.created_at|date("Y-m-d")}}</td>
+            <td><span class="label label-success arrowed">En la bodega</span></td>
+            <td class="unit">RD${{w.product.price|number_format}}</td>
+            <td class="action">
+            <!-- <a onClick="addToCart('{{w.product.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>&nbsp; -->
+            <a href="javascript:;" onClick="deteleFromWishlist('{{w.id}}');" class="text-danger" data-toggle="tooltip" data-placement="top" data-original-title="eliminar"><i class="fa fa-trash-o"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>";s:5:"mtime";i:1486845832;s:6:"markup";s:1539:"<table class="table table-cart" id="wishlist_partial">
+    <thead>
+        <tr>
+          <th></th>
+          <th>Producto</th>
+          <th>Fecha</th>
+          <th>Disponibilidad</th>
+          <th>Precio</th>
+          <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for w in wishlist %}
+        <tr>
+            <td class="img-cart">
+            <a href="{{"producto-detalle"|page({id:w.product.id})}}">
+            <img alt="Product" src="{{w.product.featured_image.getPath}}" class="img-thumbnail">
+            </a>
+            </td>
+            <td>
+            <p><a href="{{"producto-detalle"|page({id:w.product.id})}}" class="d-block">{{w.product.title}}</a></p>
+            <p><small>{{w.product.description[:125]|raw}}</small></p>
+            </td>
+            <td>{{w.created_at|date("Y-m-d")}}</td>
+            <td><span class="label label-success arrowed">En la bodega</span></td>
+            <td class="unit">RD${{w.product.price|number_format}}</td>
+            <td class="action">
+            <!-- <a onClick="addToCart('{{w.product.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>&nbsp; -->
+            <a href="javascript:;" onClick="deteleFromWishlist('{{w.id}}');" class="text-danger" data-toggle="tooltip" data-placement="top" data-original-title="eliminar"><i class="fa fa-trash-o"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>";s:4:"code";N;s:17:"_PARSER_ERROR_INI";s:0:"";}}

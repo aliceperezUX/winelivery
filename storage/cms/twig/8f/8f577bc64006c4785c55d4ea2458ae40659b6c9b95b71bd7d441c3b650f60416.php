@@ -62,9 +62,9 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
         <div class=\"col-sm-9\">
           <div class=\"title\"><span>";
         // line 45
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($this->getAttribute((isset($context["products_by_cat"]) ? $context["products_by_cat"] : null), 0, array()), "category", array()), "title", array()), "html", null, true);
-        echo "/";
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($this->getAttribute((isset($context["products_by_cat"]) ? $context["products_by_cat"] : null), 0, array()), "region", array()), "title", array()), "html", null, true);
+        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["products_by_cat"]) ? $context["products_by_cat"] : null), 0, array()), "region", array()), "country", array()), "name", array()), "html", null, true);
+        echo " / ";
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["category"]) ? $context["category"] : null), "title", array()), "html", null, true);
         echo "</span></div>
           <!-- End Product Sorting Bar -->
 
@@ -110,9 +110,14 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
             echo " <span class=\"label-tags\"></span></div>
                           </div>
                           <div class=\"col-lg-6\">
-                              <a href=\"javascript:;\" data-toggle=\"tooltip\" title=\"Agregar a la lista de deseos\" class=\"wishlist\"><i style=\"color:#fff; padding-right:8px; font-size:16px\" class=\"fa fa-heart\"></i></a>
-                              <a href=\"javascript:;\" data-toggle=\"tooltip\" title=\"Agregar al carrito\"><i style=\"color:#fff; font-size:18px\" class=\"fa fa-shopping-cart\"></i></a>
-                          </div>
+                              ";
+            // line 71
+            $context['__cms_partial_params'] = [];
+            $context['__cms_partial_params']['p'] = $context["p"]            ;
+            echo $this->env->getExtension('CMS')->partialFunction("botones"            , $context['__cms_partial_params']            );
+            unset($context['__cms_partial_params']);
+            // line 72
+            echo "                          </div>
                       </div>
                   </div>
               </div>
@@ -121,12 +126,12 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['p'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 78
+        // line 77
         echo "          <!-- End Collection -->
           <div class=\"col-xs-12 text-center\">
             <nav aria-label=\"Page navigation\">
               ";
-        // line 81
+        // line 80
         echo $this->getAttribute((isset($context["products_by_cat"]) ? $context["products_by_cat"] : null), "render", array());
         echo "
             </nav>
@@ -151,7 +156,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
 
     public function getDebugInfo()
     {
-        return array (  130 => 81,  125 => 78,  109 => 68,  93 => 57,  87 => 54,  83 => 53,  78 => 50,  74 => 49,  65 => 45,  19 => 1,);
+        return array (  135 => 80,  130 => 77,  120 => 72,  115 => 71,  109 => 68,  93 => 57,  87 => 54,  83 => 53,  78 => 50,  74 => 49,  65 => 45,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -208,7 +213,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
 
         <!-- Product List -->
         <div class=\"col-sm-9\">
-          <div class=\"title\"><span>{{products_by_cat.0.category.title}}/{{products_by_cat.0.region.title}}</span></div>
+          <div class=\"title\"><span>{{products_by_cat.0.region.country.name}} / {{category.title}}</span></div>
           <!-- End Product Sorting Bar -->
 
           <!-- Collection -->
@@ -234,8 +239,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
                               <div>RD\${{p.price|number_format}} <span class=\"label-tags\"></span></div>
                           </div>
                           <div class=\"col-lg-6\">
-                              <a href=\"javascript:;\" data-toggle=\"tooltip\" title=\"Agregar a la lista de deseos\" class=\"wishlist\"><i style=\"color:#fff; padding-right:8px; font-size:16px\" class=\"fa fa-heart\"></i></a>
-                              <a href=\"javascript:;\" data-toggle=\"tooltip\" title=\"Agregar al carrito\"><i style=\"color:#fff; font-size:18px\" class=\"fa fa-shopping-cart\"></i></a>
+                              {% partial \"botones\" p = p %}
                           </div>
                       </div>
                   </div>

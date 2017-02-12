@@ -51,7 +51,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
         echo "</span></p>
             <p class=\"detail\">Pais: <span class=\"detail-content\">";
         // line 17
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["product"]) ? $context["product"] : null), "country", array()), "name", array()), "html", null, true);
+        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($this->getAttribute((isset($context["product"]) ? $context["product"] : null), "region", array()), "country", array()), "name", array()), "html", null, true);
         echo "</span></p>
             <p class=\"detail\">Uvas: <span class=\"detail-content\">";
         // line 18
@@ -103,9 +103,34 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
         // line 22
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["product"]) ? $context["product"] : null), "maridaje", array()), "html", null, true);
         echo "</span></p>
-            <button class=\"btn btn-theme m-b-1\" type=\"button\">
-       <i class=\"fa fa-shopping-cart\" aria-hidden=\"true\"></i>  Agregar al carrito</button>
-            <button class=\"btn btn-theme1 m-b-1\" type=\"button\"><i class=\"fa fa-heart\" aria-hidden=\"true\"></i> Agregar a la lista de deseos</button>
+            
+            
+            ";
+        // line 25
+        if ((isset($context["loggedIn"]) ? $context["loggedIn"] : null)) {
+            // line 26
+            echo "            <button type=\"button\" onClick=\"addToCart('";
+            echo twig_escape_filter($this->env, $this->getAttribute((isset($context["product"]) ? $context["product"] : null), "id", array()), "html", null, true);
+            echo "');\" class=\"btn btn-theme m-b-1\" type=\"button\"><i class=\"fa fa-shopping-cart\" aria-hidden=\"true\"></i>Agregar al carrito</button>
+            <button type=\"button\" onClick=\"addToWishlist('";
+            // line 27
+            echo twig_escape_filter($this->env, $this->getAttribute((isset($context["product"]) ? $context["product"] : null), "id", array()), "html", null, true);
+            echo "');\" class=\"btn btn-theme1 m-b-1\" type=\"button\"><i class=\"fa fa-heart\" aria-hidden=\"true\"></i>Agregar a la lista de deseos</button>
+            ";
+        } else {
+            // line 29
+            echo "            <a href=\"";
+            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
+            echo "\" class=\"btn btn-theme m-b-1\"><i class=\"fa fa-shopping-cart\" aria-hidden=\"true\"></i>Agregar al carrito</a>
+            <a href=\"";
+            // line 30
+            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
+            echo "\" class=\"btn btn-theme1 m-b-1\"><i class=\"fa fa-heart\" aria-hidden=\"true\"></i>Agregar a la lista de deseos</a>
+            ";
+        }
+        // line 32
+        echo "
+            
         </div>
 </div>
 <div class=\"row\">
@@ -117,7 +142,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                         <h4>Nota de cata</h4>
                         <p>
                             ";
-        // line 36
+        // line 44
         echo $this->getAttribute((isset($context["product"]) ? $context["product"] : null), "description", array());
         echo "
                         </p>
@@ -214,17 +239,17 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
             <div class=\"title\"><span>Productos relacionados</span></div>
             <div class=\"related-product-slider owl-controls-top-offset\">
                 ";
-        // line 130
+        // line 138
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["products"]) ? $context["products"] : null));
         foreach ($context['_seq'] as $context["_key"] => $context["p"]) {
-            // line 131
+            // line 139
             echo "                    <div class=\"box-product-outer\">
                         <div class=\"box-product\">
                             <div class=\"img-wrapper\">
                                 <a href=\"detail.html\">
                                     <img alt=\"Product\" src=\"";
-            // line 135
+            // line 143
             echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["p"], "featured_image", array()), "getPath", array()), "html", null, true);
             echo "\">
                                 </a>
@@ -233,7 +258,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                                 </div>
                             </div>
                             <h6><a href=\"";
-            // line 141
+            // line 149
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
             echo "\">";
             echo twig_escape_filter($this->env, $this->getAttribute($context["p"], "title", array()), "html", null, true);
@@ -249,7 +274,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                             <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 2px 30px 5px\">
                                 <div style=\"color:#fff\" class=\"price col-lg-6 \">
                                     <div>RD\$";
-            // line 152
+            // line 160
             echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute($context["p"], "price", array())), "html", null, true);
             echo "<span class=\"label-tags\"></span></div>
                                 </div>
@@ -265,7 +290,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['p'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 162
+        // line 170
         echo "            </div>
         </div>
     </div>
@@ -288,7 +313,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
 
     public function getDebugInfo()
     {
-        return array (  269 => 162,  253 => 152,  237 => 141,  228 => 135,  222 => 131,  218 => 130,  121 => 36,  104 => 22,  100 => 21,  96 => 20,  93 => 19,  58 => 18,  54 => 17,  50 => 16,  46 => 15,  42 => 14,  38 => 13,  28 => 8,  19 => 1,);
+        return array (  294 => 170,  278 => 160,  262 => 149,  253 => 143,  247 => 139,  243 => 138,  146 => 44,  132 => 32,  127 => 30,  122 => 29,  117 => 27,  112 => 26,  110 => 25,  104 => 22,  100 => 21,  96 => 20,  93 => 19,  58 => 18,  54 => 17,  50 => 16,  46 => 15,  42 => 14,  38 => 13,  28 => 8,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -317,15 +342,23 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
             <p>Precio: <span style=\"color: #c1272d;font-size:20px;font-weight:400\" >RD\${{product.price|number_format}} </span></p>
             <p class=\"detail\">Tipo: <span class=\"detail-content\">{{product.category.title}}</span></p>
             <p class=\"detail\">Productor: <span class=\"detail-content\">{{product.productor}}</span></p>
-            <p class=\"detail\">Pais: <span class=\"detail-content\">{{product.country.name}}</span></p>
+            <p class=\"detail\">Pais: <span class=\"detail-content\">{{product.region.country.name}}</span></p>
             <p class=\"detail\">Uvas: <span class=\"detail-content\">{% for u in product.uvas %}{{u.title}}{% if loop.last %}.{% else %},&nbsp;{% endif %}{% endfor %}
             </span></p>
             <p class=\"detail\">Capacidad: <span class=\"detail-content\">{{product.capacity}}</span></p>
             <p class=\"detail\">Volumen de alcohol: <span class=\"detail-content\">{{product.volume}}%</span></p>
             <p class=\"detail\">Maridaje: <span class=\"detail-content\">{{product.maridaje}}</span></p>
-            <button class=\"btn btn-theme m-b-1\" type=\"button\">
-       <i class=\"fa fa-shopping-cart\" aria-hidden=\"true\"></i>  Agregar al carrito</button>
-            <button class=\"btn btn-theme1 m-b-1\" type=\"button\"><i class=\"fa fa-heart\" aria-hidden=\"true\"></i> Agregar a la lista de deseos</button>
+            
+            
+            {% if loggedIn %}
+            <button type=\"button\" onClick=\"addToCart('{{product.id}}');\" class=\"btn btn-theme m-b-1\" type=\"button\"><i class=\"fa fa-shopping-cart\" aria-hidden=\"true\"></i>Agregar al carrito</button>
+            <button type=\"button\" onClick=\"addToWishlist('{{product.id}}');\" class=\"btn btn-theme1 m-b-1\" type=\"button\"><i class=\"fa fa-heart\" aria-hidden=\"true\"></i>Agregar a la lista de deseos</button>
+            {% else %}
+            <a href=\"{{\"login\"|page}}\" class=\"btn btn-theme m-b-1\"><i class=\"fa fa-shopping-cart\" aria-hidden=\"true\"></i>Agregar al carrito</a>
+            <a href=\"{{\"login\"|page}}\" class=\"btn btn-theme1 m-b-1\"><i class=\"fa fa-heart\" aria-hidden=\"true\"></i>Agregar a la lista de deseos</a>
+            {% endif %}
+
+            
         </div>
 </div>
 <div class=\"row\">

@@ -8,7 +8,7 @@ is_hidden = 0
     <div class="row">
         <div class="home-slider" style="position:relative">
             <div class="item">
-                <a href="{{"productos"|page({cat:1,reg:2})}}"><img src="{{"assets/images/demo/portada.jpg"|theme}}" alt="Slider"></a>
+                <a href="{{"productos"|page({country:2,category:1})}}"><img src="{{"assets/images/demo/portada.jpg"|theme}}" alt="Slider"></a>
             </div>
         </div>
     </div>
@@ -74,8 +74,7 @@ is_hidden = 0
                                 <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
                             </div>
                             <div class="col-lg-6">
-                                <a href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
-                                <a href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                                {% partial "botones" p = p %}
                             </div>
                         </div>
                     </div>
@@ -110,8 +109,7 @@ is_hidden = 0
                                 <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
                             </div>
                             <div class="col-lg-6">
-                                <a href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
-                                <a href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                                {% partial "botones" p = p %}
                             </div>
                         </div>
                     </div>
@@ -144,8 +142,13 @@ is_hidden = 0
                     <div>RD${{ mwine.price|number_format}}<span class="label-tags"></span></div>
                 </div>
                 <div class="col-lg-6">
-                    <a href="{{"wishlist"|page}}" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
-                    <a href="{{"cart"|page}}" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                    {% if loggedIn %}
+                    <a onClick="addToWishlist('{{mwine.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                    <a onClick="addToCart('{{mwine.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                    {% else %}
+                    <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                    <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -175,12 +178,12 @@ is_hidden = 0
                     <div class="box-product-outer">
                         <div class="box-product">
                             <div class="img-wrapper">
-                                <a href="detail.html">
+                                <a href="{{"producto-detalle"|page({id: p.id})}}">
                                     <img alt="Product" src="{{p.featured_image.getPath}}">
                                 </a>
-                                <div class="tags">
+                                <!-- <div class="tags">
                                     <span class="label-tags"><span class="label label-danger arrowed">-10%</span></span>
-                                </div>
+                                </div> -->
                             </div>
                             <h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></a></h6>
                             <div class="rating">
@@ -196,8 +199,7 @@ is_hidden = 0
                                     <div>RD${{ p.price|number_format}}<span class="label-tags"></span></div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <a href="#" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
-                                    <a href="#" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                                    {% partial "botones" p = p %}
                                 </div>
                             </div>
                         </div>

@@ -4,16 +4,94 @@ use Andresalice\Winelivery\Models\Category;
 use Andresalice\Winelivery\Models\Product;
 use Andresalice\Winelivery\Models\Advertisement;
 use Andresalice\Winelivery\Models\Newsletter;
+use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Wishlist;
 
 function onStart()
 {
+    $loggedIn = Auth::check();
+    $this['loggedIn'] = $loggedIn;
     $this['categories'] = Category::get();
     $this['recentProducts'] = Product::where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
     $this['specialProducts'] = Product::where("offer","=",1)->take(4)->get();
     $this['mwine'] = Product::where("month","=",1)->first();
     $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
     $this['randomProducts'] = Product::orderByRaw("RAND()")->take(12)->get();
-    $this['user'] = Auth::getUser();
+    if($loggedIn)
+    {
+      $this['user'] = Auth::getUser();
+      $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+      $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+      $this['cart'] = Cart::where("user_id","=",$this['user']->id)->get();
+      $sum = 0;
+      foreach($this['cart'] as $c)
+      {
+          $sum += $c->product->price * $c->quantity;
+      }
+      $this['cart_total'] = $sum;
+      $this['cart_total_envio'] = $sum + 90;
+      $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
+    }
+}
+
+function onAddToWishlist()
+{
+    $product_id = Input::get("product_id");
+    $user = Auth::getUser();
+    if(!Wishlist::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = new Wishlist();
+        $w->user_id =  $user->id;
+        $w->product_id  = $product_id;
+        $w->save();
+    }
+}
+
+function onDeleteFromWishlist()
+{
+    $user = Auth::getUser();
+    $wishlist_id = Input::get("wishlist_id");
+    if(Wishlist::where("id","=",$wishlist_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = Wishlist::find($wishlist_id);
+        $w->delete();
+    }
+    $wishlist = Wishlist::where("user_id","=",$user->id)->get();
+    return ['#wishlist_partial' => $this->renderPartial('wishlist', ['wishlist' => $wishlist])];
+}
+
+function onDeleteFromCart()
+{
+    $user = Auth::getUser();
+    $cart_id = Input::get("cart_id");
+    if(Cart::where("id","=",$cart_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = Cart::find($cart_id);
+        $w->delete();
+    }
+    $cart = Cart::where("user_id","=",$user->id)->get();
+    return ['#cart_partial' => $this->renderPartial('cart', ['cart' => $cart])];
+}
+
+function onAddToCart()
+{
+    $product_id = Input::get("product_id");
+    $user = Auth::getUser();
+    if(Cart::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
+    {
+        $id_cart = Cart::where("product_id","=",$product_id)->where("user_id","=",$user->id)->select("id")->first();
+        $w = Cart::find($id_cart->id);
+        $w->quantity += 1;
+        $w->save();
+    }
+    else
+    {
+        $w = new Cart();
+        $w->user_id =  $user->id;
+        $w->product_id  = $product_id;
+        $w->quantity = 1;
+        $w->save();
+    }
 }
 
 function onNewsletterForm()
@@ -106,8 +184,8 @@ function onLogout()
                         <li class="dropdown">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{c.title}}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                {% for r in c.regions %}
-                                    <li><a href="{{"productos"|page({cat: c.id, reg: r.id})}}">{{r.title}}</a></li>
+                                {% for r in c.countries %}
+                                    <li><a href="{{"productos"|page({country: r.id, category: c.id})}}">{{r.name}}</a></li>
                                 {% endfor %}
                             </ul>
                         </li>
@@ -116,9 +194,9 @@ function onLogout()
             </div>
             <div style="float:right;" class="col-md-6">
                 <ul class="list-inline nav navbar-nav">
-                    {% if user %}
+                    {% if loggedIn %}
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a href="javascript:;" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-user"></i> Hola, {{ user.name }} {{user.surname}} <span class="caret"></span></a>
                         <ul class="dropdown-menu white">
                             <li><a href="{{"perfil"|page}}">Editar mi perfil</a></li>
@@ -134,9 +212,13 @@ function onLogout()
                        </li>
                     {% endif %}
 
-                    <li class="club"><a style="background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="">¡Unete al club de vinos!</a></li>
-                    <li class="white"><a href="wishlist.html"><i class="fa fa-heart white"></i> (0)</a></li>
-                    <li class="white"><a href="cart.html"><i class="fa fa-shopping-cart white" aria-hidden="true"></i> (0)</a></li>
+                    <!-- <li class="club"><a style="background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="">¡Unete al club de vinos!</a></li> -->
+                    <li class="white">
+                        <a {% if loggedIn %}href="{{"deseos"|page}}"{% else %}href="{{"login"|page}}"{% endif %}><i class="fa fa-heart white"></i> ({% if wishlist_counter %}{{wishlist_counter}}{% else %} 0 {% endif %})</a>
+                    </li>
+                    <li class="white">
+                        <a {% if loggedIn %}href="{{"carrito"|page}}"{% else %}href="{{"login"|page}}"{% endif %}><i class="fa fa-shopping-cart white" aria-hidden="true"></i> ({% if cart_counter %}{{cart_counter}}{% else %} 0 {% endif %})</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -238,6 +320,7 @@ function onLogout()
     <script src="{{"assets/js/mimity.js"|theme}}"></script>
     <script src="{{"assets/js/mimity.detail.js"|theme}}"></script>
     <script src="{{"assets/js/mimity.filter-sidebar.js"|theme}}"></script>
+    <script src="{{"assets/js/jqFunctions.js"|theme}}"></script>
     {% scripts %}
     <script>
     function onNewsletterForm()

@@ -1,0 +1,6 @@
+columns:
+    user_id:
+        label: USER_ID
+        type: number
+        searchable: true
+        sortable: true

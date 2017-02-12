@@ -27,6 +27,6 @@ class Category extends Model
     public $table = 'andresalice_winelivery_categories';
 
     public $belongsToMany = [
-        'regions' => ['Andresalice\Winelivery\Models\Region']
+        'countries' => ['Andresalice\Winelivery\Models\Country']
     ];
 }

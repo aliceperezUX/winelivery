@@ -54,7 +54,7 @@ class __TwigTemplate_fb2e7c0cc00191eed372b364428bb6cf8d35e00c3cc48d90547172ea115
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : null), "email", array()), "html", null, true);
         echo "\" type=\"email\" class=\"form-control\" id=\"\">
             </div>
-            <button type=\"submit\" class=\"btn btn-theme pull-right\"><i class=\"fa fa-pencil\"></i> Editar perfil</button>
+            <button type=\"button\" class=\"btn btn-theme pull-right\"><i class=\"fa fa-pencil\"></i> Editar perfil</button>
           </form>
         </div>
       </div>
@@ -115,7 +115,7 @@ class __TwigTemplate_fb2e7c0cc00191eed372b364428bb6cf8d35e00c3cc48d90547172ea115
               <label for=\"exampleInputEmail1\">Correo</label>
               <input name=\"email\" value=\"{{user.email}}\" type=\"email\" class=\"form-control\" id=\"\">
             </div>
-            <button type=\"submit\" class=\"btn btn-theme pull-right\"><i class=\"fa fa-pencil\"></i> Editar perfil</button>
+            <button type=\"button\" class=\"btn btn-theme pull-right\"><i class=\"fa fa-pencil\"></i> Editar perfil</button>
           </form>
         </div>
       </div>

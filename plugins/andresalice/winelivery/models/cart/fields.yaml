@@ -1,0 +1,7 @@
+fields:
+    user_id:
+        label: USER
+        oc.commentPosition: ''
+        span: auto
+        disabled: 1
+        type: text

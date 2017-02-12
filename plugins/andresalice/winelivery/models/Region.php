@@ -25,4 +25,8 @@ class Region extends Model
      * @var string The database table used by the model.
      */
     public $table = 'andresalice_winelivery_regions';
+
+    public $belongsTo = [
+        'country' => 'Andresalice\Winelivery\Models\Country'
+    ];
 }

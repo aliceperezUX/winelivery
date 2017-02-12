@@ -1,90 +1,26 @@
-1485499781a:1:{s:10:"deseos.htm";a:9:{s:8:"fileName";s:10:"deseos.htm";s:7:"content";s:1769:"title = "Deseos"
+1486860333a:1:{s:10:"deseos.htm";a:9:{s:8:"fileName";s:10:"deseos.htm";s:7:"content";s:394:"title = "Deseos"
 url = "/deseos"
 layout = "layout"
 is_hidden = 0
 ==
 <!-- Main Content -->
 <div class="container m-t-3">
-
   <div class="row">
     <div class="col-xs-12">
       <div class="title"><span>LISTA DE DESEOS</span></div>
       <div class="table-responsive">
-        <table class="table table-cart">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Producto</th>
-              <th>Fecha</th>
-              <th>Disponibilidad</th>
-              <th>Precio</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="img-cart">
-                <a href="detail.html">
-                  <img alt="Product" src="{{"assets/images/demo/wine-1.png"|theme}}" class="img-thumbnail">
-                </a>
-              </td>
-              <td>
-                <p><a href="detail.html" class="d-block">Marques de Murrieta Blanco Reserva 2000-Roja</a></p>
-                <p><small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima.</small></p>
-              </td>
-              <td>10-21-2016 </td>
-              <td><span class="label label-success arrowed">En la bodega</span></td>
-              <td class="unit">$13.50</td>
-              <td class="action">
-                <a href="cart.html" data-toggle="tooltip" data-placement="top" data-original-title="Agregar al carrito"><i class="fa fa-shopping-cart"></i></a>&nbsp;
-                <a href="#" class="text-danger" data-toggle="tooltip" data-placement="top" data-original-title="eliminar"><i class="fa fa-trash-o"></i></a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        {% partial "wishlist" wishlist = wishlist %}
       </div>
     </div>
   </div>
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1484833187;s:6:"markup";s:1701:"<!-- Main Content -->
+<!-- End Main Content -->";s:5:"mtime";i:1486845492;s:6:"markup";s:326:"<!-- Main Content -->
 <div class="container m-t-3">
-
   <div class="row">
     <div class="col-xs-12">
       <div class="title"><span>LISTA DE DESEOS</span></div>
       <div class="table-responsive">
-        <table class="table table-cart">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Producto</th>
-              <th>Fecha</th>
-              <th>Disponibilidad</th>
-              <th>Precio</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="img-cart">
-                <a href="detail.html">
-                  <img alt="Product" src="{{"assets/images/demo/wine-1.png"|theme}}" class="img-thumbnail">
-                </a>
-              </td>
-              <td>
-                <p><a href="detail.html" class="d-block">Marques de Murrieta Blanco Reserva 2000-Roja</a></p>
-                <p><small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima.</small></p>
-              </td>
-              <td>10-21-2016 </td>
-              <td><span class="label label-success arrowed">En la bodega</span></td>
-              <td class="unit">$13.50</td>
-              <td class="action">
-                <a href="cart.html" data-toggle="tooltip" data-placement="top" data-original-title="Agregar al carrito"><i class="fa fa-shopping-cart"></i></a>&nbsp;
-                <a href="#" class="text-danger" data-toggle="tooltip" data-placement="top" data-original-title="eliminar"><i class="fa fa-trash-o"></i></a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        {% partial "wishlist" wishlist = wishlist %}
       </div>
     </div>
   </div>

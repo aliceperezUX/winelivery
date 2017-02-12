@@ -14,14 +14,14 @@ navigation:
         url: andresalice/winelivery/region
         icon: icon-asterisk
         sideMenu:
-            regions:
-                label: Regiones
-                url: andresalice/winelivery/region
-                icon: icon-map-marker
             categories:
                 label: Categoria
                 url: andresalice/winelivery/category
                 icon: icon-certificate
+            regions:
+                label: Regiones
+                url: andresalice/winelivery/region
+                icon: icon-map-marker
             products:
                 label: Productos
                 url: andresalice/winelivery/product

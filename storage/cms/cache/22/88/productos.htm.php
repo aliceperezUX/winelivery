@@ -1,9 +1,20 @@
 <?php 
-use Andresalice\Winelivery\Models\Product;class Cms588aec77a4fff807982233_939908789Class extends \Cms\Classes\PageCode
+use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Region;use Andresalice\Winelivery\Models\Category;class Cms589fa3d97bc63963734957_3459584030Class extends \Cms\Classes\PageCode
 {
+
+
 
 public function onStart()
 {
-    $this['products_by_cat'] = Product::where("category_id",$this->param('cat'))->where("region_id","=", $this->param('reg'))->take(12)->get();
+    $country_id = $this->param('country'); 
+    $category_id = $this->param('category');
+    $regions = Region::where('country_id',"=",$country_id)->get();
+    $products = array();
+    foreach($regions as $r)
+    {
+        $products = Product::where('region_id','=',$r->id)->where('category_id','=',$category_id)->get();
+    }
+    $this['products_by_cat'] = $products;
+    $this['category'] = Category::find($category_id);
 }
 }

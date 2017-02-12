@@ -1,0 +1,10 @@
+name: Cart
+form: $/andresalice/winelivery/models/cart/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Cart
+defaultRedirect: andresalice/winelivery/cart
+create:
+    redirect: 'andresalice/winelivery/cart/update/:id'
+    redirectClose: andresalice/winelivery/cart
+update:
+    redirect: andresalice/winelivery/cart
+    redirectClose: andresalice/winelivery/cart

@@ -1,0 +1,4 @@
+title: Cart
+modelClass: Andresalice\Winelivery\Models\Cart
+toolbar:
+    buttons: reorder_toolbar

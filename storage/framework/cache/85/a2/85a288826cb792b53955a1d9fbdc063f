@@ -1,4 +1,4 @@
-1485500030a:1:{s:10:"perfil.htm";a:9:{s:8:"fileName";s:10:"perfil.htm";s:7:"content";s:1308:"title = "Perfil"
+1486860333a:1:{s:10:"perfil.htm";a:9:{s:8:"fileName";s:10:"perfil.htm";s:7:"content";s:1308:"title = "Perfil"
 url = "/perfil"
 layout = "layout"
 is_hidden = 0
@@ -27,7 +27,7 @@ is_hidden = 0
               <label for="exampleInputEmail1">Correo</label>
               <input name="email" value="{{user.email}}" type="email" class="form-control" id="">
             </div>
-            <button type="submit" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> Editar perfil</button>
+            <button type="button" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> Editar perfil</button>
           </form>
         </div>
       </div>
@@ -36,7 +36,7 @@ is_hidden = 0
 
   </div>
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1485499428;s:6:"markup";s:1240:"<!-- Main Content -->
+<!-- End Main Content -->";s:5:"mtime";i:1486844192;s:6:"markup";s:1240:"<!-- Main Content -->
 <div class="container m-t-3">
   <div class="row">
 
@@ -60,7 +60,7 @@ is_hidden = 0
               <label for="exampleInputEmail1">Correo</label>
               <input name="email" value="{{user.email}}" type="email" class="form-control" id="">
             </div>
-            <button type="submit" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> Editar perfil</button>
+            <button type="button" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> Editar perfil</button>
           </form>
         </div>
       </div>
