@@ -1,4 +1,4 @@
-1486881755a:1:{s:11:"botones.htm";a:6:{s:8:"fileName";s:11:"botones.htm";s:7:"content";s:791:"==
+1486883375a:1:{s:11:"botones.htm";a:6:{s:8:"fileName";s:11:"botones.htm";s:7:"content";s:791:"==
 {% if loggedIn %}
 <a onClick="addToWishlist('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
 <a onClick="addToCart('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>

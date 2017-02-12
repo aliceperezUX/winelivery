@@ -16,17 +16,9 @@ class __TwigTemplate_5983c4a1d058753af41bdc1a121c99418564563bbdf5ec1a7981167bf4a
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        echo "<a ";
-        if ((isset($context["loggedIn"]) ? $context["loggedIn"] : null)) {
-            echo "href=\"";
-            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("carrito");
-            echo "\"";
-        } else {
-            echo "href=\"";
-            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
-            echo "\"";
-        }
-        echo "><i class=\"fa fa-shopping-cart white\" aria-hidden=\"true\"></i> (";
+        echo "<a href=\"";
+        echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("carrito");
+        echo "\"><i class=\"fa fa-shopping-cart white\" aria-hidden=\"true\"></i> (";
         if ((isset($context["cart_counter"]) ? $context["cart_counter"] : null)) {
             echo twig_escape_filter($this->env, (isset($context["cart_counter"]) ? $context["cart_counter"] : null), "html", null, true);
         } else {
@@ -60,6 +52,6 @@ class __TwigTemplate_5983c4a1d058753af41bdc1a121c99418564563bbdf5ec1a7981167bf4a
 
     public function getSourceContext()
     {
-        return new Twig_Source("<a {% if loggedIn %}href=\"{{\"carrito\"|page}}\"{% else %}href=\"{{\"login\"|page}}\"{% endif %}><i class=\"fa fa-shopping-cart white\" aria-hidden=\"true\"></i> ({% if cart_counter %}{{cart_counter}}{% else %} 0 {% endif %})</a>", "/home/winelivery/themes/winelivery/partials/quantity_cart.htm", "");
+        return new Twig_Source("<a href=\"{{\"carrito\"|page}}\"><i class=\"fa fa-shopping-cart white\" aria-hidden=\"true\"></i> ({% if cart_counter %}{{cart_counter}}{% else %} 0 {% endif %})</a>", "/home/winelivery/themes/winelivery/partials/quantity_cart.htm", "");
     }
 }

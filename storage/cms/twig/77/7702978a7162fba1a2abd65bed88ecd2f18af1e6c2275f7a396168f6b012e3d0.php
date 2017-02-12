@@ -16,17 +16,9 @@ class __TwigTemplate_d10d4bab2d5621f1f57b28f6c90d35ba79c1a0133a298aa342ad5f5d384
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        echo "<a ";
-        if ((isset($context["loggedIn"]) ? $context["loggedIn"] : null)) {
-            echo "href=\"";
-            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("deseos");
-            echo "\"";
-        } else {
-            echo "href=\"";
-            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
-            echo "\"";
-        }
-        echo "><i class=\"fa fa-heart white\"></i> (";
+        echo "<a href=\"";
+        echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("deseos");
+        echo "\"><i class=\"fa fa-heart white\"></i> (";
         if ((isset($context["wishlist_counter"]) ? $context["wishlist_counter"] : null)) {
             echo twig_escape_filter($this->env, (isset($context["wishlist_counter"]) ? $context["wishlist_counter"] : null), "html", null, true);
         } else {
@@ -60,6 +52,6 @@ class __TwigTemplate_d10d4bab2d5621f1f57b28f6c90d35ba79c1a0133a298aa342ad5f5d384
 
     public function getSourceContext()
     {
-        return new Twig_Source("<a {% if loggedIn %}href=\"{{\"deseos\"|page}}\"{% else %}href=\"{{\"login\"|page}}\"{% endif %}><i class=\"fa fa-heart white\"></i> ({% if wishlist_counter %}{{wishlist_counter}}{% else %} 0 {% endif %})</a>", "/home/winelivery/themes/winelivery/partials/quantity_wishlist.htm", "");
+        return new Twig_Source("<a href=\"{{\"deseos\"|page}}\"><i class=\"fa fa-heart white\"></i> ({% if wishlist_counter %}{{wishlist_counter}}{% else %} 0 {% endif %})</a>", "/home/winelivery/themes/winelivery/partials/quantity_wishlist.htm", "");
     }
 }

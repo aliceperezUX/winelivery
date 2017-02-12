@@ -1,7 +1,11 @@
-1486881755a:1:{s:13:"checkout2.htm";a:9:{s:8:"fileName";s:13:"checkout2.htm";s:7:"content";s:2061:"title = "Checkout2"
+1486883504a:1:{s:13:"checkout2.htm";a:10:{s:8:"fileName";s:13:"checkout2.htm";s:7:"content";s:2110:"title = "Checkout2"
 url = "/checkout2"
 layout = "layout"
 is_hidden = 0
+
+[session]
+security = "user"
+redirect = "inicio"
 ==
 <!-- Main Content -->
     <div class="container m-t-3">
@@ -53,7 +57,7 @@ is_hidden = 0
         </div>
 
       </div>
-    </div>";s:5:"mtime";i:1484835667;s:6:"markup";s:1987:"<!-- Main Content -->
+    </div>";s:5:"mtime";i:1486882875;s:6:"markup";s:1987:"<!-- Main Content -->
     <div class="container m-t-3">
       <div class="row">
         <div class="title"><span>recibo de pago</span></div>
@@ -103,4 +107,4 @@ is_hidden = 0
         </div>
 
       </div>
-    </div>";s:4:"code";N;s:5:"title";s:9:"Checkout2";s:3:"url";s:10:"/checkout2";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}
+    </div>";s:4:"code";N;s:5:"title";s:9:"Checkout2";s:3:"url";s:10:"/checkout2";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";s:7:"session";a:2:{s:8:"security";s:4:"user";s:8:"redirect";s:6:"inicio";}}}

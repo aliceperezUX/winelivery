@@ -1,7 +1,11 @@
-1486881755a:1:{s:12:"checkout.htm";a:9:{s:8:"fileName";s:12:"checkout.htm";s:7:"content";s:2476:"title = "Checkout"
+1486883504a:1:{s:12:"checkout.htm";a:10:{s:8:"fileName";s:12:"checkout.htm";s:7:"content";s:2525:"title = "Checkout"
 url = "/checkout"
 layout = "layout"
 is_hidden = 0
+
+[session]
+security = "user"
+redirect = "inicio"
 ==
 <!-- Main Content -->
 <div class="container m-t-3">
@@ -69,7 +73,7 @@ is_hidden = 0
   </div>
   <!-- End My Address Content -->
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1484835643;s:6:"markup";s:2404:"<!-- Main Content -->
+<!-- End Main Content -->";s:5:"mtime";i:1486882884;s:6:"markup";s:2404:"<!-- Main Content -->
 <div class="container m-t-3">
 
   <div class="row">
@@ -135,4 +139,4 @@ is_hidden = 0
   </div>
   <!-- End My Address Content -->
 </div>
-<!-- End Main Content -->";s:4:"code";N;s:5:"title";s:8:"Checkout";s:3:"url";s:9:"/checkout";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}
+<!-- End Main Content -->";s:4:"code";N;s:5:"title";s:8:"Checkout";s:3:"url";s:9:"/checkout";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";s:7:"session";a:2:{s:8:"security";s:4:"user";s:8:"redirect";s:6:"inicio";}}}
