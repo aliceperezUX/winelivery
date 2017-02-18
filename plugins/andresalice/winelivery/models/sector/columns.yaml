@@ -1,0 +1,6 @@
+columns:
+    title:
+        label: 'TITULO DEL SECTOR'
+        type: text
+        searchable: true
+        sortable: true

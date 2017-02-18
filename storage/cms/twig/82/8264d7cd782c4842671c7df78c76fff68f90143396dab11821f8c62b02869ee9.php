@@ -65,19 +65,22 @@ class __TwigTemplate_a2b5efd3af8af874cd09a75af8b308e3f4b350cdea73bedfbf5d5fba05c
     {
         var error = true; var regex = /^([a-zA-Z0-9_\\.\\-\\+])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+\$/;
         
-    \tif(\$('input[name=name]').val() === ''){\$('input[name=name]').css('border', '1px solid red');error = false;} 
-    \telse{\$('input[name=name]').css('border', '');}
+    \tif(\$('input[name=old_password]').val() === ''){\$('input[name=old_password]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=old_password]').css('border', '');}
     \t
-    \tif(\$('input[name=surname]').val() === ''){\$('input[name=surname]').css('border', '1px solid red');error = false;} 
-    \telse{\$('input[name=surname]').css('border', '');}
+    \tif(\$('input[name=password]').val() === ''){\$('input[name=password]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=password]').css('border', '');}
+    \t
+    \tif(\$('input[name=password_confirmation]').val() === ''){\$('input[name=password_confirmation]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=password_confirmation]').css('border', '');}
+    \t
+    \tif(\$('input[name=password]').val() !== \$('input[name=password_confirmation]').val()){\$('input[name=password_confirmation]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=password_confirmation]').css('border', '');}
     
-    \tif(!regex.test(\$('input[name=email]').val())){\$('input[name=email]').css('border', '1px solid red');error = false;} 
-    \telse {\$('input[name=email]').css('border', '');}
-    \t
     \tif(error)
     \t{
-    \t\t\$('#profileForm').request('onProfileForm', {data: \$('#profileForm').serialize()});
-    \t\t\$(\"#profileFormMessage\").fadeIn(\"fast\");
+    \t\t\$('#changePasswordForm').request('onChangePasswordForm', {data: \$('#changePasswordForm').serialize()});
+    \t\t\$(\"#changePasswordFormMessage\").fadeIn(\"fast\");
     \t} 
     \telse { return false; }
     }
@@ -99,7 +102,7 @@ class __TwigTemplate_a2b5efd3af8af874cd09a75af8b308e3f4b350cdea73bedfbf5d5fba05c
 
     public function getDebugInfo()
     {
-        return array (  87 => 36,  63 => 37,  61 => 36,  28 => 5,  24 => 4,  19 => 1,);
+        return array (  90 => 36,  63 => 37,  61 => 36,  28 => 5,  24 => 4,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -153,19 +156,22 @@ class __TwigTemplate_a2b5efd3af8af874cd09a75af8b308e3f4b350cdea73bedfbf5d5fba05c
     {
         var error = true; var regex = /^([a-zA-Z0-9_\\.\\-\\+])+\\@(([a-zA-Z0-9\\-])+\\.)+([a-zA-Z0-9]{2,4})+\$/;
         
-    \tif(\$('input[name=name]').val() === ''){\$('input[name=name]').css('border', '1px solid red');error = false;} 
-    \telse{\$('input[name=name]').css('border', '');}
+    \tif(\$('input[name=old_password]').val() === ''){\$('input[name=old_password]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=old_password]').css('border', '');}
     \t
-    \tif(\$('input[name=surname]').val() === ''){\$('input[name=surname]').css('border', '1px solid red');error = false;} 
-    \telse{\$('input[name=surname]').css('border', '');}
+    \tif(\$('input[name=password]').val() === ''){\$('input[name=password]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=password]').css('border', '');}
+    \t
+    \tif(\$('input[name=password_confirmation]').val() === ''){\$('input[name=password_confirmation]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=password_confirmation]').css('border', '');}
+    \t
+    \tif(\$('input[name=password]').val() !== \$('input[name=password_confirmation]').val()){\$('input[name=password_confirmation]').css('border', '1px solid red');error = false;} 
+    \telse{\$('input[name=password_confirmation]').css('border', '');}
     
-    \tif(!regex.test(\$('input[name=email]').val())){\$('input[name=email]').css('border', '1px solid red');error = false;} 
-    \telse {\$('input[name=email]').css('border', '');}
-    \t
     \tif(error)
     \t{
-    \t\t\$('#profileForm').request('onProfileForm', {data: \$('#profileForm').serialize()});
-    \t\t\$(\"#profileFormMessage\").fadeIn(\"fast\");
+    \t\t\$('#changePasswordForm').request('onChangePasswordForm', {data: \$('#changePasswordForm').serialize()});
+    \t\t\$(\"#changePasswordFormMessage\").fadeIn(\"fast\");
     \t} 
     \telse { return false; }
     }

@@ -1,0 +1,6 @@
+fields:
+    title:
+        label: 'NOMBRE DEL SECTOR'
+        oc.commentPosition: ''
+        span: full
+        type: text

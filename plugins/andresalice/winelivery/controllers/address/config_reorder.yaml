@@ -1,0 +1,4 @@
+title: Address
+modelClass: Andresalice\Winelivery\Models\Address
+toolbar:
+    buttons: reorder_toolbar

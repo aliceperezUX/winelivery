@@ -62,7 +62,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
         <div class=\"col-sm-9\">
           <div class=\"title\"><span>";
         // line 45
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["products_by_cat"]) ? $context["products_by_cat"] : null), 0, array()), "region", array()), "country", array()), "name", array()), "html", null, true);
+        echo twig_escape_filter($this->env, $this->getAttribute((isset($context["country_title"]) ? $context["country_title"] : null), "name", array()), "html", null, true);
         echo " / ";
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["category"]) ? $context["category"] : null), "title", array()), "html", null, true);
         echo "</span></div>
@@ -224,7 +224,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
 
         <!-- Product List -->
         <div class=\"col-sm-9\">
-          <div class=\"title\"><span>{{products_by_cat.0.region.country.name}} / {{category.title}}</span></div>
+          <div class=\"title\"><span>{{country_title.name}} / {{category.title}}</span></div>
           <!-- End Product Sorting Bar -->
 
           <!-- Collection -->

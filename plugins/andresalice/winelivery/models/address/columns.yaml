@@ -1,0 +1,6 @@
+columns:
+    sector:
+        label: SECTOR
+        type: text
+        searchable: true
+        sortable: true

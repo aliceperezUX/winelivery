@@ -1,4 +1,4 @@
-1486884072a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:18086:"==
+1487462839a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:18248:"==
 <?php
 use Andresalice\Winelivery\Models\Category;
 use Andresalice\Winelivery\Models\Product;
@@ -12,11 +12,11 @@ function onStart()
     $loggedIn = Auth::check();
     $this['loggedIn'] = $loggedIn;
     $this['categories'] = Category::get();
-    $this['recentProducts'] = Product::where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
-    $this['specialProducts'] = Product::where("offer","=",1)->take(4)->get();
-    $this['mwine'] = Product::where("month","=",1)->first();
+    $this['recentProducts'] = Product::where("stock",">=", 1)->where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
+    $this['specialProducts'] = Product::where("stock",">=", 1)->where("offer","=",1)->take(4)->get();
+    $this['mwine'] = Product::where("stock",">=", 1)->where("month","=",1)->first();
     $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
-    $this['randomProducts'] = Product::orderByRaw("RAND()")->take(12)->get();
+    $this['randomProducts'] = Product::where("stock",">=", 1)->orderByRaw("RAND()")->take(12)->get();
     if($loggedIn)
     {
       $this['user'] = Auth::getUser();
@@ -347,6 +347,7 @@ function onLogout()
     <script src="{{"assets/js/mimity.js"|theme}}"></script>
     <script src="{{"assets/js/mimity.detail.js"|theme}}"></script>
     <script src="{{"assets/js/mimity.filter-sidebar.js"|theme}}"></script>
+    <script src="{{"assets/js/jquery.mask.js"|theme}}"></script>
     <script src="{{"assets/js/jqFunctions.js"|theme}}"></script>
     {% scripts %}
     <script>
@@ -381,7 +382,7 @@ function onLogout()
     }
     </script>
 </body>
-</html>";s:5:"mtime";i:1486871693;s:6:"markup";s:13323:"<!DOCTYPE html>
+</html>";s:5:"mtime";i:1487449995;s:6:"markup";s:13389:"<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -606,6 +607,7 @@ function onLogout()
     <script src="{{"assets/js/mimity.js"|theme}}"></script>
     <script src="{{"assets/js/mimity.detail.js"|theme}}"></script>
     <script src="{{"assets/js/mimity.filter-sidebar.js"|theme}}"></script>
+    <script src="{{"assets/js/jquery.mask.js"|theme}}"></script>
     <script src="{{"assets/js/jqFunctions.js"|theme}}"></script>
     {% scripts %}
     <script>
@@ -640,7 +642,7 @@ function onLogout()
     }
     </script>
 </body>
-</html>";s:4:"code";s:4747:"use Andresalice\Winelivery\Models\Category;
+</html>";s:4:"code";s:4843:"use Andresalice\Winelivery\Models\Category;
 use Andresalice\Winelivery\Models\Product;
 use Andresalice\Winelivery\Models\Advertisement;
 use Andresalice\Winelivery\Models\Newsletter;
@@ -652,11 +654,11 @@ function onStart()
     $loggedIn = Auth::check();
     $this['loggedIn'] = $loggedIn;
     $this['categories'] = Category::get();
-    $this['recentProducts'] = Product::where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
-    $this['specialProducts'] = Product::where("offer","=",1)->take(4)->get();
-    $this['mwine'] = Product::where("month","=",1)->first();
+    $this['recentProducts'] = Product::where("stock",">=", 1)->where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
+    $this['specialProducts'] = Product::where("stock",">=", 1)->where("offer","=",1)->take(4)->get();
+    $this['mwine'] = Product::where("stock",">=", 1)->where("month","=",1)->first();
     $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
-    $this['randomProducts'] = Product::orderByRaw("RAND()")->take(12)->get();
+    $this['randomProducts'] = Product::where("stock",">=", 1)->orderByRaw("RAND()")->take(12)->get();
     if($loggedIn)
     {
       $this['user'] = Auth::getUser();

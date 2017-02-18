@@ -1,13 +1,13 @@
 <?php 
-use RainLab\User\Models\User;class Cms589fb98ad623d545716880_284122676Class extends \Cms\Classes\PageCode
+use RainLab\User\Models\User;class Cms58a89e18c7e36494778693_148368876Class extends \Cms\Classes\PageCode
 {
 
-public function onProfileForm()
+public function onChangePasswordForm()
 {
     $user = User::find(Auth::getUser()->id);
-    $user->name = post("name");
-    $user->surname = post("surname");
-    $user->email = post("email");
+    $user->password = post("password");
+    $user->password_confirmation = post("password_confirmation");
     $user->save();
+    Auth::login($user);
 }
 }

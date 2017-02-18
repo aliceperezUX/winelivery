@@ -61,14 +61,13 @@ class __TwigTemplate_1feefe5dd5d7437ce89831f145388c834f4bcb2c069e4c34c8e43e66ebe
       </div>
     </div>
     <!-- End Login Form -->
-
   </div>
 </div>
 <!-- End Main Content -->
 ";
-        // line 44
+        // line 43
         echo $this->env->getExtension('CMS')->startBlock('scripts'        );
-        // line 45
+        // line 44
         echo "<script>
     function onRegisterForm()
     {
@@ -91,7 +90,7 @@ class __TwigTemplate_1feefe5dd5d7437ce89831f145388c834f4bcb2c069e4c34c8e43e66ebe
     }
 </script>
 ";
-        // line 44
+        // line 43
         echo $this->env->getExtension('CMS')->endBlock(true        );
     }
 
@@ -107,7 +106,7 @@ class __TwigTemplate_1feefe5dd5d7437ce89831f145388c834f4bcb2c069e4c34c8e43e66ebe
 
     public function getDebugInfo()
     {
-        return array (  95 => 44,  72 => 45,  70 => 44,  59 => 36,  26 => 6,  19 => 1,);
+        return array (  94 => 43,  71 => 44,  69 => 43,  59 => 36,  26 => 6,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -159,7 +158,6 @@ class __TwigTemplate_1feefe5dd5d7437ce89831f145388c834f4bcb2c069e4c34c8e43e66ebe
       </div>
     </div>
     <!-- End Login Form -->
-
   </div>
 </div>
 <!-- End Main Content -->

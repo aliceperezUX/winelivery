@@ -1,4 +1,4 @@
-1486883504a:1:{s:13:"checkout2.htm";a:10:{s:8:"fileName";s:13:"checkout2.htm";s:7:"content";s:2110:"title = "Checkout2"
+1487462839a:1:{s:13:"checkout2.htm";a:10:{s:8:"fileName";s:13:"checkout2.htm";s:7:"content";s:2110:"title = "Checkout2"
 url = "/checkout2"
 layout = "layout"
 is_hidden = 0
@@ -57,7 +57,7 @@ redirect = "inicio"
         </div>
 
       </div>
-    </div>";s:5:"mtime";i:1486882875;s:6:"markup";s:1987:"<!-- Main Content -->
+    </div>";s:5:"mtime";i:1486882874;s:6:"markup";s:1987:"<!-- Main Content -->
     <div class="container m-t-3">
       <div class="row">
         <div class="title"><span>recibo de pago</span></div>

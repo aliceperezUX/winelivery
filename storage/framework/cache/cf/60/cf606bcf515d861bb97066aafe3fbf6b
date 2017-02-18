@@ -1,4 +1,4 @@
-1486884072a:1:{s:12:"password.htm";a:9:{s:8:"fileName";s:12:"password.htm";s:7:"content";s:2783:"title = "Password"
+1487462839a:1:{s:12:"password.htm";a:9:{s:8:"fileName";s:12:"password.htm";s:7:"content";s:3167:"title = "Password"
 url = "/password"
 layout = "layout"
 is_hidden = 0
@@ -6,13 +6,13 @@ is_hidden = 0
 <?php
 use RainLab\User\Models\User;
 
-function onProfileForm()
+function onChangePasswordForm()
 {
     $user = User::find(Auth::getUser()->id);
-    $user->name = post("name");
-    $user->surname = post("surname");
-    $user->email = post("email");
+    $user->password = post("password");
+    $user->password_confirmation = post("password_confirmation");
     $user->save();
+    Auth::login($user);
 }
 ?>
 ==
@@ -57,24 +57,27 @@ function onProfileForm()
     {
         var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         
-    	if($('input[name=name]').val() === ''){$('input[name=name]').css('border', '1px solid red');error = false;} 
-    	else{$('input[name=name]').css('border', '');}
+    	if($('input[name=old_password]').val() === ''){$('input[name=old_password]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=old_password]').css('border', '');}
     	
-    	if($('input[name=surname]').val() === ''){$('input[name=surname]').css('border', '1px solid red');error = false;} 
-    	else{$('input[name=surname]').css('border', '');}
+    	if($('input[name=password]').val() === ''){$('input[name=password]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=password]').css('border', '');}
+    	
+    	if($('input[name=password_confirmation]').val() === ''){$('input[name=password_confirmation]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=password_confirmation]').css('border', '');}
+    	
+    	if($('input[name=password]').val() !== $('input[name=password_confirmation]').val()){$('input[name=password_confirmation]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=password_confirmation]').css('border', '');}
     
-    	if(!regex.test($('input[name=email]').val())){$('input[name=email]').css('border', '1px solid red');error = false;} 
-    	else {$('input[name=email]').css('border', '');}
-    	
     	if(error)
     	{
-    		$('#profileForm').request('onProfileForm', {data: $('#profileForm').serialize()});
-    		$("#profileFormMessage").fadeIn("fast");
+    		$('#changePasswordForm').request('onChangePasswordForm', {data: $('#changePasswordForm').serialize()});
+    		$("#changePasswordFormMessage").fadeIn("fast");
     	} 
     	else { return false; }
     }
 </script>
-{% endput %}";s:5:"mtime";i:1486862729;s:6:"markup";s:2462:"<!-- Main Content -->
+{% endput %}";s:5:"mtime";i:1487445527;s:6:"markup";s:2813:"<!-- Main Content -->
 <div class="container m-t-3">
   <div class="row">
     {% partial "perfilmenu" %}
@@ -115,30 +118,33 @@ function onProfileForm()
     {
         var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         
-    	if($('input[name=name]').val() === ''){$('input[name=name]').css('border', '1px solid red');error = false;} 
-    	else{$('input[name=name]').css('border', '');}
+    	if($('input[name=old_password]').val() === ''){$('input[name=old_password]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=old_password]').css('border', '');}
     	
-    	if($('input[name=surname]').val() === ''){$('input[name=surname]').css('border', '1px solid red');error = false;} 
-    	else{$('input[name=surname]').css('border', '');}
+    	if($('input[name=password]').val() === ''){$('input[name=password]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=password]').css('border', '');}
+    	
+    	if($('input[name=password_confirmation]').val() === ''){$('input[name=password_confirmation]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=password_confirmation]').css('border', '');}
+    	
+    	if($('input[name=password]').val() !== $('input[name=password_confirmation]').val()){$('input[name=password_confirmation]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=password_confirmation]').css('border', '');}
     
-    	if(!regex.test($('input[name=email]').val())){$('input[name=email]').css('border', '1px solid red');error = false;} 
-    	else {$('input[name=email]').css('border', '');}
-    	
     	if(error)
     	{
-    		$('#profileForm').request('onProfileForm', {data: $('#profileForm').serialize()});
-    		$("#profileFormMessage").fadeIn("fast");
+    		$('#changePasswordForm').request('onChangePasswordForm', {data: $('#changePasswordForm').serialize()});
+    		$("#changePasswordFormMessage").fadeIn("fast");
     	} 
     	else { return false; }
     }
 </script>
-{% endput %}";s:4:"code";s:236:"use RainLab\User\Models\User;
+{% endput %}";s:4:"code";s:269:"use RainLab\User\Models\User;
 
-function onProfileForm()
+function onChangePasswordForm()
 {
     $user = User::find(Auth::getUser()->id);
-    $user->name = post("name");
-    $user->surname = post("surname");
-    $user->email = post("email");
+    $user->password = post("password");
+    $user->password_confirmation = post("password_confirmation");
     $user->save();
+    Auth::login($user);
 }";s:5:"title";s:8:"Password";s:3:"url";s:9:"/password";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}

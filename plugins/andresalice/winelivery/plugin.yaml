@@ -38,3 +38,7 @@ navigation:
                 label: Newsletter
                 url: andresalice/winelivery/newsletter
                 icon: icon-newspaper-o
+            sector:
+                label: Sectores
+                url: andresalice/winelivery/sector
+                icon: icon-location-arrow

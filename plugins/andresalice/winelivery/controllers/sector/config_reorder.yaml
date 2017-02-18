@@ -1,0 +1,4 @@
+title: Sector
+modelClass: Andresalice\Winelivery\Models\Sector
+toolbar:
+    buttons: reorder_toolbar

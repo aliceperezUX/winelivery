@@ -1,0 +1,7 @@
+fields:
+    sector:
+        label: SECTOR
+        oc.commentPosition: ''
+        span: full
+        disabled: 1
+        type: text

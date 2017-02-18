@@ -1,0 +1,10 @@
+name: Address
+form: $/andresalice/winelivery/models/address/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Address
+defaultRedirect: andresalice/winelivery/address
+create:
+    redirect: 'andresalice/winelivery/address/update/:id'
+    redirectClose: andresalice/winelivery/address
+update:
+    redirect: andresalice/winelivery/address
+    redirectClose: andresalice/winelivery/address

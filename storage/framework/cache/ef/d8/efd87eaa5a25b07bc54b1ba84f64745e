@@ -1,4 +1,4 @@
-1486883504a:1:{s:13:"historial.htm";a:10:{s:8:"fileName";s:13:"historial.htm";s:7:"content";s:1327:"title = "Historial"
+1487462839a:1:{s:13:"historial.htm";a:10:{s:8:"fileName";s:13:"historial.htm";s:7:"content";s:1327:"title = "Historial"
 url = "/historial"
 layout = "layout"
 is_hidden = 0
@@ -47,7 +47,7 @@ redirect = "inicio"
 
   </div>
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1486882859;s:6:"markup";s:1204:"<!-- Main Content -->
+<!-- End Main Content -->";s:5:"mtime";i:1486882858;s:6:"markup";s:1204:"<!-- Main Content -->
 <div class="container m-t-3">
   <div class="row">
 

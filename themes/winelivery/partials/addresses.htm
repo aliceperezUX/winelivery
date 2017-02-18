@@ -1,0 +1,10 @@
+==
+{% for a in addresses %}
+ <div class="col-xs-12 col-md-4">
+    <form>
+        <p>{{a.sector}} {{a.calle}} {{a.residencial}} {{a.numero}} {{a.telefono}} {{a.celular}} {{a.proximo}}</p>
+        <button onClick="editAddress('{{a.id}}','{{a.sector}}','{{a.calle}}','{{a.residencial}}','{{a.numero}}','{{a.telefono}}','{{a.celular}}','{{a.proximo}}');" style="width: 150px" type="button" class="btn btn-theme">Editar</button>
+        <button onClick="eliminarAddress('{{a.id}}');" style="width: 150px" type="button" class="btn  pull-right">Eliminar</button>
+    </form>
+</div>
+{% endfor %}

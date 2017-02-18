@@ -12,11 +12,11 @@ function onStart()
     $loggedIn = Auth::check();
     $this['loggedIn'] = $loggedIn;
     $this['categories'] = Category::get();
-    $this['recentProducts'] = Product::where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
-    $this['specialProducts'] = Product::where("offer","=",1)->take(4)->get();
-    $this['mwine'] = Product::where("month","=",1)->first();
+    $this['recentProducts'] = Product::where("stock",">=", 1)->where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
+    $this['specialProducts'] = Product::where("stock",">=", 1)->where("offer","=",1)->take(4)->get();
+    $this['mwine'] = Product::where("stock",">=", 1)->where("month","=",1)->first();
     $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
-    $this['randomProducts'] = Product::orderByRaw("RAND()")->take(12)->get();
+    $this['randomProducts'] = Product::where("stock",">=", 1)->orderByRaw("RAND()")->take(12)->get();
     if($loggedIn)
     {
       $this['user'] = Auth::getUser();
@@ -347,6 +347,7 @@ function onLogout()
     <script src="{{"assets/js/mimity.js"|theme}}"></script>
     <script src="{{"assets/js/mimity.detail.js"|theme}}"></script>
     <script src="{{"assets/js/mimity.filter-sidebar.js"|theme}}"></script>
+    <script src="{{"assets/js/jquery.mask.js"|theme}}"></script>
     <script src="{{"assets/js/jqFunctions.js"|theme}}"></script>
     {% scripts %}
     <script>

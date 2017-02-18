@@ -76,3 +76,8 @@ fields:
         label: 'VINO DEL MES'
         span: auto
         type: switch
+    stock:
+        label: STOCK
+        oc.commentPosition: ''
+        span: full
+        type: number

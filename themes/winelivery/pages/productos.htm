@@ -7,6 +7,7 @@ is_hidden = 0
 use Andresalice\Winelivery\Models\Product;
 use Andresalice\Winelivery\Models\Region;
 use Andresalice\Winelivery\Models\Category;
+use Andresalice\Winelivery\Models\Country;
 
 function onStart()
 {
@@ -18,6 +19,7 @@ function onStart()
     {
         $products[] = Product::where('region_id','=',$r->id)->where('category_id','=',$category_id)->get();
     }
+    $this['country_title'] = Country::find($country_id);
     $this['products_by_cat'] = $products;
     $this['category'] = Category::find($category_id);
 }
@@ -67,7 +69,7 @@ function onStart()
 
         <!-- Product List -->
         <div class="col-sm-9">
-          <div class="title"><span>{{products_by_cat.0.region.country.name}} / {{category.title}}</span></div>
+          <div class="title"><span>{{country_title.name}} / {{category.title}}</span></div>
           <!-- End Product Sorting Bar -->
 
           <!-- Collection -->

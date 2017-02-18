@@ -1,0 +1,10 @@
+name: Sector
+form: $/andresalice/winelivery/models/sector/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Sector
+defaultRedirect: andresalice/winelivery/sector
+create:
+    redirect: 'andresalice/winelivery/sector/update/:id'
+    redirectClose: andresalice/winelivery/sector
+update:
+    redirect: andresalice/winelivery/sector
+    redirectClose: andresalice/winelivery/sector

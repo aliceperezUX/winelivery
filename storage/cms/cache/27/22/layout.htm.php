@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Advertisement;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;class Cms589fdc90df068057425454_3615034186Class extends \Cms\Classes\LayoutCode
+use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Advertisement;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;class Cms58a8af8d3975e521830574_3246552498Class extends \Cms\Classes\LayoutCode
 {
 
 
@@ -12,11 +12,11 @@ public function onStart()
     $loggedIn = Auth::check();
     $this['loggedIn'] = $loggedIn;
     $this['categories'] = Category::get();
-    $this['recentProducts'] = Product::where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
-    $this['specialProducts'] = Product::where("offer","=",1)->take(4)->get();
-    $this['mwine'] = Product::where("month","=",1)->first();
+    $this['recentProducts'] = Product::where("stock",">=", 1)->where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
+    $this['specialProducts'] = Product::where("stock",">=", 1)->where("offer","=",1)->take(4)->get();
+    $this['mwine'] = Product::where("stock",">=", 1)->where("month","=",1)->first();
     $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
-    $this['randomProducts'] = Product::orderByRaw("RAND()")->take(12)->get();
+    $this['randomProducts'] = Product::where("stock",">=", 1)->orderByRaw("RAND()")->take(12)->get();
     if($loggedIn)
     {
       $this['user'] = Auth::getUser();
