@@ -1,0 +1,20 @@
+columns:
+    product_id:
+        label: Producto
+        type: text
+        searchable: true
+        sortable: true
+        select: title
+        relation: product
+    taste_id:
+        label: Catador
+        type: text
+        searchable: true
+        sortable: true
+        select: name
+        relation: taste
+    comment:
+        label: Comentario
+        type: text
+        searchable: true
+        sortable: true

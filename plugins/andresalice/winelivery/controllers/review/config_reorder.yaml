@@ -1,0 +1,4 @@
+title: Review
+modelClass: Andresalice\Winelivery\Models\Review
+toolbar:
+    buttons: reorder_toolbar

@@ -1,0 +1,4 @@
+title: Slideshow
+modelClass: Andresalice\Winelivery\Models\Slideshow
+toolbar:
+    buttons: reorder_toolbar

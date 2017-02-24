@@ -18,21 +18,59 @@ class __TwigTemplate_ac14aeb0696233a176d169357a0f3b05128bcdd97dd8f785c14ee101e1c
         // line 1
         if ((isset($context["loggedIn"]) ? $context["loggedIn"] : null)) {
             // line 2
-            echo "<a onClick=\"addToWishlist('";
-            echo twig_escape_filter($this->env, $this->getAttribute((isset($context["p"]) ? $context["p"] : null), "id", array()), "html", null, true);
-            echo "');\" href=\"javascript:;\" data-toggle=\"tooltip\" title=\"Agregar a la lista de deseos\" class=\"wishlist\"><i style=\"color:#fff; padding-right:8px; font-size:16px\" class=\"fa fa-heart\"></i></a>
-<a onClick=\"addToCart('";
+            echo "<a href=\"javascript:;\" data-toggle=\"tooltip\" ";
+            if (($this->getAttribute((isset($context["p"]) ? $context["p"] : null), "stock", array()) > 0)) {
+                echo " onClick=\"addToWishlist('";
+                echo twig_escape_filter($this->env, $this->getAttribute((isset($context["p"]) ? $context["p"] : null), "id", array()), "html", null, true);
+                echo "');\" ";
+            }
+            echo " title=\"";
+            if (($this->getAttribute((isset($context["p"]) ? $context["p"] : null), "stock", array()) < 1)) {
+                echo "No Disponible ";
+            } else {
+                echo " Agregar a la lista de deseos ";
+            }
+            echo " \" class=\"wishlist\">
+    <i style=\"";
             // line 3
-            echo twig_escape_filter($this->env, $this->getAttribute((isset($context["p"]) ? $context["p"] : null), "id", array()), "html", null, true);
-            echo "');\" href=\"javascript:;\" data-toggle=\"tooltip\" title=\"Agregar al carrito\"><i style=\"color:#fff; font-size:18px\" class=\"fa fa-shopping-cart\"></i></a>
+            if (($this->getAttribute((isset($context["p"]) ? $context["p"] : null), "stock", array()) < 1)) {
+                echo " color:#ccc; ";
+            } else {
+                echo " color:#fff; ";
+            }
+            echo " padding-right:8px; font-size:16px\" class=\"fa fa-heart\"></i>
+</a>
+<a href=\"javascript:;\" data-toggle=\"tooltip\" ";
+            // line 5
+            if (($this->getAttribute((isset($context["p"]) ? $context["p"] : null), "stock", array()) > 0)) {
+                echo " onClick=\"addToCart('";
+                echo twig_escape_filter($this->env, $this->getAttribute((isset($context["p"]) ? $context["p"] : null), "id", array()), "html", null, true);
+                echo "');\" ";
+            }
+            echo " title=\"";
+            if (($this->getAttribute((isset($context["p"]) ? $context["p"] : null), "stock", array()) < 1)) {
+                echo "No Disponible ";
+            } else {
+                echo " Agregar al carrito ";
+            }
+            echo "\">
+    <i style=\"";
+            // line 6
+            if (($this->getAttribute((isset($context["p"]) ? $context["p"] : null), "stock", array()) < 1)) {
+                echo " color:#ccc; ";
+            } else {
+                echo " color:#fff; ";
+            }
+            echo " font-size:18px\" class=\"fa fa-shopping-cart\"></i>
+</a>
 ";
         } else {
-            // line 5
+            // line 9
             echo "<a href=\"";
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
             echo "\" data-toggle=\"tooltip\" title=\"Agregar a la lista de deseos\" class=\"wishlist\"><i style=\"color:#fff; padding-right:8px; font-size:16px\" class=\"fa fa-heart\"></i></a>
 <a href=\"";
-            // line 6
+            // line 10
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
             echo "\" data-toggle=\"tooltip\" title=\"Agregar al carrito\"><i style=\"color:#fff; font-size:18px\" class=\"fa fa-shopping-cart\"></i></a>
 ";
@@ -51,7 +89,7 @@ class __TwigTemplate_ac14aeb0696233a176d169357a0f3b05128bcdd97dd8f785c14ee101e1c
 
     public function getDebugInfo()
     {
-        return array (  36 => 6,  31 => 5,  26 => 3,  21 => 2,  19 => 1,);
+        return array (  74 => 10,  69 => 9,  59 => 6,  45 => 5,  36 => 3,  21 => 2,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -65,8 +103,12 @@ class __TwigTemplate_ac14aeb0696233a176d169357a0f3b05128bcdd97dd8f785c14ee101e1c
     public function getSourceContext()
     {
         return new Twig_Source("{% if loggedIn %}
-<a onClick=\"addToWishlist('{{p.id}}');\" href=\"javascript:;\" data-toggle=\"tooltip\" title=\"Agregar a la lista de deseos\" class=\"wishlist\"><i style=\"color:#fff; padding-right:8px; font-size:16px\" class=\"fa fa-heart\"></i></a>
-<a onClick=\"addToCart('{{p.id}}');\" href=\"javascript:;\" data-toggle=\"tooltip\" title=\"Agregar al carrito\"><i style=\"color:#fff; font-size:18px\" class=\"fa fa-shopping-cart\"></i></a>
+<a href=\"javascript:;\" data-toggle=\"tooltip\" {% if p.stock > 0 %} onClick=\"addToWishlist('{{p.id}}');\" {% endif %} title=\"{% if p.stock < 1 %}No Disponible {% else %} Agregar a la lista de deseos {% endif %} \" class=\"wishlist\">
+    <i style=\"{% if p.stock < 1 %} color:#ccc; {% else %} color:#fff; {%endif%} padding-right:8px; font-size:16px\" class=\"fa fa-heart\"></i>
+</a>
+<a href=\"javascript:;\" data-toggle=\"tooltip\" {% if p.stock > 0 %} onClick=\"addToCart('{{p.id}}');\" {% endif %} title=\"{% if p.stock < 1 %}No Disponible {% else %} Agregar al carrito {% endif %}\">
+    <i style=\"{% if p.stock < 1 %} color:#ccc; {% else %} color:#fff; {%endif%} font-size:18px\" class=\"fa fa-shopping-cart\"></i>
+</a>
 {% else %}
 <a href=\"{{\"login\"|page}}\" data-toggle=\"tooltip\" title=\"Agregar a la lista de deseos\" class=\"wishlist\"><i style=\"color:#fff; padding-right:8px; font-size:16px\" class=\"fa fa-heart\"></i></a>
 <a href=\"{{\"login\"|page}}\" data-toggle=\"tooltip\" title=\"Agregar al carrito\"><i style=\"color:#fff; font-size:18px\" class=\"fa fa-shopping-cart\"></i></a>

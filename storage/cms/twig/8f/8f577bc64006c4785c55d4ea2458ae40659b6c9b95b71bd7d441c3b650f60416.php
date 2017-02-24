@@ -92,9 +92,16 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
                 echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["p"], "featured_image", array()), "getPath", array()), "html", null, true);
                 echo "\">
                           </a>
-                      </div>
-                      <h6><a href=\"";
+                          ";
+                // line 57
+                $context['__cms_partial_params'] = [];
+                $context['__cms_partial_params']['p'] = $context["p"]                ;
+                echo $this->env->getExtension('CMS')->partialFunction("stock"                , $context['__cms_partial_params']                );
+                unset($context['__cms_partial_params']);
                 // line 58
+                echo "                      </div>
+                      <h6><a href=\"";
+                // line 59
                 echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
                 echo "\">";
                 echo twig_escape_filter($this->env, $this->getAttribute($context["p"], "title", array()), "html", null, true);
@@ -110,18 +117,18 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
                       <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px\">
                           <div style=\"color:#fff\" class=\"price col-lg-6 \">
                               <div>RD\$";
-                // line 69
+                // line 70
                 echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute($context["p"], "price", array())), "html", null, true);
                 echo " <span class=\"label-tags\"></span></div>
                           </div>
                           <div class=\"col-lg-6\">
                               ";
-                // line 72
+                // line 73
                 $context['__cms_partial_params'] = [];
                 $context['__cms_partial_params']['p'] = $context["p"]                ;
                 echo $this->env->getExtension('CMS')->partialFunction("botones"                , $context['__cms_partial_params']                );
                 unset($context['__cms_partial_params']);
-                // line 73
+                // line 74
                 echo "                          </div>
                       </div>
                   </div>
@@ -131,18 +138,18 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['p'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 78
+            // line 79
             echo "          ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['pp'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 79
+        // line 80
         echo "          <!-- End Collection -->
           <div class=\"col-xs-12 text-center\">
             <nav aria-label=\"Page navigation\">
               ";
-        // line 82
+        // line 83
         echo $this->getAttribute((isset($context["products_by_cat"]) ? $context["products_by_cat"] : null), "render", array());
         echo "
             </nav>
@@ -167,7 +174,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
 
     public function getDebugInfo()
     {
-        return array (  146 => 82,  141 => 79,  135 => 78,  125 => 73,  120 => 72,  114 => 69,  98 => 58,  92 => 55,  88 => 54,  83 => 51,  78 => 50,  74 => 49,  65 => 45,  19 => 1,);
+        return array (  153 => 83,  148 => 80,  142 => 79,  132 => 74,  127 => 73,  121 => 70,  105 => 59,  102 => 58,  97 => 57,  92 => 55,  88 => 54,  83 => 51,  78 => 50,  74 => 49,  65 => 45,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -236,6 +243,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
                           <a href=\"{{\"producto-detalle\"|page({id:p.id})}}\">
                               <img alt=\"Product\" src=\"{{p.featured_image.getPath}}\">
                           </a>
+                          {% partial \"stock\" p = p %}
                       </div>
                       <h6><a href=\"{{\"producto-detalle\"|page({id:p.id})}}\">{{p.title}}</a></h6>
                       <div class=\"rating\">

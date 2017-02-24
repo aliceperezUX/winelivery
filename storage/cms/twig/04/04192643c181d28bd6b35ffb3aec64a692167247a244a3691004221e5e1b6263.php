@@ -49,7 +49,10 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
         // line 18
         echo twig_escape_filter($this->env, twig_number_format_filter($this->env, (isset($context["cart_total_envio"]) ? $context["cart_total_envio"] : null)), "html", null, true);
         echo "</span></p>
-      <button style=\"\" type=\"submit\" class=\"btn btn-theme col-md-12 \">procesar orden</button>
+      <a href=\"";
+        // line 19
+        echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("checkout");
+        echo "\" class=\"btn btn-theme col-md-12\">procesar orden</a>
     </div>
     <!-- Related Products -->
     <div class=\"row m-t-3\">
@@ -140,7 +143,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
 
     public function getDebugInfo()
     {
-        return array (  120 => 57,  110 => 52,  105 => 51,  99 => 48,  83 => 37,  74 => 31,  70 => 30,  65 => 27,  61 => 26,  50 => 18,  45 => 16,  41 => 15,  34 => 10,  29 => 9,  19 => 1,);
+        return array (  123 => 57,  113 => 52,  108 => 51,  102 => 48,  86 => 37,  77 => 31,  73 => 30,  68 => 27,  64 => 26,  54 => 19,  50 => 18,  45 => 16,  41 => 15,  34 => 10,  29 => 9,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -171,7 +174,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
       <p class=\"detailbox-items\">costo:<span class=\"detailbox-content\" > RD\${{ cart_total|number_format}}</span></p>
       <p class=\"detailbox-items\">costo de envio:<span class=\"detailbox-content\"> RD\$90</span></p>
       <p class=\"detailbox-items\">costo total:<span class=\"detailbox-content\"> RD\${{ cart_total_envio|number_format}}</span></p>
-      <button style=\"\" type=\"submit\" class=\"btn btn-theme col-md-12 \">procesar orden</button>
+      <a href=\"{{\"checkout\"|page}}\" class=\"btn btn-theme col-md-12\">procesar orden</a>
     </div>
     <!-- Related Products -->
     <div class=\"row m-t-3\">

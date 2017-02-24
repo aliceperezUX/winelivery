@@ -1,0 +1,10 @@
+name: Slideshow
+form: $/andresalice/winelivery/models/slideshow/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Slideshow
+defaultRedirect: andresalice/winelivery/slideshow
+create:
+    redirect: 'andresalice/winelivery/slideshow/update/:id'
+    redirectClose: andresalice/winelivery/slideshow
+update:
+    redirect: andresalice/winelivery/slideshow
+    redirectClose: andresalice/winelivery/slideshow

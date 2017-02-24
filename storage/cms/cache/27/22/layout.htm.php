@@ -1,7 +1,6 @@
 <?php 
-use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Advertisement;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;class Cms58a8af8d3975e521830574_3246552498Class extends \Cms\Classes\LayoutCode
+use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Product;class Cms58b09d0ac66a8701764008_1402982259Class extends \Cms\Classes\LayoutCode
 {
-
 
 
 
@@ -9,28 +8,14 @@ use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Pro
 
 public function onStart()
 {
-    $loggedIn = Auth::check();
-    $this['loggedIn'] = $loggedIn;
+    $this['loggedIn'] = Auth::check();
     $this['categories'] = Category::get();
-    $this['recentProducts'] = Product::where("stock",">=", 1)->where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
-    $this['specialProducts'] = Product::where("stock",">=", 1)->where("offer","=",1)->take(4)->get();
-    $this['mwine'] = Product::where("stock",">=", 1)->where("month","=",1)->first();
-    $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
-    $this['randomProducts'] = Product::where("stock",">=", 1)->orderByRaw("RAND()")->take(12)->get();
-    if($loggedIn)
+    $this['randomProducts'] = Product::orderByRaw("RAND()")->take(12)->get();
+    if($this['loggedIn'])
     {
       $this['user'] = Auth::getUser();
       $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
       $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
-      $this['cart'] = Cart::where("user_id","=",$this['user']->id)->get();
-      $sum = 0;
-      foreach($this['cart'] as $c)
-      {
-          $sum += $c->product->price * $c->quantity;
-      }
-      $this['cart_total'] = $sum;
-      $this['cart_total_envio'] = $sum + 90;
-      $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
     }
 }
 public function onAddToCart()
@@ -54,19 +39,6 @@ public function onAddToCart()
     }
     $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
     return ['#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
-}
-public function onDeleteFromCart()
-{
-    $user = Auth::getUser();
-    $cart_id = Input::get("cart_id");
-    if(Cart::where("id","=",$cart_id)->where("user_id","=",$user->id)->exists())
-    {
-        $w = Cart::find($cart_id);
-        $w->delete();
-    }
-    $cart = Cart::where("user_id","=",$user->id)->get();
-    $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
-    return ['#cart_partial' => $this->renderPartial('cart', ['cart' => $cart]), '#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
 }
 public function onAddToWishlist()
 {

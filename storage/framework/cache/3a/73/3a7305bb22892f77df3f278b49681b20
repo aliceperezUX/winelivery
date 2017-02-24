@@ -1,10 +1,11 @@
-1487448955a:1:{s:8:"cart.htm";a:6:{s:8:"fileName";s:8:"cart.htm";s:7:"content";s:1421:"==
+1487969382a:1:{s:8:"cart.htm";a:6:{s:8:"fileName";s:8:"cart.htm";s:7:"content";s:1562:"==
 <table class="table table-cart" id="cart_partial">
   <thead>
     <tr>
       <th></th>
       <th></th>
       <th>Cantidad</th>
+      <th>Aplicar</th>
       <th>Precio</th>
       <th>SubTotal</th>
     </tr>
@@ -22,7 +23,8 @@
         <!-- <a href="#" data-toggle="tooltip" data-placement="top" data-original-title="Comprar despues"><i class="fa fa-refresh"></i></a>&nbsp; -->
         <a href="javascript:;" onClick="deteleFromCart('{{c.id}}');" class="text-danger" data-toggle="tooltip" data-placement="top" data-original-title="Borrar"><i class="fa fa-trash-o"></i></a>
       </td>
-      <td class="input-qty"><input type="text" value="{{c.quantity}}" class="form-control text-center"/></td>
+      <td class=""><input name="quantity" id="qNumber{{c.id}}" type="number" value="{{c.quantity}}" class="form-control text-center"/></td>
+      <td><a href="javascript:;" onClick="changeQuantity({{c.id}});">Aplicar</a></td>
       <td class="unit">RD${{c.product.price|number_format}}</td>
       <td class="sub">{% set sub = c.product.price * c.quantity %}RD${{sub|number_format}}</td>
     </tr>
@@ -32,12 +34,13 @@
       <td colspan="2"><b>RD${{ cart_total|number_format}}</b></td>
     </tr>
   </tbody>
-</table>";s:5:"mtime";i:1486858766;s:6:"markup";s:1418:"<table class="table table-cart" id="cart_partial">
+</table>";s:5:"mtime";i:1487968134;s:6:"markup";s:1559:"<table class="table table-cart" id="cart_partial">
   <thead>
     <tr>
       <th></th>
       <th></th>
       <th>Cantidad</th>
+      <th>Aplicar</th>
       <th>Precio</th>
       <th>SubTotal</th>
     </tr>
@@ -55,7 +58,8 @@
         <!-- <a href="#" data-toggle="tooltip" data-placement="top" data-original-title="Comprar despues"><i class="fa fa-refresh"></i></a>&nbsp; -->
         <a href="javascript:;" onClick="deteleFromCart('{{c.id}}');" class="text-danger" data-toggle="tooltip" data-placement="top" data-original-title="Borrar"><i class="fa fa-trash-o"></i></a>
       </td>
-      <td class="input-qty"><input type="text" value="{{c.quantity}}" class="form-control text-center"/></td>
+      <td class=""><input name="quantity" id="qNumber{{c.id}}" type="number" value="{{c.quantity}}" class="form-control text-center"/></td>
+      <td><a href="javascript:;" onClick="changeQuantity({{c.id}});">Aplicar</a></td>
       <td class="unit">RD${{c.product.price|number_format}}</td>
       <td class="sub">{% set sub = c.product.price * c.quantity %}RD${{sub|number_format}}</td>
     </tr>

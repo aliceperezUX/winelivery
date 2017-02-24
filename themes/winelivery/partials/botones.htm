@@ -1,7 +1,11 @@
 ==
 {% if loggedIn %}
-<a onClick="addToWishlist('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
-<a onClick="addToCart('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+<a href="javascript:;" data-toggle="tooltip" {% if p.stock > 0 %} onClick="addToWishlist('{{p.id}}');" {% endif %} title="{% if p.stock < 1 %}No Disponible {% else %} Agregar a la lista de deseos {% endif %} " class="wishlist">
+    <i style="{% if p.stock < 1 %} color:#ccc; {% else %} color:#fff; {%endif%} padding-right:8px; font-size:16px" class="fa fa-heart"></i>
+</a>
+<a href="javascript:;" data-toggle="tooltip" {% if p.stock > 0 %} onClick="addToCart('{{p.id}}');" {% endif %} title="{% if p.stock < 1 %}No Disponible {% else %} Agregar al carrito {% endif %}">
+    <i style="{% if p.stock < 1 %} color:#ccc; {% else %} color:#fff; {%endif%} font-size:18px" class="fa fa-shopping-cart"></i>
+</a>
 {% else %}
 <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
 <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>

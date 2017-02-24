@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Address;use Andresalice\Winelivery\Models\Sector;class Cms58a8df5f06861726137590_2335209221Class extends \Cms\Classes\PageCode
+use Andresalice\Winelivery\Models\Address;use Andresalice\Winelivery\Models\Sector;class Cms58b073fd8f839864878965_4182634177Class extends \Cms\Classes\PageCode
 {
 
 

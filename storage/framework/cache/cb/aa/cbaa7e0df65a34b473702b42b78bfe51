@@ -1,13 +1,21 @@
-1487456091a:1:{s:11:"botones.htm";a:6:{s:8:"fileName";s:11:"botones.htm";s:7:"content";s:791:"==
+1487970065a:1:{s:11:"botones.htm";a:6:{s:8:"fileName";s:11:"botones.htm";s:7:"content";s:1096:"==
 {% if loggedIn %}
-<a onClick="addToWishlist('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
-<a onClick="addToCart('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+<a href="javascript:;" data-toggle="tooltip" {% if p.stock > 0 %} onClick="addToWishlist('{{p.id}}');" {% endif %} title="{% if p.stock < 1 %}No Disponible {% else %} Agregar a la lista de deseos {% endif %} " class="wishlist">
+    <i style="{% if p.stock < 1 %} color:#ccc; {% else %} color:#fff; {%endif%} padding-right:8px; font-size:16px" class="fa fa-heart"></i>
+</a>
+<a href="javascript:;" data-toggle="tooltip" {% if p.stock > 0 %} onClick="addToCart('{{p.id}}');" {% endif %} title="{% if p.stock < 1 %}No Disponible {% else %} Agregar al carrito {% endif %}">
+    <i style="{% if p.stock < 1 %} color:#ccc; {% else %} color:#fff; {%endif%} font-size:18px" class="fa fa-shopping-cart"></i>
+</a>
 {% else %}
 <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
 <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
-{% endif %}";s:5:"mtime";i:1486855414;s:6:"markup";s:788:"{% if loggedIn %}
-<a onClick="addToWishlist('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
-<a onClick="addToCart('{{p.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+{% endif %}";s:5:"mtime";i:1487961898;s:6:"markup";s:1093:"{% if loggedIn %}
+<a href="javascript:;" data-toggle="tooltip" {% if p.stock > 0 %} onClick="addToWishlist('{{p.id}}');" {% endif %} title="{% if p.stock < 1 %}No Disponible {% else %} Agregar a la lista de deseos {% endif %} " class="wishlist">
+    <i style="{% if p.stock < 1 %} color:#ccc; {% else %} color:#fff; {%endif%} padding-right:8px; font-size:16px" class="fa fa-heart"></i>
+</a>
+<a href="javascript:;" data-toggle="tooltip" {% if p.stock > 0 %} onClick="addToCart('{{p.id}}');" {% endif %} title="{% if p.stock < 1 %}No Disponible {% else %} Agregar al carrito {% endif %}">
+    <i style="{% if p.stock < 1 %} color:#ccc; {% else %} color:#fff; {%endif%} font-size:18px" class="fa fa-shopping-cart"></i>
+</a>
 {% else %}
 <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
 <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>

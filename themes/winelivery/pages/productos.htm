@@ -81,6 +81,7 @@ function onStart()
                           <a href="{{"producto-detalle"|page({id:p.id})}}">
                               <img alt="Product" src="{{p.featured_image.getPath}}">
                           </a>
+                          {% partial "stock" p = p %}
                       </div>
                       <h6><a href="{{"producto-detalle"|page({id:p.id})}}">{{p.title}}</a></h6>
                       <div class="rating">

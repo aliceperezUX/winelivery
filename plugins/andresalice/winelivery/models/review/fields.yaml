@@ -1,0 +1,27 @@
+fields:
+    product:
+        label: Producto
+        oc.commentPosition: ''
+        nameFrom: title
+        descriptionFrom: description
+        span: full
+        type: relation
+    taste:
+        label: Catador
+        oc.commentPosition: ''
+        nameFrom: name
+        descriptionFrom: description
+        span: full
+        type: relation
+    comment:
+        label: 'Comentario del Catador'
+        size: large
+        oc.commentPosition: ''
+        span: full
+        type: textarea
+    stars:
+        label: 'Cantidad de estrellas (1-5)'
+        oc.commentPosition: ''
+        span: full
+        type: number
+    

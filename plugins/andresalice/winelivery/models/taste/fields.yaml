@@ -1,0 +1,18 @@
+fields:
+    name:
+        label: 'NOMBRE DEL CATADOR'
+        oc.commentPosition: ''
+        span: full
+        type: text
+    featured_image:
+        label: 'IMAGEN PRINCIPAL'
+        oc.commentPosition: ''
+        mode: image
+        imageWidth: 100
+        imageHeight: 100
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: full
+        type: fileupload

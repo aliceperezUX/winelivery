@@ -87,3 +87,15 @@
 1.0.30:
     - 'Created table andresalice_winelivery_sectors'
     - builder_table_create_andresalice_winelivery_sectors.php
+1.0.31:
+    - 'Created table andresalice_winelivery_tasters'
+    - builder_table_create_andresalice_winelivery_tasters.php
+1.0.32:
+    - 'Created table andresalice_winelivery_reviews'
+    - builder_table_create_andresalice_winelivery_reviews.php
+1.0.33:
+    - 'Updated table andresalice_winelivery_reviews'
+    - builder_table_update_andresalice_winelivery_reviews.php
+1.0.34:
+    - 'Created table andresalice_winelivery_slideshows'
+    - builder_table_create_andresalice_winelivery_slideshows.php

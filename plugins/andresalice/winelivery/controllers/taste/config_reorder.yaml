@@ -1,0 +1,4 @@
+title: Taste
+modelClass: Andresalice\Winelivery\Models\Taste
+toolbar:
+    buttons: reorder_toolbar

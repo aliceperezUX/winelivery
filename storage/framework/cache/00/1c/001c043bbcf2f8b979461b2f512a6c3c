@@ -1,0 +1,124 @@
+1487970065a:1:{s:24:"preguntas-frecuentes.htm";a:9:{s:8:"fileName";s:24:"preguntas-frecuentes.htm";s:7:"content";s:2423:"title = "Preguntas Frecuentes"
+url = "/preguntas-frecuentes"
+layout = "layout"
+is_hidden = 0
+==
+<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+    <!-- My Profile Content -->
+    <div class="col-sm-8 col-md-12">
+      <h2 style="color: #c1272d; margin-bottom: 30px">Preguntas frecuentes</h2>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+        <h3 class="panel-title">¿Existe algun costo de envio?</h3>
+        </div>
+        <div class="panel-body">
+        Si, existe un costo de RD$90.00 por envio sin importar la cantidad de botellas, este costo es sumado al total de su compra.
+        </div>
+     </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">¿Cuanto tiempo tarda en llegar mi pedido?</h3>
+          </div>
+          <div class="panel-body">
+            Entre 30 y 45 minutos.
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">¿Existe un consumo minimo?</h3>
+          </div>
+          <div class="panel-body">
+            Si, tenemos un consumo minimo de RD$1,500.00
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">¿Puedo comprar solo 1 botella de vino?</h3>
+          </div>
+          <div class="panel-body">
+           Si, si el valor de esa botella de vino es superior a RD$1,499.00
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">¿Cual es el numero maximo de botellas que me pueden enviar?</h3>
+          </div>
+          <div class="panel-body">
+           Enviamos un maximo de 12 botellas de vino.
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">¿A que temperatura Winelivery almacena sus vinos?</h3>
+          </div>
+          <div class="panel-body">
+           Almacenamos nuestros vinos en un cuarto refrigerado a 20 grados en posicion orizontal y sin exposicion a la luz del sol.
+          </div>
+        </div>     
+    </div>
+    <!-- End My Profile Content -->
+
+  </div>
+</div>
+<!-- End Main Content -->";s:5:"mtime";i:1487959449;s:6:"markup";s:2327:"<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+    <!-- My Profile Content -->
+    <div class="col-sm-8 col-md-12">
+      <h2 style="color: #c1272d; margin-bottom: 30px">Preguntas frecuentes</h2>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+        <h3 class="panel-title">¿Existe algun costo de envio?</h3>
+        </div>
+        <div class="panel-body">
+        Si, existe un costo de RD$90.00 por envio sin importar la cantidad de botellas, este costo es sumado al total de su compra.
+        </div>
+     </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">¿Cuanto tiempo tarda en llegar mi pedido?</h3>
+          </div>
+          <div class="panel-body">
+            Entre 30 y 45 minutos.
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">¿Existe un consumo minimo?</h3>
+          </div>
+          <div class="panel-body">
+            Si, tenemos un consumo minimo de RD$1,500.00
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">¿Puedo comprar solo 1 botella de vino?</h3>
+          </div>
+          <div class="panel-body">
+           Si, si el valor de esa botella de vino es superior a RD$1,499.00
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">¿Cual es el numero maximo de botellas que me pueden enviar?</h3>
+          </div>
+          <div class="panel-body">
+           Enviamos un maximo de 12 botellas de vino.
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">¿A que temperatura Winelivery almacena sus vinos?</h3>
+          </div>
+          <div class="panel-body">
+           Almacenamos nuestros vinos en un cuarto refrigerado a 20 grados en posicion orizontal y sin exposicion a la luz del sol.
+          </div>
+        </div>     
+    </div>
+    <!-- End My Profile Content -->
+
+  </div>
+</div>
+<!-- End Main Content -->";s:4:"code";N;s:5:"title";s:20:"Preguntas Frecuentes";s:3:"url";s:21:"/preguntas-frecuentes";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}

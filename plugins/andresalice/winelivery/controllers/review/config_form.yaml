@@ -1,0 +1,10 @@
+name: Review
+form: $/andresalice/winelivery/models/review/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Review
+defaultRedirect: andresalice/winelivery/review
+create:
+    redirect: 'andresalice/winelivery/review/update/:id'
+    redirectClose: andresalice/winelivery/review
+update:
+    redirect: andresalice/winelivery/review
+    redirectClose: andresalice/winelivery/review

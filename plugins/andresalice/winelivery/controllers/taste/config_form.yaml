@@ -1,0 +1,10 @@
+name: Taste
+form: $/andresalice/winelivery/models/taste/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Taste
+defaultRedirect: andresalice/winelivery/taste
+create:
+    redirect: 'andresalice/winelivery/taste/update/:id'
+    redirectClose: andresalice/winelivery/taste
+update:
+    redirect: andresalice/winelivery/taste
+    redirectClose: andresalice/winelivery/taste

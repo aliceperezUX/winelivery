@@ -1,26 +1,28 @@
-1487462839a:1:{s:20:"producto-detalle.htm";a:9:{s:8:"fileName";s:20:"producto-detalle.htm";s:7:"content";s:11020:"title = "Producto Detalle"
+1487970065a:1:{s:20:"producto-detalle.htm";a:9:{s:8:"fileName";s:20:"producto-detalle.htm";s:7:"content";s:9000:"title = "Producto Detalle"
 url = "/producto/:id"
 layout = "layout"
 is_hidden = 0
 ==
 <?php
 use Andresalice\Winelivery\Models\Product;
+use Andresalice\Winelivery\Models\Review;
 
 function onStart()
 {
     $this['product'] = Product::find($this->param('id'));
     $this['products'] = Product::where("category_id",$this['product']->category_id)->where("id","!=", $this['product']->id)->take(12)->get();
+    $this['reviews'] = Review::where("product_id",$this['product']->id)->get();
 }
 ?>
 ==
 <!-- Main Content -->
 <div class="container m-t-3">
-
     <div class="row">
         <!-- Image List -->
         <div class="col-sm-4 col-md-4 ">
             <div style="width: 350px; height:500px" class="image-detail">
                 <img src="{{product.featured_image.getPath}}" data-zoom-image="{{product.featured_image.getPath}}" alt="">
+                {% partial "stock" p = product %}
             </div>
         </div>
         <!-- End Image List -->
@@ -38,8 +40,8 @@ function onStart()
             
             
             {% if loggedIn %}
-            <button type="button" onClick="addToCart('{{product.id}}');" class="btn btn-theme m-b-1" type="button"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Agregar al carrito</button>
-            <button type="button" onClick="addToWishlist('{{product.id}}');" class="btn btn-theme1 m-b-1" type="button"><i class="fa fa-heart" aria-hidden="true"></i>Agregar a la lista de deseos</button>
+            <button type="button" {% if product.stock > 0 %} onClick="addToCart('{{product.id}}');" {% endif %} class="btn btn-theme m-b-1" type="button"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Agregar al carrito</button>
+            <button type="button" {% if product.stock > 0 %} onClick="addToWishlist('{{product.id}}');" {% endif %} class="btn btn-theme1 m-b-1" type="button"><i class="fa fa-heart" aria-hidden="true"></i>Agregar a la lista de deseos</button>
             {% else %}
             <a href="{{"login"|page}}" class="btn btn-theme m-b-1"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Agregar al carrito</a>
             <a href="{{"login"|page}}" class="btn btn-theme1 m-b-1"><i class="fa fa-heart" aria-hidden="true"></i>Agregar a la lista de deseos</a>
@@ -65,42 +67,23 @@ function onStart()
                 <div class="">
                     <div class="title"><span>Review de catadores</span></div>
                     <div class="well">
+                        {% for r in reviews %}
                         <div class="media">
                             <div class="media-left">
-                                <a href="#">
-                                    <img class="media-object img-thumbnail" alt="64x64" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+">
+                                <a href="javascript:;">
+                                    <img class="media-object img-thumbnail" alt="{{r.taste.name}}" src="{{r.taste.featured_image.getPath}}">
                                 </a>
                                 <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
+                                    {% for i in 1..r.stars %}
+                                        <i class="fa fa-star"></i>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="media-body">
-                                <h5 class="media-heading"><strong>John Thor</strong></h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
-                                Donec lacinia congue felis in faucibus.
+                                <h5 class="media-heading"><strong>{{r.taste.name}}</strong></h5> {{r.comment}}
                             </div>
                         </div>
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <img class="media-object img-thumbnail" alt="64x64" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+">
-                                </a>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <h5 class="media-heading"><strong>Michael</strong></h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
-                                Donec lacinia congue felis in faucibus.
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <!-- End Review Tab Content -->
@@ -138,10 +121,10 @@ function onStart()
 
             <div class="form-group col-md-12">
                 <label for="Review">Deja tu comentario</label>
-                <textarea id="Review" class="form-control" rows="5"></textarea>
+                <textarea name="comentario" id="Review" class="form-control" rows="5"></textarea>
             </div>
             <div class="form-group col-md-12">
-                <button type="submit" class="btn btn-theme">Enviar review</button>
+                <button onClick="onAddReview();" type="button" class="btn btn-theme">Enviar review</button>
             </div>
         </form>
     </div>
@@ -157,9 +140,9 @@ function onStart()
                                 <a href="detail.html">
                                     <img alt="Product" src="{{p.featured_image.getPath}}">
                                 </a>
-                                <div class="tags">
+                                <!-- <div class="tags">
                                     <span class="label-tags"><span class="label label-danger arrowed">-10%</span></span>
-                                </div>
+                                </div> -->
                             </div>
                             <h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></a></h6>
                             <div class="rating">
@@ -189,14 +172,14 @@ function onStart()
 <!-- End Related Products -->
 
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1486855970;s:6:"markup";s:10651:"<!-- Main Content -->
+<!-- End Main Content -->";s:5:"mtime";i:1487963292;s:6:"markup";s:8507:"<!-- Main Content -->
 <div class="container m-t-3">
-
     <div class="row">
         <!-- Image List -->
         <div class="col-sm-4 col-md-4 ">
             <div style="width: 350px; height:500px" class="image-detail">
                 <img src="{{product.featured_image.getPath}}" data-zoom-image="{{product.featured_image.getPath}}" alt="">
+                {% partial "stock" p = product %}
             </div>
         </div>
         <!-- End Image List -->
@@ -214,8 +197,8 @@ function onStart()
             
             
             {% if loggedIn %}
-            <button type="button" onClick="addToCart('{{product.id}}');" class="btn btn-theme m-b-1" type="button"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Agregar al carrito</button>
-            <button type="button" onClick="addToWishlist('{{product.id}}');" class="btn btn-theme1 m-b-1" type="button"><i class="fa fa-heart" aria-hidden="true"></i>Agregar a la lista de deseos</button>
+            <button type="button" {% if product.stock > 0 %} onClick="addToCart('{{product.id}}');" {% endif %} class="btn btn-theme m-b-1" type="button"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Agregar al carrito</button>
+            <button type="button" {% if product.stock > 0 %} onClick="addToWishlist('{{product.id}}');" {% endif %} class="btn btn-theme1 m-b-1" type="button"><i class="fa fa-heart" aria-hidden="true"></i>Agregar a la lista de deseos</button>
             {% else %}
             <a href="{{"login"|page}}" class="btn btn-theme m-b-1"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Agregar al carrito</a>
             <a href="{{"login"|page}}" class="btn btn-theme1 m-b-1"><i class="fa fa-heart" aria-hidden="true"></i>Agregar a la lista de deseos</a>
@@ -241,42 +224,23 @@ function onStart()
                 <div class="">
                     <div class="title"><span>Review de catadores</span></div>
                     <div class="well">
+                        {% for r in reviews %}
                         <div class="media">
                             <div class="media-left">
-                                <a href="#">
-                                    <img class="media-object img-thumbnail" alt="64x64" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+">
+                                <a href="javascript:;">
+                                    <img class="media-object img-thumbnail" alt="{{r.taste.name}}" src="{{r.taste.featured_image.getPath}}">
                                 </a>
                                 <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
+                                    {% for i in 1..r.stars %}
+                                        <i class="fa fa-star"></i>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="media-body">
-                                <h5 class="media-heading"><strong>John Thor</strong></h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
-                                Donec lacinia congue felis in faucibus.
+                                <h5 class="media-heading"><strong>{{r.taste.name}}</strong></h5> {{r.comment}}
                             </div>
                         </div>
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <img class="media-object img-thumbnail" alt="64x64" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjZWVlIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMzIiIHk9IjMyIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9zdmc+">
-                                </a>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <h5 class="media-heading"><strong>Michael</strong></h5> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
-                                Donec lacinia congue felis in faucibus.
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <!-- End Review Tab Content -->
@@ -314,10 +278,10 @@ function onStart()
 
             <div class="form-group col-md-12">
                 <label for="Review">Deja tu comentario</label>
-                <textarea id="Review" class="form-control" rows="5"></textarea>
+                <textarea name="comentario" id="Review" class="form-control" rows="5"></textarea>
             </div>
             <div class="form-group col-md-12">
-                <button type="submit" class="btn btn-theme">Enviar review</button>
+                <button onClick="onAddReview();" type="button" class="btn btn-theme">Enviar review</button>
             </div>
         </form>
     </div>
@@ -333,9 +297,9 @@ function onStart()
                                 <a href="detail.html">
                                     <img alt="Product" src="{{p.featured_image.getPath}}">
                                 </a>
-                                <div class="tags">
+                                <!-- <div class="tags">
                                     <span class="label-tags"><span class="label label-danger arrowed">-10%</span></span>
-                                </div>
+                                </div> -->
                             </div>
                             <h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></a></h6>
                             <div class="rating">
@@ -365,10 +329,12 @@ function onStart()
 <!-- End Related Products -->
 
 </div>
-<!-- End Main Content -->";s:4:"code";s:272:"use Andresalice\Winelivery\Models\Product;
+<!-- End Main Content -->";s:4:"code";s:396:"use Andresalice\Winelivery\Models\Product;
+use Andresalice\Winelivery\Models\Review;
 
 function onStart()
 {
     $this['product'] = Product::find($this->param('id'));
     $this['products'] = Product::where("category_id",$this['product']->category_id)->where("id","!=", $this['product']->id)->take(12)->get();
+    $this['reviews'] = Review::where("product_id",$this['product']->id)->get();
 }";s:5:"title";s:16:"Producto Detalle";s:3:"url";s:13:"/producto/:id";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}

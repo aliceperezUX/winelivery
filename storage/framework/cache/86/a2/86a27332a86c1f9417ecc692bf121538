@@ -1,4 +1,4 @@
-1487462838a:1:{s:13:"productos.htm";a:9:{s:8:"fileName";s:13:"productos.htm";s:7:"content";s:4506:"title = "Productos"
+1487970065a:1:{s:13:"productos.htm";a:9:{s:8:"fileName";s:13:"productos.htm";s:7:"content";s:4561:"title = "Productos"
 url = "/productos/:country/:category"
 layout = "layout"
 is_hidden = 0
@@ -81,6 +81,7 @@ function onStart()
                           <a href="{{"producto-detalle"|page({id:p.id})}}">
                               <img alt="Product" src="{{p.featured_image.getPath}}">
                           </a>
+                          {% partial "stock" p = p %}
                       </div>
                       <h6><a href="{{"producto-detalle"|page({id:p.id})}}">{{p.title}}</a></h6>
                       <div class="rating">
@@ -114,7 +115,7 @@ function onStart()
 
       </div>
     </div>
-    <!-- End Main Content -->";s:5:"mtime";i:1487448103;s:6:"markup";s:3705:"<!-- Main Content -->
+    <!-- End Main Content -->";s:5:"mtime";i:1487674934;s:6:"markup";s:3760:"<!-- Main Content -->
     <div class="container m-t-3">
       <div class="row">
 
@@ -170,6 +171,7 @@ function onStart()
                           <a href="{{"producto-detalle"|page({id:p.id})}}">
                               <img alt="Product" src="{{p.featured_image.getPath}}">
                           </a>
+                          {% partial "stock" p = p %}
                       </div>
                       <h6><a href="{{"producto-detalle"|page({id:p.id})}}">{{p.title}}</a></h6>
                       <div class="rating">

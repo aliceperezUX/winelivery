@@ -34,11 +34,23 @@ navigation:
                 label: 'Anuncios (Publicidad)'
                 url: andresalice/winelivery/advertisement
                 icon: icon-image
-            Newsletter:
-                label: Newsletter
-                url: andresalice/winelivery/newsletter
-                icon: icon-newspaper-o
             sector:
                 label: Sectores
                 url: andresalice/winelivery/sector
                 icon: icon-location-arrow
+            tasters:
+                label: Catadores
+                url: andresalice/winelivery/taste
+                icon: icon-star
+            'Review de Vinos':
+                label: reviews
+                url: andresalice/winelivery/review
+                icon: icon-star-half-empty
+            Newsletter:
+                label: Newsletter
+                url: andresalice/winelivery/newsletter
+                icon: icon-newspaper-o
+            slideshows:
+                label: Slideshows
+                url: andresalice/winelivery/slideshow
+                icon: icon-image

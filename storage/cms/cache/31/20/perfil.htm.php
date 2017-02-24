@@ -1,5 +1,5 @@
 <?php 
-use RainLab\User\Models\User;class Cms58a897df26624565012292_1711733794Class extends \Cms\Classes\PageCode
+use RainLab\User\Models\User;class Cms58b073fc1e6bc340480995_2912559460Class extends \Cms\Classes\PageCode
 {
 
 public function onProfileForm()

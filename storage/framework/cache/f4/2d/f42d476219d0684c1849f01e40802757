@@ -1,38 +1,24 @@
-1487462839a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:18248:"==
+1487970146a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:16971:"==
 <?php
 use Andresalice\Winelivery\Models\Category;
-use Andresalice\Winelivery\Models\Product;
-use Andresalice\Winelivery\Models\Advertisement;
 use Andresalice\Winelivery\Models\Newsletter;
 use Andresalice\Winelivery\Models\Cart;
 use Andresalice\Winelivery\Models\Wishlist;
+use Andresalice\Winelivery\Models\Product;
 
 function onStart()
 {
-    $loggedIn = Auth::check();
-    $this['loggedIn'] = $loggedIn;
+    $this['loggedIn'] = Auth::check();
     $this['categories'] = Category::get();
-    $this['recentProducts'] = Product::where("stock",">=", 1)->where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
-    $this['specialProducts'] = Product::where("stock",">=", 1)->where("offer","=",1)->take(4)->get();
-    $this['mwine'] = Product::where("stock",">=", 1)->where("month","=",1)->first();
-    $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
-    $this['randomProducts'] = Product::where("stock",">=", 1)->orderByRaw("RAND()")->take(12)->get();
-    if($loggedIn)
+    $this['randomProducts'] = Product::orderByRaw("RAND()")->take(12)->get();
+    if($this['loggedIn'])
     {
       $this['user'] = Auth::getUser();
       $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
       $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
-      $this['cart'] = Cart::where("user_id","=",$this['user']->id)->get();
-      $sum = 0;
-      foreach($this['cart'] as $c)
-      {
-          $sum += $c->product->price * $c->quantity;
-      }
-      $this['cart_total'] = $sum;
-      $this['cart_total_envio'] = $sum + 90;
-      $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
     }
 }
+
 
 function onAddToCart()
 {
@@ -55,20 +41,6 @@ function onAddToCart()
     }
     $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
     return ['#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
-}
-
-function onDeleteFromCart()
-{
-    $user = Auth::getUser();
-    $cart_id = Input::get("cart_id");
-    if(Cart::where("id","=",$cart_id)->where("user_id","=",$user->id)->exists())
-    {
-        $w = Cart::find($cart_id);
-        $w->delete();
-    }
-    $cart = Cart::where("user_id","=",$user->id)->get();
-    $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
-    return ['#cart_partial' => $this->renderPartial('cart', ['cart' => $cart]), '#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
 }
 
 function onAddToWishlist()
@@ -124,7 +96,6 @@ function onLogout()
 ==
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -269,10 +240,10 @@ function onLogout()
                 <div class="col-md-3 col-sm-6">
                     <div class="title-footer"><span>Informaci&oacute;n</span></div>
                     <ul>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Preguntas frecuentes</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Politicas de privacidad</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Terminos y condiciones</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Metodo de envio</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"preguntas-frecuentes"|page}}">Preguntas frecuentes</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"politicas"|page}}">Politicas de privacidad</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"terminos"|page}}">Terminos y condiciones</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"metodo-de-envio"|page}}">Metodo de envio</a></li>
                     </ul>
                 </div>
                 <div class="clearfix visible-sm-block"></div>
@@ -318,10 +289,10 @@ function onLogout()
                 <div class="col-md-3 col-sm-6">
                     <div class="title-footer"><span>Mi cuenta</span></div>
                     <ul>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Ordenes</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Direcci&oacute;n</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Perfil</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Salir</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"historial"|page}}">Ordenes</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"direcciones"|page}}">Direcci&oacute;n</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"perfil"|page}}">Perfil</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a data-request="onLogout" data-request-data="redirect: '/good-bye'">Salir</a></li>
                     </ul>
                 </div>
             </div>
@@ -382,9 +353,8 @@ function onLogout()
     }
     </script>
 </body>
-</html>";s:5:"mtime";i:1487449995;s:6:"markup";s:13389:"<!DOCTYPE html>
+</html>";s:5:"mtime";i:1487969545;s:6:"markup";s:13592:"<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -529,10 +499,10 @@ function onLogout()
                 <div class="col-md-3 col-sm-6">
                     <div class="title-footer"><span>Informaci&oacute;n</span></div>
                     <ul>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Preguntas frecuentes</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Politicas de privacidad</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Terminos y condiciones</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Metodo de envio</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"preguntas-frecuentes"|page}}">Preguntas frecuentes</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"politicas"|page}}">Politicas de privacidad</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"terminos"|page}}">Terminos y condiciones</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"metodo-de-envio"|page}}">Metodo de envio</a></li>
                     </ul>
                 </div>
                 <div class="clearfix visible-sm-block"></div>
@@ -578,10 +548,10 @@ function onLogout()
                 <div class="col-md-3 col-sm-6">
                     <div class="title-footer"><span>Mi cuenta</span></div>
                     <ul>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Ordenes</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Direcci&oacute;n</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Perfil</a></li>
-                        <li><i class="fa fa-angle-double-right"></i> <a href="#">Salir</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"historial"|page}}">Ordenes</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"direcciones"|page}}">Direcci&oacute;n</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"perfil"|page}}">Perfil</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a data-request="onLogout" data-request-data="redirect: '/good-bye'">Salir</a></li>
                     </ul>
                 </div>
             </div>
@@ -642,39 +612,25 @@ function onLogout()
     }
     </script>
 </body>
-</html>";s:4:"code";s:4843:"use Andresalice\Winelivery\Models\Category;
-use Andresalice\Winelivery\Models\Product;
-use Andresalice\Winelivery\Models\Advertisement;
+</html>";s:4:"code";s:3363:"use Andresalice\Winelivery\Models\Category;
 use Andresalice\Winelivery\Models\Newsletter;
 use Andresalice\Winelivery\Models\Cart;
 use Andresalice\Winelivery\Models\Wishlist;
+use Andresalice\Winelivery\Models\Product;
 
 function onStart()
 {
-    $loggedIn = Auth::check();
-    $this['loggedIn'] = $loggedIn;
+    $this['loggedIn'] = Auth::check();
     $this['categories'] = Category::get();
-    $this['recentProducts'] = Product::where("stock",">=", 1)->where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
-    $this['specialProducts'] = Product::where("stock",">=", 1)->where("offer","=",1)->take(4)->get();
-    $this['mwine'] = Product::where("stock",">=", 1)->where("month","=",1)->first();
-    $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
-    $this['randomProducts'] = Product::where("stock",">=", 1)->orderByRaw("RAND()")->take(12)->get();
-    if($loggedIn)
+    $this['randomProducts'] = Product::orderByRaw("RAND()")->take(12)->get();
+    if($this['loggedIn'])
     {
       $this['user'] = Auth::getUser();
       $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
       $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
-      $this['cart'] = Cart::where("user_id","=",$this['user']->id)->get();
-      $sum = 0;
-      foreach($this['cart'] as $c)
-      {
-          $sum += $c->product->price * $c->quantity;
-      }
-      $this['cart_total'] = $sum;
-      $this['cart_total_envio'] = $sum + 90;
-      $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
     }
 }
+
 
 function onAddToCart()
 {
@@ -697,20 +653,6 @@ function onAddToCart()
     }
     $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
     return ['#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
-}
-
-function onDeleteFromCart()
-{
-    $user = Auth::getUser();
-    $cart_id = Input::get("cart_id");
-    if(Cart::where("id","=",$cart_id)->where("user_id","=",$user->id)->exists())
-    {
-        $w = Cart::find($cart_id);
-        $w->delete();
-    }
-    $cart = Cart::where("user_id","=",$user->id)->get();
-    $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
-    return ['#cart_partial' => $this->renderPartial('cart', ['cart' => $cart]), '#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
 }
 
 function onAddToWishlist()

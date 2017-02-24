@@ -1,5 +1,5 @@
 <?php 
-use RainLab\User\Models\User;class Cms58a89e18c7e36494778693_148368876Class extends \Cms\Classes\PageCode
+use RainLab\User\Models\User;class Cms58b07400cc556250174207_1782001683Class extends \Cms\Classes\PageCode
 {
 
 public function onChangePasswordForm()
