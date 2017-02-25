@@ -1,0 +1,10 @@
+name: Order
+form: $/andresalice/winelivery/models/order/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Order
+defaultRedirect: andresalice/winelivery/order
+create:
+    redirect: 'andresalice/winelivery/order/update/:id'
+    redirectClose: andresalice/winelivery/order
+update:
+    redirect: andresalice/winelivery/order
+    redirectClose: andresalice/winelivery/order

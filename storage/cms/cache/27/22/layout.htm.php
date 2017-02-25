@@ -1,6 +1,8 @@
 <?php 
-use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Product;class Cms58b09d0ac66a8701764008_1402982259Class extends \Cms\Classes\LayoutCode
+use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Address;use Andresalice\Winelivery\Models\Sector;class Cms58b0c4fa144f0841073548_1784133882Class extends \Cms\Classes\LayoutCode
 {
+
+
 
 
 
@@ -17,6 +19,12 @@ public function onStart()
       $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
       $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
     }
+    if($this->param('id'))
+    {
+        $this['address'] = Address::find($this->param('id'));
+    }
+    $this['addresses'] = Address::where("user_id",Auth::getUser()->id)->get();
+    $this['sectors'] = Sector::get();
 }
 public function onAddToCart()
 {
@@ -80,6 +88,53 @@ public function onNewsletterForm()
         $n->email = post('email_newsletter');
         $n->save();
     }
+}
+public function onAddressesForm()
+{
+    $user_id = Auth::getUser()->id;
+    if(Input::has("id_control"))
+    {
+        $address = Address::where("id",post("id_control"))->update(['sector' => post("sector"),'calle' => post("calle"),'residencial' => post("residencial"),'numero' => post("numero"),'telefono' => post("telefono"),'celular' => post("celular"),'proximo' => post("proximo")]);
+    }
+    else
+    {
+        $address = new Address;
+        $address->sector = post("sector");
+        $address->calle = post("calle");
+        $address->residencial = post("residencial");
+        $address->numero = post("numero");
+        $address->telefono = post("telefono");
+        $address->celular = post("celular");
+        $address->proximo = post("proximo");
+        $address->user_id = $user_id;
+        $address->save();
+    }
+   
+    $addresses = Address::where("user_id",$user_id)->get();
+    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
+}
+public function onCheckoutAddressesForm()
+{
+    $user_id = Auth::getUser()->id;
+    $address = new Address;
+    $address->sector = post("sector");
+    $address->calle = post("calle");
+    $address->residencial = post("residencial");
+    $address->numero = post("numero");
+    $address->telefono = post("telefono");
+    $address->celular = post("celular");
+    $address->proximo = post("proximo");
+    $address->user_id = $user_id;
+    $address->save();
+    return Redirect::to("checkout2/".$address->id);
+}
+public function onDeleteAddress()
+{
+    $id = post("id");
+    $address = Address::find($id);
+    $address->delete();
+    $addresses = Address::where("user_id",Auth::getUser()->id)->get();
+    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
 }
 public function onLogout()
 {

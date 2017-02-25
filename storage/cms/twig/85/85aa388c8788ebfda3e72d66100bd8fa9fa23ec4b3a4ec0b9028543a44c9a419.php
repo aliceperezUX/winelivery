@@ -45,12 +45,31 @@ class __TwigTemplate_0df843e7db329b12a5e0bf9501dea462c60f476c60a2881043c62b9aac0
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>2 items</td>
-                  <td>2016-12-19</td>
+                ";
+        // line 25
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable((isset($context["orders"]) ? $context["orders"] : null));
+        foreach ($context['_seq'] as $context["_key"] => $context["o"]) {
+            // line 26
+            echo "                <tr>
+                  <td>2 Vinos</td>
+                  <td>";
+            // line 28
+            echo twig_escape_filter($this->env, twig_date_format_filter($this->env, $this->getAttribute($context["o"], "created_at", array()), "Y-M-d"), "html", null, true);
+            echo "</td>
                   <td class=\"text-right\">\$74.00</td>
-                  <td class=\"text-center\"><span class=\"label label-warning\">Processing</span></td>
+                  <td class=\"text-center\"><span class=\"label label-warning\">";
+            // line 30
+            echo twig_escape_filter($this->env, $this->getAttribute($context["o"], "status", array()), "html", null, true);
+            echo "</span></td>
                 </tr>
+                ";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['o'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 32
+        echo " 
               </tbody>
             </table>
           </div>
@@ -76,7 +95,7 @@ class __TwigTemplate_0df843e7db329b12a5e0bf9501dea462c60f476c60a2881043c62b9aac0
 
     public function getDebugInfo()
     {
-        return array (  29 => 6,  25 => 5,  19 => 1,);
+        return array (  72 => 32,  63 => 30,  58 => 28,  54 => 26,  50 => 25,  29 => 6,  25 => 5,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -113,12 +132,14 @@ class __TwigTemplate_0df843e7db329b12a5e0bf9501dea462c60f476c60a2881043c62b9aac0
                 </tr>
               </thead>
               <tbody>
+                {% for o in orders %}
                 <tr>
-                  <td>2 items</td>
-                  <td>2016-12-19</td>
+                  <td>2 Vinos</td>
+                  <td>{{o.created_at|date(\"Y-M-d\")}}</td>
                   <td class=\"text-right\">\$74.00</td>
-                  <td class=\"text-center\"><span class=\"label label-warning\">Processing</span></td>
+                  <td class=\"text-center\"><span class=\"label label-warning\">{{o.status}}</span></td>
                 </tr>
+                {% endfor %} 
               </tbody>
             </table>
           </div>

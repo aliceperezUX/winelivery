@@ -1,4 +1,4 @@
-1487970065a:1:{s:20:"producto-detalle.htm";a:9:{s:8:"fileName";s:20:"producto-detalle.htm";s:7:"content";s:9000:"title = "Producto Detalle"
+1488005648a:1:{s:20:"producto-detalle.htm";a:9:{s:8:"fileName";s:20:"producto-detalle.htm";s:7:"content";s:9034:"title = "Producto Detalle"
 url = "/producto/:id"
 layout = "layout"
 is_hidden = 0
@@ -71,7 +71,7 @@ function onStart()
                         <div class="media">
                             <div class="media-left">
                                 <a href="javascript:;">
-                                    <img class="media-object img-thumbnail" alt="{{r.taste.name}}" src="{{r.taste.featured_image.getPath}}">
+                                    <img style="width: 76px; height: 76px" class="media-object img-thumbnail" alt="{{r.taste.name}}" src="{{r.taste.featured_image.getPath}}">
                                 </a>
                                 <div class="product-rating">
                                     {% for i in 1..r.stars %}
@@ -172,7 +172,7 @@ function onStart()
 <!-- End Related Products -->
 
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1487963292;s:6:"markup";s:8507:"<!-- Main Content -->
+<!-- End Main Content -->";s:5:"mtime";i:1488005046;s:6:"markup";s:8541:"<!-- Main Content -->
 <div class="container m-t-3">
     <div class="row">
         <!-- Image List -->
@@ -228,7 +228,7 @@ function onStart()
                         <div class="media">
                             <div class="media-left">
                                 <a href="javascript:;">
-                                    <img class="media-object img-thumbnail" alt="{{r.taste.name}}" src="{{r.taste.featured_image.getPath}}">
+                                    <img style="width: 76px; height: 76px" class="media-object img-thumbnail" alt="{{r.taste.name}}" src="{{r.taste.featured_image.getPath}}">
                                 </a>
                                 <div class="product-rating">
                                     {% for i in 1..r.stars %}

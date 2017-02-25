@@ -49,10 +49,16 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
         // line 18
         echo twig_escape_filter($this->env, twig_number_format_filter($this->env, (isset($context["cart_total_envio"]) ? $context["cart_total_envio"] : null)), "html", null, true);
         echo "</span></p>
-      <a href=\"";
+      <a ";
         // line 19
-        echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("checkout");
-        echo "\" class=\"btn btn-theme col-md-12\">procesar orden</a>
+        if (((isset($context["cart_total"]) ? $context["cart_total"] : null) < 1500)) {
+            echo " data-toggle=\"modal\" data-target=\"#consumo_minimo\" ";
+        } else {
+            echo " href=\"";
+            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("checkout");
+            echo "\" ";
+        }
+        echo " class=\"btn btn-theme col-md-12\">procesar orden</a>
     </div>
     <!-- Related Products -->
     <div class=\"row m-t-3\">
@@ -128,7 +134,26 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
 
   </div>
 </div>
-<!-- End Main Content -->";
+<!-- End Main Content -->
+
+<!-- Lightbox -->
+<div class=\"modal fade\" id=\"consumo_minimo\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">
+  <div class=\"modal-dialog\" role=\"document\">
+    <div class=\"modal-content\">
+      <div class=\"modal-header\">
+        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+        <h4 class=\"modal-title\" id=\"myModalLabel\">Aviso</h4>
+      </div>
+      <div class=\"modal-body\">
+        Debes tener una orden de un minimo de RD \$1,500 pesos para ser procesada.
+      </div>
+      <div class=\"modal-footer\">
+        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Lightbox -->";
     }
 
     public function getTemplateName()
@@ -143,7 +168,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
 
     public function getDebugInfo()
     {
-        return array (  123 => 57,  113 => 52,  108 => 51,  102 => 48,  86 => 37,  77 => 31,  73 => 30,  68 => 27,  64 => 26,  54 => 19,  50 => 18,  45 => 16,  41 => 15,  34 => 10,  29 => 9,  19 => 1,);
+        return array (  129 => 57,  119 => 52,  114 => 51,  108 => 48,  92 => 37,  83 => 31,  79 => 30,  74 => 27,  70 => 26,  54 => 19,  50 => 18,  45 => 16,  41 => 15,  34 => 10,  29 => 9,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -174,7 +199,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
       <p class=\"detailbox-items\">costo:<span class=\"detailbox-content\" > RD\${{ cart_total|number_format}}</span></p>
       <p class=\"detailbox-items\">costo de envio:<span class=\"detailbox-content\"> RD\$90</span></p>
       <p class=\"detailbox-items\">costo total:<span class=\"detailbox-content\"> RD\${{ cart_total_envio|number_format}}</span></p>
-      <a href=\"{{\"checkout\"|page}}\" class=\"btn btn-theme col-md-12\">procesar orden</a>
+      <a {% if cart_total < 1500 %} data-toggle=\"modal\" data-target=\"#consumo_minimo\" {% else %} href=\"{{\"checkout\"|page}}\" {% endif %} class=\"btn btn-theme col-md-12\">procesar orden</a>
     </div>
     <!-- Related Products -->
     <div class=\"row m-t-3\">
@@ -220,6 +245,25 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
 
   </div>
 </div>
-<!-- End Main Content -->", "/home/winelivery/themes/winelivery/pages/carrito.htm", "");
+<!-- End Main Content -->
+
+<!-- Lightbox -->
+<div class=\"modal fade\" id=\"consumo_minimo\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">
+  <div class=\"modal-dialog\" role=\"document\">
+    <div class=\"modal-content\">
+      <div class=\"modal-header\">
+        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+        <h4 class=\"modal-title\" id=\"myModalLabel\">Aviso</h4>
+      </div>
+      <div class=\"modal-body\">
+        Debes tener una orden de un minimo de RD \$1,500 pesos para ser procesada.
+      </div>
+      <div class=\"modal-footer\">
+        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Lightbox -->", "/home/winelivery/themes/winelivery/pages/carrito.htm", "");
     }
 }

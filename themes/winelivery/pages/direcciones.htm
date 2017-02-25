@@ -1,56 +1,11 @@
 title = "Direcciones"
-url = "/direcciones"
+url = "/direcciones/:id?"
 layout = "layout"
 is_hidden = 0
 
 [session]
 security = "user"
 redirect = "inicio"
-==
-<?php
-use Andresalice\Winelivery\Models\Address;
-use Andresalice\Winelivery\Models\Sector;
-
-function onStart()
-{
-    $this['addresses'] = Address::where("user_id",Auth::getUser()->id)->get();
-    $this['sectors'] = Sector::get();
-}
-
-function onAddressesForm()
-{
-    $user_id = Auth::getUser()->id;
-    if(Input::has("id_control"))
-    {
-        $address = Address::where("id",post("id_control"))->update(['sector' => post("sector"),'calle' => post("calle"),'residencial' => post("residencial"),'numero' => post("numero"),'telefono' => post("telefono"),'celular' => post("celular"),'proximo' => post("proximo")]);
-    }
-    else
-    {
-        $address = new Address;
-        $address->sector = post("sector");
-        $address->calle = post("calle");
-        $address->residencial = post("residencial");
-        $address->numero = post("numero");
-        $address->telefono = post("telefono");
-        $address->celular = post("celular");
-        $address->proximo = post("proximo");
-        $address->user_id = $user_id;
-        $address->save();
-    }
-   
-    $addresses = Address::where("user_id",$user_id)->get();
-    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
-}
-
-function onDeleteAddress()
-{
-    $id = post("id");
-    $address = Address::find($id);
-    $address->delete();
-    $addresses = Address::where("user_id",Auth::getUser()->id)->get();
-    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
-}
-?>
 ==
 <!-- Main Content -->
 <div class="container m-t-3">
@@ -68,38 +23,44 @@ function onDeleteAddress()
               <label >Sector</label>
               <select id="sectors" name="sector" class="form-control">
                 {% for s in sectors %}
-                    <option value="{{s.title}}">{{s.title}}</option>
+                    <option {% if s.title == address.sector %} selected {% endif %} value="{{s.title}}">{{s.title}}</option>
                 {% endfor %}
               </select>
             </div>
             <div class="form-group">
               <label>Calle</label>
-              <input name="calle" type="text" class="form-control" >
+              <input value="{{address.calle}}" name="calle" type="text" class="form-control" >
             </div>
             <div class="form-group">
               <label>Residencial y Edificio</label>
-              <input name="residencial" type="text" class="form-control" >
+              <input value="{{address.residencial}}" name="residencial" type="text" class="form-control" >
             </div>
             <div class="form-group">
               <label>Apto/No</label>
-              <input name="numero" type="text" class="form-control" >
+              <input value="{{address.numero}}" name="numero" type="text" class="form-control" >
             </div>
             <div class="form-group">
               <label>Telefono</label>
-              <input name="telefono" type="text" class="form-control phone" >
+              <input name="telefono" value="{{address.telefono}}" type="text" class="form-control phone" >
             </div>
             <div class="form-group">
               <label>Celular</label>
-              <input name="celular" type="text" class="form-control phone" >
+              <input name="celular" type="text" value="{{address.celular}}" class="form-control phone" >
             </div>
             <div class="form-group">
               <label>Proximo a</label>
-              <textarea name="proximo" class="form-control" rows="5"></textarea>
+              <textarea name="proximo" class="form-control" rows="5">{{address.proximo}}</textarea>
             </div>
-            <input name="id_control" type="hidden" value="">
+            <input name="id_control" type="hidden" value="{{address.id}}">
+            {% if address %}
+                <a href="{{"checkout"|page}}" class="btn btn-theme pull-left">Volver al Checkout</a>
+            {% endif %}
             <button onClick="addressesForm();" type="button" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> Guardar direcci&oacute;n</button>
           </form>
         </div>
+      </div><br>
+      <div style="display:none;" id="addressesFormMessage" class="alert alert-success">
+          Direcci&oacute;n agregada correctamente.
       </div>
     </div>
     <!-- End My Address Content -->
@@ -165,6 +126,7 @@ function onDeleteAddress()
     	if(error)
     	{
     		$('#addressesForm').request('onAddressesForm', {data: $('#addressesForm').serialize()});
+    		$("#addressesFormMessage").fadeIn("fast");
     	} 
     	else { return false; }
     }

@@ -1,4 +1,4 @@
-1487970065a:1:{s:12:"checkout.htm";a:10:{s:8:"fileName";s:12:"checkout.htm";s:7:"content";s:2525:"title = "Checkout"
+1488005488a:1:{s:12:"checkout.htm";a:10:{s:8:"fileName";s:12:"checkout.htm";s:7:"content";s:4719:"title = "Checkout"
 url = "/checkout"
 layout = "layout"
 is_hidden = 0
@@ -7,136 +7,230 @@ is_hidden = 0
 security = "user"
 redirect = "inicio"
 ==
+<?php
+use Andresalice\Winelivery\Models\Cart;
+function onStart()
+{
+    $exists = Cart::where("user_id",Auth::getUser()->id)->exists();
+    if(!$exists)
+    {
+        return Redirect::to('/');
+    }
+}
+?>
+==
 <!-- Main Content -->
 <div class="container m-t-3">
 
   <div class="row">
     <!-- My Address Content -->
-    <div class="col-sm-12 col-md-12">
-      <div class="title m-b-2"><span>Direcciones guardadas</span></div>
-      <div class="row">
-        <div class="col-xs-12 col-md-4">
-          <form>
-            <p>8400 NW 25TH ST STE 100
-            DORAL, FL 33198-1534
-            United States</p>
-            <button style="margin-bottom:10px" type="submit" class="btn btn-theme  col-md-12">Enviar a esta direccion</button>
-            <button  type="submit" class="btn btn-theme1 col-sm-12 col-md-5">Editar</button>
-            <button type="submit" class="btn  pull-right btn-theme1 col-sm-12 col-md-5">Eliminar</button>
-          </form>
+        <div class="col-sm-12 col-md-12">
+          <div class="title m-b-2"><span>Direcciones guardadas</span></div>
+          <div class="row">
+            {% for a in addresses %}
+                <div class="col-xs-12 col-md-4">
+                  <form>
+                    <p>{{a.sector}} {{a.calle}} {{a.residencial}} {{a.numero}} {{a.telefono}} {{a.celular}} {{a.proximo}}</p>
+                    <a href="{{"checkout2"|page({id:a.id})}}" style="margin-bottom:10px" class="btn btn-theme col-md-12">Enviar a esta direccion</a>
+                    <a class="btn btn-theme1 col-md-12" href="{{"direcciones"|page({id:a.id})}}">Editar</a>
+                  </form>
+                </div>
+            {% endfor %}
+            
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- End My Address Content -->
+        <!-- End My Address Content -->
   </div>
   <!-- My Address Content -->
-
-
     <div class="row" style="margin-top:50px">
       <div  class="col-sm-8 col-md-12">
         <div class="title m-b-2"><span>Nueva direcci&oacute;n</span></div>
       <div class="col-xs-12">
-        <form>
-          <div class="form-group">
-            <label >Sector</label>
-            <select class="form-control">
-              <option>Ens. Naco</option>
-              <option>Piantini</option>
-              <option>Gazcue</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Calle</label>
-            <input type="text" class="form-control" id="">
-          </div>
-          <div class="form-group">
-            <label>Apto/No</label>
-            <input type="email" class="form-control" id="">
-          </div>
-          <div class="form-group">
-            <label>Telefono</label>
-            <input type="email" class="form-control" id="">
-          </div>
-          <div class="form-group">
-            <label>Proximo a</label>
-            <textarea class="form-control" rows="5"></textarea>
-          </div>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"><span> Guardar esta direcci&oacute;n para usar despues</span>
-            </label>
-          </div>
-          <button type="submit" class="btn btn-theme pull-right">enviar  a esta direcci&oacute;n</button>
-        </form>
+        <form id="addressesForm">
+            <div class="form-group">
+              <label >Sector</label>
+              <select id="sectors" name="sector" class="form-control">
+                {% for s in sectors %}
+                    <option value="{{s.title}}">{{s.title}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Calle</label>
+              <input name="calle" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Residencial y Edificio</label>
+              <input name="residencial" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Apto/No</label>
+              <input name="numero" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Telefono</label>
+              <input name="telefono" type="text" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Celular</label>
+              <input name="celular" type="text" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Proximo a</label>
+              <textarea name="proximo" class="form-control" rows="5"></textarea>
+            </div>
+            <!-- <div class="checkbox">
+                <label>
+                  <input name="guardar" type="checkbox" value="1"><span> Guardar esta direcci&oacute;n para usar despues</span>
+                </label>
+            </div> -->
+            <input name="id_control" type="hidden" value="">
+            <button onClick="addressesForm();" type="button" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> enviar  a esta direcci&oacute;n</button>
+          </form>
       </div>
     </div>
   </div>
   <!-- End My Address Content -->
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1486882884;s:6:"markup";s:2404:"<!-- Main Content -->
+<!-- End Main Content -->
+{% put scripts %}
+<script>
+    $( document ).ready(function() {
+        $('.phone').mask('000-000-0000');
+    });
+
+    function addressesForm()
+    {
+        var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        
+    	if($('input[name=calle]').val() === ''){$('input[name=calle]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=calle]').css('border', '');}
+    	
+    	if($('input[name=numero]').val() === ''){$('input[name=numero]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=numero]').css('border', '');}
+    	
+    	if($('input[name=telefono]').val() === ''){$('input[name=telefono]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=telefono]').css('border', '');}
+    	
+    	if($('textarea[name=proximo]').val() === ''){$('textarea[name=proximo]').css('border', '1px solid red');error = false;} 
+    	else{$('textarea[name=proximo]').css('border', '');}
+    
+    	if(error)
+    	{
+    		$('#addressesForm').request('onCheckoutAddressesForm', {data: $('#addressesForm').serialize()});
+    	} 
+    	else { return false; }
+    }
+</script>
+{% endput %}";s:5:"mtime";i:1487982455;s:6:"markup";s:4384:"<!-- Main Content -->
 <div class="container m-t-3">
 
   <div class="row">
     <!-- My Address Content -->
-    <div class="col-sm-12 col-md-12">
-      <div class="title m-b-2"><span>Direcciones guardadas</span></div>
-      <div class="row">
-        <div class="col-xs-12 col-md-4">
-          <form>
-            <p>8400 NW 25TH ST STE 100
-            DORAL, FL 33198-1534
-            United States</p>
-            <button style="margin-bottom:10px" type="submit" class="btn btn-theme  col-md-12">Enviar a esta direccion</button>
-            <button  type="submit" class="btn btn-theme1 col-sm-12 col-md-5">Editar</button>
-            <button type="submit" class="btn  pull-right btn-theme1 col-sm-12 col-md-5">Eliminar</button>
-          </form>
+        <div class="col-sm-12 col-md-12">
+          <div class="title m-b-2"><span>Direcciones guardadas</span></div>
+          <div class="row">
+            {% for a in addresses %}
+                <div class="col-xs-12 col-md-4">
+                  <form>
+                    <p>{{a.sector}} {{a.calle}} {{a.residencial}} {{a.numero}} {{a.telefono}} {{a.celular}} {{a.proximo}}</p>
+                    <a href="{{"checkout2"|page({id:a.id})}}" style="margin-bottom:10px" class="btn btn-theme col-md-12">Enviar a esta direccion</a>
+                    <a class="btn btn-theme1 col-md-12" href="{{"direcciones"|page({id:a.id})}}">Editar</a>
+                  </form>
+                </div>
+            {% endfor %}
+            
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- End My Address Content -->
+        <!-- End My Address Content -->
   </div>
   <!-- My Address Content -->
-
-
     <div class="row" style="margin-top:50px">
       <div  class="col-sm-8 col-md-12">
         <div class="title m-b-2"><span>Nueva direcci&oacute;n</span></div>
       <div class="col-xs-12">
-        <form>
-          <div class="form-group">
-            <label >Sector</label>
-            <select class="form-control">
-              <option>Ens. Naco</option>
-              <option>Piantini</option>
-              <option>Gazcue</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Calle</label>
-            <input type="text" class="form-control" id="">
-          </div>
-          <div class="form-group">
-            <label>Apto/No</label>
-            <input type="email" class="form-control" id="">
-          </div>
-          <div class="form-group">
-            <label>Telefono</label>
-            <input type="email" class="form-control" id="">
-          </div>
-          <div class="form-group">
-            <label>Proximo a</label>
-            <textarea class="form-control" rows="5"></textarea>
-          </div>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"><span> Guardar esta direcci&oacute;n para usar despues</span>
-            </label>
-          </div>
-          <button type="submit" class="btn btn-theme pull-right">enviar  a esta direcci&oacute;n</button>
-        </form>
+        <form id="addressesForm">
+            <div class="form-group">
+              <label >Sector</label>
+              <select id="sectors" name="sector" class="form-control">
+                {% for s in sectors %}
+                    <option value="{{s.title}}">{{s.title}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Calle</label>
+              <input name="calle" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Residencial y Edificio</label>
+              <input name="residencial" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Apto/No</label>
+              <input name="numero" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Telefono</label>
+              <input name="telefono" type="text" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Celular</label>
+              <input name="celular" type="text" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Proximo a</label>
+              <textarea name="proximo" class="form-control" rows="5"></textarea>
+            </div>
+            <!-- <div class="checkbox">
+                <label>
+                  <input name="guardar" type="checkbox" value="1"><span> Guardar esta direcci&oacute;n para usar despues</span>
+                </label>
+            </div> -->
+            <input name="id_control" type="hidden" value="">
+            <button onClick="addressesForm();" type="button" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> enviar  a esta direcci&oacute;n</button>
+          </form>
       </div>
     </div>
   </div>
   <!-- End My Address Content -->
 </div>
-<!-- End Main Content -->";s:4:"code";N;s:5:"title";s:8:"Checkout";s:3:"url";s:9:"/checkout";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";s:7:"session";a:2:{s:8:"security";s:4:"user";s:8:"redirect";s:6:"inicio";}}}
+<!-- End Main Content -->
+{% put scripts %}
+<script>
+    $( document ).ready(function() {
+        $('.phone').mask('000-000-0000');
+    });
+
+    function addressesForm()
+    {
+        var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        
+    	if($('input[name=calle]').val() === ''){$('input[name=calle]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=calle]').css('border', '');}
+    	
+    	if($('input[name=numero]').val() === ''){$('input[name=numero]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=numero]').css('border', '');}
+    	
+    	if($('input[name=telefono]').val() === ''){$('input[name=telefono]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=telefono]').css('border', '');}
+    	
+    	if($('textarea[name=proximo]').val() === ''){$('textarea[name=proximo]').css('border', '1px solid red');error = false;} 
+    	else{$('textarea[name=proximo]').css('border', '');}
+    
+    	if(error)
+    	{
+    		$('#addressesForm').request('onCheckoutAddressesForm', {data: $('#addressesForm').serialize()});
+    	} 
+    	else { return false; }
+    }
+</script>
+{% endput %}";s:4:"code";s:201:"use Andresalice\Winelivery\Models\Cart;
+function onStart()
+{
+    $exists = Cart::where("user_id",Auth::getUser()->id)->exists();
+    if(!$exists)
+    {
+        return Redirect::to('/');
+    }
+}";s:5:"title";s:8:"Checkout";s:3:"url";s:9:"/checkout";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";s:7:"session";a:2:{s:8:"security";s:4:"user";s:8:"redirect";s:6:"inicio";}}}

@@ -1,6 +1,7 @@
 <?php 
-use Andresalice\Winelivery\Models\Wishlist;class Cms58b09bb0154b8990923846_2637631285Class extends \Cms\Classes\PageCode
+use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Cart;class Cms58b0a19cc26cb999323288_3880705282Class extends \Cms\Classes\PageCode
 {
+
 
 public function onStart()
 {

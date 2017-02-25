@@ -1,11 +1,48 @@
-1487970065a:1:{s:13:"checkout2.htm";a:10:{s:8:"fileName";s:13:"checkout2.htm";s:7:"content";s:2110:"title = "Checkout2"
-url = "/checkout2"
+1488005488a:1:{s:13:"checkout2.htm";a:10:{s:8:"fileName";s:13:"checkout2.htm";s:7:"content";s:3833:"title = "Checkout2"
+url = "/checkout2/:id?"
 layout = "layout"
 is_hidden = 0
 
 [session]
 security = "user"
 redirect = "inicio"
+==
+<?php
+use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Order;
+
+function onStart()
+{
+    $exists = Cart::where("user_id",Auth::getUser()->id)->exists();
+    if($exists)
+    {
+        $cart = Cart::where("user_id",Auth::getUser()->id)->get();
+        $this['products'] = $cart; 
+        $this['address'] = Address::find($this->param('id')); 
+        $order = new Order();
+        $order->user_id = Auth::getUser()->id;
+        $order->address_id = $this->param('id');
+        $order->status = "Procesando Orden";
+        $order->save();
+        $sum = 0;
+        foreach($cart as $c)
+        {
+            $sum += $c->product->price * $c->quantity;
+            DB::table("product_order")->insert(['order_id' => $order->id, 'product_id' => $c->product_id, 'quantity' => $c->quantity]);
+        }
+        $this['cart_total'] = $sum;
+        $this['cart_total_envio'] = $sum + 90;
+        $this['cart_counter'] = Cart::where("user_id","=",Auth::getUser()->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+        Cart::where("user_id",Auth::getUser()->id)->delete();
+    }
+    else
+    {
+        return Redirect::to('historial');
+    }
+    
+}
+?>
 ==
 <!-- Main Content -->
     <div class="container m-t-3">
@@ -21,24 +58,27 @@ redirect = "inicio"
                 <tr>
                   <th></th>
                   <th></th>
-
+                  <th>Cantidad</th>
                   <th>Precio</th>
                   <th>SubTotal</th>
                 </tr>
               </thead>
               <tbody>
+                {% for p in products %}
                 <tr>
                   <td class="img-cart">
-                    <a href="detail.html">
-                      <img alt="Product" src="images/demo/wine-1.png" class="img-thumbnail">
+                    <a href="{{"producto-detalle"|page({id:p.product.id})}}">
+                      <img alt="Product" src="{{p.product.featured_image.getPath}}" class="img-thumbnail">
                     </a>
                   </td>
                   <td>
-                    <p><a href="detail.html" class="d-block">Marques de Murrieta Blanco Reserva 2000-Roja</a></p>
+                    <p><a href="{{"producto-detalle"|page({id:p.product.id})}}" class="d-block">{{p.product.title}}</a></p>
                   </td>
-                  <td class="unit">$13.50</td>
-                  <td class="sub">$13.50</td>
+                   <td>{{p.quantity}}</td>
+                   <td class="unit">RD${{p.product.price|number_format}}</td>
+                   <td class="sub">{% set sub = p.product.price * p.quantity %}RD${{sub|number_format}}</td>
                 </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -46,18 +86,16 @@ redirect = "inicio"
         <!-- End Shopping Cart List -->
         <div class="col-md-3 cart-detailbox">
           <h4>orden de compra</h4>
-          <p class="detailbox-items">direccion:<span class="detailbox-content">  8400 NW 25TH ST STE 100
-          DORAL, FL 33198-1534
-          United States</span></p>
-          <p class="detailbox-items">Total items:<span class="detailbox-content">  4</span></p>
-          <p class="detailbox-items">costo:<span class="detailbox-content" ></span></p>
+          <p class="detailbox-items">direccion:<span class="detailbox-content">{{address.sector}} {{address.calle}} {{address.residencial}} {{address.numero}} {{address.telefono}} {{address.celular}} {{address.proximo}}</span></p>
+          <p class="detailbox-items">Total items:<span class="detailbox-content">{{cart_counter}}</span></p>
+          <p class="detailbox-items">costo:<span class="detailbox-content" >RD${{ cart_total|number_format}}</span></p>
           <p class="detailbox-items">costo de envio:<span class="detailbox-content"> $90</span></p>
-          <p class="detailbox-items">costo total:<span class="detailbox-content"></span></p>
+          <p class="detailbox-items">costo total:<span class="detailbox-content">RD${{ cart_total_envio|number_format}}</span></p>
 
         </div>
 
       </div>
-    </div>";s:5:"mtime";i:1486882874;s:6:"markup";s:1987:"<!-- Main Content -->
+    </div>";s:5:"mtime";i:1487983860;s:6:"markup";s:2431:"<!-- Main Content -->
     <div class="container m-t-3">
       <div class="row">
         <div class="title"><span>recibo de pago</span></div>
@@ -71,24 +109,27 @@ redirect = "inicio"
                 <tr>
                   <th></th>
                   <th></th>
-
+                  <th>Cantidad</th>
                   <th>Precio</th>
                   <th>SubTotal</th>
                 </tr>
               </thead>
               <tbody>
+                {% for p in products %}
                 <tr>
                   <td class="img-cart">
-                    <a href="detail.html">
-                      <img alt="Product" src="images/demo/wine-1.png" class="img-thumbnail">
+                    <a href="{{"producto-detalle"|page({id:p.product.id})}}">
+                      <img alt="Product" src="{{p.product.featured_image.getPath}}" class="img-thumbnail">
                     </a>
                   </td>
                   <td>
-                    <p><a href="detail.html" class="d-block">Marques de Murrieta Blanco Reserva 2000-Roja</a></p>
+                    <p><a href="{{"producto-detalle"|page({id:p.product.id})}}" class="d-block">{{p.product.title}}</a></p>
                   </td>
-                  <td class="unit">$13.50</td>
-                  <td class="sub">$13.50</td>
+                   <td>{{p.quantity}}</td>
+                   <td class="unit">RD${{p.product.price|number_format}}</td>
+                   <td class="sub">{% set sub = p.product.price * p.quantity %}RD${{sub|number_format}}</td>
                 </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -96,15 +137,46 @@ redirect = "inicio"
         <!-- End Shopping Cart List -->
         <div class="col-md-3 cart-detailbox">
           <h4>orden de compra</h4>
-          <p class="detailbox-items">direccion:<span class="detailbox-content">  8400 NW 25TH ST STE 100
-          DORAL, FL 33198-1534
-          United States</span></p>
-          <p class="detailbox-items">Total items:<span class="detailbox-content">  4</span></p>
-          <p class="detailbox-items">costo:<span class="detailbox-content" ></span></p>
+          <p class="detailbox-items">direccion:<span class="detailbox-content">{{address.sector}} {{address.calle}} {{address.residencial}} {{address.numero}} {{address.telefono}} {{address.celular}} {{address.proximo}}</span></p>
+          <p class="detailbox-items">Total items:<span class="detailbox-content">{{cart_counter}}</span></p>
+          <p class="detailbox-items">costo:<span class="detailbox-content" >RD${{ cart_total|number_format}}</span></p>
           <p class="detailbox-items">costo de envio:<span class="detailbox-content"> $90</span></p>
-          <p class="detailbox-items">costo total:<span class="detailbox-content"></span></p>
+          <p class="detailbox-items">costo total:<span class="detailbox-content">RD${{ cart_total_envio|number_format}}</span></p>
 
         </div>
 
       </div>
-    </div>";s:4:"code";N;s:5:"title";s:9:"Checkout2";s:3:"url";s:10:"/checkout2";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";s:7:"session";a:2:{s:8:"security";s:4:"user";s:8:"redirect";s:6:"inicio";}}}
+    </div>";s:4:"code";s:1261:"use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Order;
+
+function onStart()
+{
+    $exists = Cart::where("user_id",Auth::getUser()->id)->exists();
+    if($exists)
+    {
+        $cart = Cart::where("user_id",Auth::getUser()->id)->get();
+        $this['products'] = $cart; 
+        $this['address'] = Address::find($this->param('id')); 
+        $order = new Order();
+        $order->user_id = Auth::getUser()->id;
+        $order->address_id = $this->param('id');
+        $order->status = "Procesando Orden";
+        $order->save();
+        $sum = 0;
+        foreach($cart as $c)
+        {
+            $sum += $c->product->price * $c->quantity;
+            DB::table("product_order")->insert(['order_id' => $order->id, 'product_id' => $c->product_id, 'quantity' => $c->quantity]);
+        }
+        $this['cart_total'] = $sum;
+        $this['cart_total_envio'] = $sum + 90;
+        $this['cart_counter'] = Cart::where("user_id","=",Auth::getUser()->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+        Cart::where("user_id",Auth::getUser()->id)->delete();
+    }
+    else
+    {
+        return Redirect::to('historial');
+    }
+    
+}";s:5:"title";s:9:"Checkout2";s:3:"url";s:15:"/checkout2/:id?";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";s:7:"session";a:2:{s:8:"security";s:4:"user";s:8:"redirect";s:6:"inicio";}}}

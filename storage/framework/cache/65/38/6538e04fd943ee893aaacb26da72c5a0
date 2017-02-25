@@ -1,4 +1,4 @@
-1487969885a:1:{s:11:"carrito.htm";a:10:{s:8:"fileName";s:11:"carrito.htm";s:7:"content";s:4478:"title = "Carrito"
+1488005488a:1:{s:11:"carrito.htm";a:10:{s:8:"fileName";s:11:"carrito.htm";s:7:"content";s:5488:"title = "Carrito"
 url = "/carrito"
 layout = "layout"
 is_hidden = 0
@@ -20,7 +20,13 @@ function onStart()
     }
     $this['cart_total'] = $sum;
     $this['cart_total_envio'] = $sum + 90;
-      
+    $date = date("Y-m-d H:i:s");
+    /*echo $date;
+    $date = strtotime($date);
+    
+    echo "<br>";
+    echo date('H', $date);
+    die();*/
 }
 function onUpdateQuantity()
 {
@@ -63,7 +69,7 @@ function onDeleteFromCart()
       <p class="detailbox-items">costo:<span class="detailbox-content" > RD${{ cart_total|number_format}}</span></p>
       <p class="detailbox-items">costo de envio:<span class="detailbox-content"> RD$90</span></p>
       <p class="detailbox-items">costo total:<span class="detailbox-content"> RD${{ cart_total_envio|number_format}}</span></p>
-      <a href="{{"checkout"|page}}" class="btn btn-theme col-md-12">procesar orden</a>
+      <a {% if cart_total < 1500 %} data-toggle="modal" data-target="#consumo_minimo" {% else %} href="{{"checkout"|page}}" {% endif %} class="btn btn-theme col-md-12">procesar orden</a>
     </div>
     <!-- Related Products -->
     <div class="row m-t-3">
@@ -109,7 +115,26 @@ function onDeleteFromCart()
 
   </div>
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1487969284;s:6:"markup";s:3216:"<!-- Main Content -->
+<!-- End Main Content -->
+
+<!-- Lightbox -->
+<div class="modal fade" id="consumo_minimo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Aviso</h4>
+      </div>
+      <div class="modal-body">
+        Debes tener una orden de un minimo de RD $1,500 pesos para ser procesada.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Lightbox -->";s:5:"mtime";i:1487995371;s:6:"markup";s:4084:"<!-- Main Content -->
 <div class="container m-t-3">
   <div class="row">
 
@@ -127,7 +152,7 @@ function onDeleteFromCart()
       <p class="detailbox-items">costo:<span class="detailbox-content" > RD${{ cart_total|number_format}}</span></p>
       <p class="detailbox-items">costo de envio:<span class="detailbox-content"> RD$90</span></p>
       <p class="detailbox-items">costo total:<span class="detailbox-content"> RD${{ cart_total_envio|number_format}}</span></p>
-      <a href="{{"checkout"|page}}" class="btn btn-theme col-md-12">procesar orden</a>
+      <a {% if cart_total < 1500 %} data-toggle="modal" data-target="#consumo_minimo" {% else %} href="{{"checkout"|page}}" {% endif %} class="btn btn-theme col-md-12">procesar orden</a>
     </div>
     <!-- Related Products -->
     <div class="row m-t-3">
@@ -173,7 +198,26 @@ function onDeleteFromCart()
 
   </div>
 </div>
-<!-- End Main Content -->";s:4:"code";s:1131:"use Andresalice\Winelivery\Models\Cart;
+<!-- End Main Content -->
+
+<!-- Lightbox -->
+<div class="modal fade" id="consumo_minimo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Aviso</h4>
+      </div>
+      <div class="modal-body">
+        Debes tener una orden de un minimo de RD $1,500 pesos para ser procesada.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Lightbox -->";s:4:"code";s:1273:"use Andresalice\Winelivery\Models\Cart;
 
 function onStart()
 {
@@ -185,7 +229,13 @@ function onStart()
     }
     $this['cart_total'] = $sum;
     $this['cart_total_envio'] = $sum + 90;
-      
+    $date = date("Y-m-d H:i:s");
+    /*echo $date;
+    $date = strtotime($date);
+    
+    echo "<br>";
+    echo date('H', $date);
+    die();*/
 }
 function onUpdateQuantity()
 {

@@ -7,6 +7,15 @@ is_hidden = 0
 security = "user"
 redirect = "inicio"
 ==
+<?php
+use Andresalice\Winelivery\Models\Order;
+
+function onStart()
+{
+    $this['orders'] = DB::table("andresalice_winelivery_orders as o")->join("product_order as po","po.order_id","=","o.id")->groupBy("order_id")->select("po.*","o.*")->get();
+}
+?>
+==
 <!-- Main Content -->
 <div class="container m-t-3">
   <div class="row">
@@ -31,12 +40,14 @@ redirect = "inicio"
                 </tr>
               </thead>
               <tbody>
+                {% for o in orders %}
                 <tr>
-                  <td>2 items</td>
-                  <td>2016-12-19</td>
+                  <td>2 Vinos</td>
+                  <td>{{o.created_at|date("Y-M-d")}}</td>
                   <td class="text-right">$74.00</td>
-                  <td class="text-center"><span class="label label-warning">Processing</span></td>
+                  <td class="text-center"><span class="label label-warning">{{o.status}}</span></td>
                 </tr>
+                {% endfor %} 
               </tbody>
             </table>
           </div>

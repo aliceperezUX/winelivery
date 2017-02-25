@@ -22,7 +22,7 @@ class __TwigTemplate_018679ecdb71e698e833272b1fe154805c87eab29864ec064ba43f7a44d
       <th></th>
       <th></th>
       <th>Cantidad</th>
-      <th>Aplicar</th>
+      <th>Act. Cantidad</th>
       <th>Precio</th>
       <th>SubTotal</th>
     </tr>
@@ -59,7 +59,7 @@ class __TwigTemplate_018679ecdb71e698e833272b1fe154805c87eab29864ec064ba43f7a44d
             echo twig_escape_filter($this->env, $this->getAttribute($context["c"], "id", array()), "html", null, true);
             echo "');\" class=\"text-danger\" data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Borrar\"><i class=\"fa fa-trash-o\"></i></a>
       </td>
-      <td class=\"\"><input name=\"quantity\" id=\"qNumber";
+      <td class=\"sub\"><input name=\"quantity\" id=\"qNumber";
             // line 25
             echo twig_escape_filter($this->env, $this->getAttribute($context["c"], "id", array()), "html", null, true);
             echo "\" type=\"number\" value=\"";
@@ -68,7 +68,7 @@ class __TwigTemplate_018679ecdb71e698e833272b1fe154805c87eab29864ec064ba43f7a44d
       <td><a href=\"javascript:;\" onClick=\"changeQuantity(";
             // line 26
             echo twig_escape_filter($this->env, $this->getAttribute($context["c"], "id", array()), "html", null, true);
-            echo ");\">Aplicar</a></td>
+            echo ");\">Act. Cantidad</a></td>
       <td class=\"unit\">RD\$";
             // line 27
             echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute($this->getAttribute($context["c"], "product", array()), "price", array())), "html", null, true);
@@ -128,7 +128,7 @@ class __TwigTemplate_018679ecdb71e698e833272b1fe154805c87eab29864ec064ba43f7a44d
       <th></th>
       <th></th>
       <th>Cantidad</th>
-      <th>Aplicar</th>
+      <th>Act. Cantidad</th>
       <th>Precio</th>
       <th>SubTotal</th>
     </tr>
@@ -146,8 +146,8 @@ class __TwigTemplate_018679ecdb71e698e833272b1fe154805c87eab29864ec064ba43f7a44d
         <!-- <a href=\"#\" data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Comprar despues\"><i class=\"fa fa-refresh\"></i></a>&nbsp; -->
         <a href=\"javascript:;\" onClick=\"deteleFromCart('{{c.id}}');\" class=\"text-danger\" data-toggle=\"tooltip\" data-placement=\"top\" data-original-title=\"Borrar\"><i class=\"fa fa-trash-o\"></i></a>
       </td>
-      <td class=\"\"><input name=\"quantity\" id=\"qNumber{{c.id}}\" type=\"number\" value=\"{{c.quantity}}\" class=\"form-control text-center\"/></td>
-      <td><a href=\"javascript:;\" onClick=\"changeQuantity({{c.id}});\">Aplicar</a></td>
+      <td class=\"sub\"><input name=\"quantity\" id=\"qNumber{{c.id}}\" type=\"number\" value=\"{{c.quantity}}\" class=\"form-control text-center\"/></td>
+      <td><a href=\"javascript:;\" onClick=\"changeQuantity({{c.id}});\">Act. Cantidad</a></td>
       <td class=\"unit\">RD\${{c.product.price|number_format}}</td>
       <td class=\"sub\">{% set sub = c.product.price * c.quantity %}RD\${{sub|number_format}}</td>
     </tr>

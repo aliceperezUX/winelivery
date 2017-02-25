@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Cart;class Cms58b09c05aa8f5988586133_3583037996Class extends \Cms\Classes\PageCode
+use Andresalice\Winelivery\Models\Cart;class Cms58b101ec6637f597827762_2729362277Class extends \Cms\Classes\PageCode
 {
 
 public function onStart()
@@ -12,7 +12,13 @@ public function onStart()
     }
     $this['cart_total'] = $sum;
     $this['cart_total_envio'] = $sum + 90;
-      
+    $date = date("Y-m-d H:i:s");
+    /*echo $date;
+    $date = strtotime($date);
+    
+    echo "<br>";
+    echo date('H', $date);
+    die();*/
 }
 public function onUpdateQuantity()
 {

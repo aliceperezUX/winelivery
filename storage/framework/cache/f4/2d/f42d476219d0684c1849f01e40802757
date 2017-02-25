@@ -1,10 +1,12 @@
-1487970146a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:16971:"==
+1488005488a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:19102:"==
 <?php
 use Andresalice\Winelivery\Models\Category;
 use Andresalice\Winelivery\Models\Newsletter;
 use Andresalice\Winelivery\Models\Cart;
 use Andresalice\Winelivery\Models\Wishlist;
 use Andresalice\Winelivery\Models\Product;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Sector;
 
 function onStart()
 {
@@ -17,6 +19,12 @@ function onStart()
       $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
       $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
     }
+    if($this->param('id'))
+    {
+        $this['address'] = Address::find($this->param('id'));
+    }
+    $this['addresses'] = Address::where("user_id",Auth::getUser()->id)->get();
+    $this['sectors'] = Sector::get();
 }
 
 
@@ -85,6 +93,56 @@ function onNewsletterForm()
         $n->email = post('email_newsletter');
         $n->save();
     }
+}
+
+function onAddressesForm()
+{
+    $user_id = Auth::getUser()->id;
+    if(Input::has("id_control"))
+    {
+        $address = Address::where("id",post("id_control"))->update(['sector' => post("sector"),'calle' => post("calle"),'residencial' => post("residencial"),'numero' => post("numero"),'telefono' => post("telefono"),'celular' => post("celular"),'proximo' => post("proximo")]);
+    }
+    else
+    {
+        $address = new Address;
+        $address->sector = post("sector");
+        $address->calle = post("calle");
+        $address->residencial = post("residencial");
+        $address->numero = post("numero");
+        $address->telefono = post("telefono");
+        $address->celular = post("celular");
+        $address->proximo = post("proximo");
+        $address->user_id = $user_id;
+        $address->save();
+    }
+   
+    $addresses = Address::where("user_id",$user_id)->get();
+    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
+}
+
+function onCheckoutAddressesForm()
+{
+    $user_id = Auth::getUser()->id;
+    $address = new Address;
+    $address->sector = post("sector");
+    $address->calle = post("calle");
+    $address->residencial = post("residencial");
+    $address->numero = post("numero");
+    $address->telefono = post("telefono");
+    $address->celular = post("celular");
+    $address->proximo = post("proximo");
+    $address->user_id = $user_id;
+    $address->save();
+    return Redirect::to("checkout2/".$address->id);
+}
+
+function onDeleteAddress()
+{
+    $id = post("id");
+    $address = Address::find($id);
+    $address->delete();
+    $addresses = Address::where("user_id",Auth::getUser()->id)->get();
+    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
 }
 
 function onLogout()
@@ -353,7 +411,7 @@ function onLogout()
     }
     </script>
 </body>
-</html>";s:5:"mtime";i:1487969545;s:6:"markup";s:13592:"<!DOCTYPE html>
+</html>";s:5:"mtime";i:1487979652;s:6:"markup";s:13592:"<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -612,11 +670,13 @@ function onLogout()
     }
     </script>
 </body>
-</html>";s:4:"code";s:3363:"use Andresalice\Winelivery\Models\Category;
+</html>";s:4:"code";s:5494:"use Andresalice\Winelivery\Models\Category;
 use Andresalice\Winelivery\Models\Newsletter;
 use Andresalice\Winelivery\Models\Cart;
 use Andresalice\Winelivery\Models\Wishlist;
 use Andresalice\Winelivery\Models\Product;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Sector;
 
 function onStart()
 {
@@ -629,6 +689,12 @@ function onStart()
       $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
       $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
     }
+    if($this->param('id'))
+    {
+        $this['address'] = Address::find($this->param('id'));
+    }
+    $this['addresses'] = Address::where("user_id",Auth::getUser()->id)->get();
+    $this['sectors'] = Sector::get();
 }
 
 
@@ -697,6 +763,56 @@ function onNewsletterForm()
         $n->email = post('email_newsletter');
         $n->save();
     }
+}
+
+function onAddressesForm()
+{
+    $user_id = Auth::getUser()->id;
+    if(Input::has("id_control"))
+    {
+        $address = Address::where("id",post("id_control"))->update(['sector' => post("sector"),'calle' => post("calle"),'residencial' => post("residencial"),'numero' => post("numero"),'telefono' => post("telefono"),'celular' => post("celular"),'proximo' => post("proximo")]);
+    }
+    else
+    {
+        $address = new Address;
+        $address->sector = post("sector");
+        $address->calle = post("calle");
+        $address->residencial = post("residencial");
+        $address->numero = post("numero");
+        $address->telefono = post("telefono");
+        $address->celular = post("celular");
+        $address->proximo = post("proximo");
+        $address->user_id = $user_id;
+        $address->save();
+    }
+   
+    $addresses = Address::where("user_id",$user_id)->get();
+    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
+}
+
+function onCheckoutAddressesForm()
+{
+    $user_id = Auth::getUser()->id;
+    $address = new Address;
+    $address->sector = post("sector");
+    $address->calle = post("calle");
+    $address->residencial = post("residencial");
+    $address->numero = post("numero");
+    $address->telefono = post("telefono");
+    $address->celular = post("celular");
+    $address->proximo = post("proximo");
+    $address->user_id = $user_id;
+    $address->save();
+    return Redirect::to("checkout2/".$address->id);
+}
+
+function onDeleteAddress()
+{
+    $id = post("id");
+    $address = Address::find($id);
+    $address->delete();
+    $addresses = Address::where("user_id",Auth::getUser()->id)->get();
+    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
 }
 
 function onLogout()

@@ -176,7 +176,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
             echo "                        <div class=\"media\">
                             <div class=\"media-left\">
                                 <a href=\"javascript:;\">
-                                    <img class=\"media-object img-thumbnail\" alt=\"";
+                                    <img style=\"width: 76px; height: 76px\" class=\"media-object img-thumbnail\" alt=\"";
             // line 57
             echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["r"], "taste", array()), "name", array()), "html", null, true);
             echo "\" src=\"";
@@ -407,7 +407,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                         <div class=\"media\">
                             <div class=\"media-left\">
                                 <a href=\"javascript:;\">
-                                    <img class=\"media-object img-thumbnail\" alt=\"{{r.taste.name}}\" src=\"{{r.taste.featured_image.getPath}}\">
+                                    <img style=\"width: 76px; height: 76px\" class=\"media-object img-thumbnail\" alt=\"{{r.taste.name}}\" src=\"{{r.taste.featured_image.getPath}}\">
                                 </a>
                                 <div class=\"product-rating\">
                                     {% for i in 1..r.stars %}

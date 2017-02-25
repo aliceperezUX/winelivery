@@ -1,4 +1,4 @@
-1487969800a:1:{s:10:"deseos.htm";a:10:{s:8:"fileName";s:10:"deseos.htm";s:7:"content";s:1981:"title = "Deseos"
+1488005488a:1:{s:10:"deseos.htm";a:10:{s:8:"fileName";s:10:"deseos.htm";s:7:"content";s:2022:"title = "Deseos"
 url = "/deseos"
 layout = "layout"
 is_hidden = 0
@@ -9,6 +9,7 @@ redirect = "login"
 ==
 <?php
 use Andresalice\Winelivery\Models\Wishlist;
+use Andresalice\Winelivery\Models\Cart;
 
 function onStart()
 {
@@ -55,7 +56,7 @@ function onMoveToCart()
     </div>
   </div>
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1487969198;s:6:"markup";s:326:"<!-- Main Content -->
+<!-- End Main Content -->";s:5:"mtime";i:1487970715;s:6:"markup";s:326:"<!-- Main Content -->
 <div class="container m-t-3">
   <div class="row">
     <div class="col-xs-12">
@@ -66,7 +67,8 @@ function onMoveToCart()
     </div>
   </div>
 </div>
-<!-- End Main Content -->";s:4:"code";s:1526:"use Andresalice\Winelivery\Models\Wishlist;
+<!-- End Main Content -->";s:4:"code";s:1567:"use Andresalice\Winelivery\Models\Wishlist;
+use Andresalice\Winelivery\Models\Cart;
 
 function onStart()
 {
