@@ -1,0 +1,10 @@
+==
+<div class="comments" style="padding: 20px; margin-bottom: 60px">
+    {% for c in comments %}
+    <div class="col-md-12" style="margin-bottom: 30px" >
+        <p style="font-weight: 700; margin-bottom: -3px">{{c.user.name}}</p>
+        <p style="color:#ccc; font-size: 10px;">{{c.created_at|date("Y-m-d")}}</p>
+        {{c.comment}}
+    </div>
+    {% endfor %}     
+</div>

@@ -25,11 +25,4 @@ class Order extends Model
      * @var string The database table used by the model.
      */
     public $table = 'andresalice_winelivery_orders';
-
-    public $hasManyThrough = [
-        'products' => [
-            'Andresalice\Winelivery\Product',
-            'through' => 'Andresalice\Winelivery\Porder'
-        ],
-    ];
 }

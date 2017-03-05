@@ -108,3 +108,9 @@
 1.0.37:
     - 'Updated table andresalice_winelivery_carts'
     - builder_table_update_andresalice_winelivery_carts_3.php
+1.0.38:
+    - 'Created table andresalice_winelivery_ratings'
+    - builder_table_create_andresalice_winelivery_ratings.php
+1.0.39:
+    - 'Created table andresalice_winelivery_comments'
+    - builder_table_create_andresalice_winelivery_comments.php

@@ -1,0 +1,10 @@
+name: Comment
+form: $/andresalice/winelivery/models/comment/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Comment
+defaultRedirect: andresalice/winelivery/comment
+create:
+    redirect: 'andresalice/winelivery/comment/update/:id'
+    redirectClose: andresalice/winelivery/comment
+update:
+    redirect: andresalice/winelivery/comment
+    redirectClose: andresalice/winelivery/comment

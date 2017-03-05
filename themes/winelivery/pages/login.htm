@@ -4,12 +4,20 @@ layout = "layout"
 is_hidden = 0
 ==
 <?php
+function onStart()
+{
+    session()->put('from', URL::previous());
+}
+
 function onLoginForm()
 {
     $user = Auth::authenticate(['login' => post('email'),'password' => post('password')]);
     Auth::login($user, true);
     $loggedIn = Auth::check();
-    if($loggedIn){return Redirect::to('/');}
+    if($loggedIn)
+    {
+        return redirect(session()->pull('from',$this->redirectTo));
+    }
 }
 ?>
 ==

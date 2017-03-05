@@ -1,0 +1,10 @@
+name: Rating
+form: $/andresalice/winelivery/models/rating/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Rating
+defaultRedirect: andresalice/winelivery/rating
+create:
+    redirect: 'andresalice/winelivery/rating/update/:id'
+    redirectClose: andresalice/winelivery/rating
+update:
+    redirect: andresalice/winelivery/rating
+    redirectClose: andresalice/winelivery/rating

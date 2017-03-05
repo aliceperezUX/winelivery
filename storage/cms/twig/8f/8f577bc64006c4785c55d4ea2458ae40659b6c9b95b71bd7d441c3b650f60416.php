@@ -58,12 +58,13 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
               <li>
                 <select id=\"priceRangeFilter\" class=\"selectpicker\" data-width=\"100%\">
                   <option value=\"0\">Todos los Precios</option>
-                  <option value=\"1-500\">RD\$1 - RD\$500</option>
-                  <option value=\"501-1,000\">RD\$501 - RD\$1,000</option>
-                  <option value=\"1,001-2,000\">RD\$1,001 - RD\$2,000</option>
-                  <option value=\"2,001-3,000\">RD\$2,001- RD\$3,000</option>
-                  <option value=\"3,001-4,000\">RD\$3,001- RD\$4,000</option>
-                  <option value=\"4,001-5,000\">RD\$4,001- RD\$5,000</option>
+                  <option value=\"?desde=1&hasta=500\">RD\$1 - RD\$500</option>
+                  <option value=\"?desde=501&hasta=1000\">RD\$501 - RD\$1,000</option>
+                  <option value=\"?desde=1001&hasta=2000\">RD\$1,001 - RD\$2,000</option>
+                  <option value=\"?desde=2001&hasta=3000\">RD\$2,001- RD\$3,000</option>
+                  <option value=\"?desde=3001&hasta=4000\">RD\$3,001- RD\$4,000</option>
+                  <option value=\"?desde=4001&hasta=5000\">RD\$4,001- RD\$5,000</option>
+                   <option value=\"?desde=5001&hasta=100000\">RD\$5,001 +</option>
                 </select>
               </li>
             </ul>
@@ -74,13 +75,13 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
               <li>
                 <select id=\"priceFilter\" class=\"selectpicker\" data-width=\"100%\">
                   <option ";
-        // line 40
+        // line 41
         if (((isset($context["orderBy"]) ? $context["orderBy"] : null) == "ASC")) {
             echo " selected ";
         }
         echo " value=\"ASC\">Precio Ascendente</option>
                   <option ";
-        // line 41
+        // line 42
         if (((isset($context["orderBy"]) ? $context["orderBy"] : null) == "DESC")) {
             echo " selected ";
         }
@@ -95,7 +96,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
         <!-- Product List -->
         <div class=\"col-sm-9\">
           <div class=\"title\"><span>";
-        // line 51
+        // line 52
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["country_title"]) ? $context["country_title"] : null), "name", array()), "html", null, true);
         echo " / ";
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["category"]) ? $context["category"] : null), "title", array()), "html", null, true);
@@ -104,46 +105,46 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
 
           <!-- Collection -->
           ";
-        // line 55
+        // line 56
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["products_by_cat"]) ? $context["products_by_cat"] : null));
         foreach ($context['_seq'] as $context["_key"] => $context["pp"]) {
-            // line 56
+            // line 57
             echo "              ";
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable($context["pp"]);
             foreach ($context['_seq'] as $context["_key"] => $context["p"]) {
-                // line 57
+                // line 58
                 echo "                ";
                 $context['_parent'] = $context;
                 $context['_seq'] = twig_ensure_traversable((isset($context["regions"]) ? $context["regions"] : null));
                 foreach ($context['_seq'] as $context["_key"] => $context["r"]) {
-                    // line 58
+                    // line 59
                     echo "                ";
                     if (($this->getAttribute($context["r"], "id", array()) == $this->getAttribute($context["p"], "region_id", array()))) {
-                        // line 59
+                        // line 60
                         echo "                    <div class=\"col-sm-4 col-lg-3 box-product-outer\">
                       <div class=\"box-product\">
                           <div class=\"img-wrapper\">
                               <a href=\"";
-                        // line 62
+                        // line 63
                         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
                         echo "\">
                                   <img alt=\"Product\" src=\"";
-                        // line 63
+                        // line 64
                         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["p"], "featured_image", array()), "getPath", array()), "html", null, true);
                         echo "\">
                               </a>
                               ";
-                        // line 65
+                        // line 66
                         $context['__cms_partial_params'] = [];
                         $context['__cms_partial_params']['p'] = $context["p"]                        ;
                         echo $this->env->getExtension('CMS')->partialFunction("stock"                        , $context['__cms_partial_params']                        );
                         unset($context['__cms_partial_params']);
-                        // line 66
+                        // line 67
                         echo "                          </div>
                           <h6><a href=\"";
-                        // line 67
+                        // line 68
                         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
                         echo "\">";
                         echo twig_escape_filter($this->env, $this->getAttribute($context["p"], "title", array()), "html", null, true);
@@ -153,54 +154,54 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
                               <i class=\"fa fa-star\"></i>
                               <i class=\"fa fa-star\"></i>
                               <i class=\"fa fa-star\"></i>
-                              <i class=\"fa fa-star-half-o\"></i>
+                              <i class=\"fa fa-star\"></i>
                               <a href=\"#\">(5 reviews)</a>
                           </div>
                           <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px\">
                               <div style=\"color:#fff\" class=\"price col-lg-6 \">
                                   <div>RD\$";
-                        // line 78
+                        // line 79
                         echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute($context["p"], "price", array())), "html", null, true);
                         echo " <span class=\"label-tags\"></span></div>
                               </div>
                               <div class=\"col-lg-6\">
                                   ";
-                        // line 81
+                        // line 82
                         $context['__cms_partial_params'] = [];
                         $context['__cms_partial_params']['p'] = $context["p"]                        ;
                         echo $this->env->getExtension('CMS')->partialFunction("botones"                        , $context['__cms_partial_params']                        );
                         unset($context['__cms_partial_params']);
-                        // line 82
+                        // line 83
                         echo "                              </div>
                           </div>
                       </div>
                     </div>
                 ";
                     }
-                    // line 87
+                    // line 88
                     echo "                ";
                 }
                 $_parent = $context['_parent'];
                 unset($context['_seq'], $context['_iterated'], $context['_key'], $context['r'], $context['_parent'], $context['loop']);
                 $context = array_intersect_key($context, $_parent) + $_parent;
-                // line 88
+                // line 89
                 echo "              ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['p'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 89
+            // line 90
             echo "          ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['pp'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 90
+        // line 91
         echo "          <!-- End Collection -->
           <div class=\"col-xs-12 text-center\">
             <nav aria-label=\"Page navigation\">
               ";
-        // line 93
+        // line 94
         echo $this->getAttribute((isset($context["products_by_cat"]) ? $context["products_by_cat"] : null), "render", array());
         echo "
             </nav>
@@ -212,15 +213,15 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
     </div>
     <!-- End Main Content -->
 ";
-        // line 102
-        echo $this->env->getExtension('CMS')->startBlock('scripts'        );
         // line 103
+        echo $this->env->getExtension('CMS')->startBlock('scripts'        );
+        // line 104
         echo "<script>
 \$('#regionFilter').on('change', function() {
     var value = this.value;
     if(value === 0){value = \"\"}
     location.href='/productos/";
-        // line 107
+        // line 108
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["this"]) ? $context["this"] : null), "param", array()), "country", array()), "html", null, true);
         echo "/";
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["this"]) ? $context["this"] : null), "param", array()), "category", array()), "html", null, true);
@@ -228,7 +229,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
 })
 \$('#priceFilter').on('change', function() {
     location.href='/productos/";
-        // line 110
+        // line 111
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["this"]) ? $context["this"] : null), "param", array()), "country", array()), "html", null, true);
         echo "/";
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["this"]) ? $context["this"] : null), "param", array()), "category", array()), "html", null, true);
@@ -237,11 +238,18 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
         echo "?order='+this.value;
 })
 \$('#priceRangeFilter').on('change', function() {
-    location.href=window.location.href+'?price='+this.value;
+    location.href='/productos/";
+        // line 114
+        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["this"]) ? $context["this"] : null), "param", array()), "country", array()), "html", null, true);
+        echo "/";
+        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["this"]) ? $context["this"] : null), "param", array()), "category", array()), "html", null, true);
+        echo "/";
+        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["this"]) ? $context["this"] : null), "param", array()), "region", array()), "html", null, true);
+        echo "'+this.value;
 })
 </script>
 ";
-        // line 102
+        // line 103
         echo $this->env->getExtension('CMS')->endBlock(true        );
     }
 
@@ -257,7 +265,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
 
     public function getDebugInfo()
     {
-        return array (  245 => 102,  232 => 110,  224 => 107,  218 => 103,  216 => 102,  204 => 93,  199 => 90,  193 => 89,  187 => 88,  181 => 87,  174 => 82,  169 => 81,  163 => 78,  147 => 67,  144 => 66,  139 => 65,  134 => 63,  130 => 62,  125 => 59,  122 => 58,  117 => 57,  112 => 56,  108 => 55,  99 => 51,  84 => 41,  78 => 40,  51 => 15,  36 => 13,  32 => 12,  19 => 1,);
+        return array (  253 => 103,  243 => 114,  233 => 111,  225 => 108,  219 => 104,  217 => 103,  205 => 94,  200 => 91,  194 => 90,  188 => 89,  182 => 88,  175 => 83,  170 => 82,  164 => 79,  148 => 68,  145 => 67,  140 => 66,  135 => 64,  131 => 63,  126 => 60,  123 => 59,  118 => 58,  113 => 57,  109 => 56,  100 => 52,  85 => 42,  79 => 41,  51 => 15,  36 => 13,  32 => 12,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -294,12 +302,13 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
               <li>
                 <select id=\"priceRangeFilter\" class=\"selectpicker\" data-width=\"100%\">
                   <option value=\"0\">Todos los Precios</option>
-                  <option value=\"1-500\">RD\$1 - RD\$500</option>
-                  <option value=\"501-1,000\">RD\$501 - RD\$1,000</option>
-                  <option value=\"1,001-2,000\">RD\$1,001 - RD\$2,000</option>
-                  <option value=\"2,001-3,000\">RD\$2,001- RD\$3,000</option>
-                  <option value=\"3,001-4,000\">RD\$3,001- RD\$4,000</option>
-                  <option value=\"4,001-5,000\">RD\$4,001- RD\$5,000</option>
+                  <option value=\"?desde=1&hasta=500\">RD\$1 - RD\$500</option>
+                  <option value=\"?desde=501&hasta=1000\">RD\$501 - RD\$1,000</option>
+                  <option value=\"?desde=1001&hasta=2000\">RD\$1,001 - RD\$2,000</option>
+                  <option value=\"?desde=2001&hasta=3000\">RD\$2,001- RD\$3,000</option>
+                  <option value=\"?desde=3001&hasta=4000\">RD\$3,001- RD\$4,000</option>
+                  <option value=\"?desde=4001&hasta=5000\">RD\$4,001- RD\$5,000</option>
+                   <option value=\"?desde=5001&hasta=100000\">RD\$5,001 +</option>
                 </select>
               </li>
             </ul>
@@ -342,7 +351,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
                               <i class=\"fa fa-star\"></i>
                               <i class=\"fa fa-star\"></i>
                               <i class=\"fa fa-star\"></i>
-                              <i class=\"fa fa-star-half-o\"></i>
+                              <i class=\"fa fa-star\"></i>
                               <a href=\"#\">(5 reviews)</a>
                           </div>
                           <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px\">
@@ -382,7 +391,7 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
     location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}?order='+this.value;
 })
 \$('#priceRangeFilter').on('change', function() {
-    location.href=window.location.href+'?price='+this.value;
+    location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}'+this.value;
 })
 </script>
 {% endput %}", "/home/winelivery/themes/winelivery/pages/productos.htm", "");

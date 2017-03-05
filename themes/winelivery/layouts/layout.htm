@@ -18,12 +18,12 @@ function onStart()
       $this['user'] = Auth::getUser();
       $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
       $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+      $this['addresses'] = Address::where("user_id",Auth::getUser()->id)->get();
+        if($this->param('id'))
+        {
+            $this['address'] = Address::find($this->param('id'));
+        }
     }
-    if($this->param('id'))
-    {
-        $this['address'] = Address::find($this->param('id'));
-    }
-    $this['addresses'] = Address::where("user_id",Auth::getUser()->id)->get();
     $this['sectors'] = Sector::get();
 }
 
@@ -190,6 +190,78 @@ function onLogout()
         	width: 350px; 
         	height:500px;
         }
+        .evaluacion {
+          width: 160px;
+          height: 20px;
+        }
+       .evaluacion p {
+        }
+
+        .evaluacion label {
+          font-size:14px;
+          padding-right: 1px;
+     
+        }
+
+        input[type="radio"] {
+          display: none;
+        }
+        .clasificacion {
+          direction: rtl;
+          unicode-bidi: bidi-override;
+          float: left;
+        }
+
+        label {
+          color: #ccc;
+
+        }
+
+        label:hover,
+        label:hover ~ label {
+          color: orange;
+        }
+
+        input[type="radio"]:checked ~ label {
+          color: orange;
+        }
+        
+        .evaluacion-detalle {
+              width: 160px;
+              height: 20px;
+            }
+
+            .evaluacion-detalle label {
+              font-size:20px;
+              padding-right: 3px;
+         
+            }
+              .evaluacion-detalle p {
+              
+            }
+
+            input[type="radio"] {
+              display: none;
+            }
+            .clasificacion {
+              direction: rtl;
+              unicode-bidi: bidi-override;
+              float: left;
+            }
+
+            label {
+              color: #ccc;
+
+            }
+
+            label:hover,
+            label:hover ~ label {
+              color: orange;
+            }
+
+            input[type="radio"]:checked ~ label {
+              color: orange;
+            }
     </style>
 </head>
 

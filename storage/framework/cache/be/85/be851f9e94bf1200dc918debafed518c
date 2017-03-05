@@ -1,4 +1,4 @@
-1488005488a:1:{s:10:"deseos.htm";a:10:{s:8:"fileName";s:10:"deseos.htm";s:7:"content";s:2022:"title = "Deseos"
+1488744006a:1:{s:10:"deseos.htm";a:10:{s:8:"fileName";s:10:"deseos.htm";s:7:"content";s:2107:"title = "Deseos"
 url = "/deseos"
 layout = "layout"
 is_hidden = 0
@@ -13,7 +13,11 @@ use Andresalice\Winelivery\Models\Cart;
 
 function onStart()
 {
-    $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
+    $this['loggedIn'] = Auth::check();
+    if($this['loggedIn'])
+    {
+        $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
+    }
 }
 function onMoveToCart()
 {
@@ -56,7 +60,7 @@ function onMoveToCart()
     </div>
   </div>
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1487970715;s:6:"markup";s:326:"<!-- Main Content -->
+<!-- End Main Content -->";s:5:"mtime";i:1488359731;s:6:"markup";s:326:"<!-- Main Content -->
 <div class="container m-t-3">
   <div class="row">
     <div class="col-xs-12">
@@ -67,12 +71,16 @@ function onMoveToCart()
     </div>
   </div>
 </div>
-<!-- End Main Content -->";s:4:"code";s:1567:"use Andresalice\Winelivery\Models\Wishlist;
+<!-- End Main Content -->";s:4:"code";s:1652:"use Andresalice\Winelivery\Models\Wishlist;
 use Andresalice\Winelivery\Models\Cart;
 
 function onStart()
 {
-    $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
+    $this['loggedIn'] = Auth::check();
+    if($this['loggedIn'])
+    {
+        $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
+    }
 }
 function onMoveToCart()
 {

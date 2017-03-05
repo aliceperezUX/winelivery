@@ -1,0 +1,19 @@
+columns:
+    id:
+        label: id
+        type: number
+    comment:
+        label: comment
+        type: text
+    created_at:
+        label: created_at
+        type: datetime
+    updated_at:
+        label: updated_at
+        type: datetime
+    user_id:
+        label: user_id
+        type: text
+    product_id:
+        label: product_id
+        type: number

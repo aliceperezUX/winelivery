@@ -1,0 +1,4 @@
+title: Comment
+modelClass: Andresalice\Winelivery\Models\Comment
+toolbar:
+    buttons: reorder_toolbar

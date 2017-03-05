@@ -280,11 +280,13 @@ class __TwigTemplate_f746ab97a14571a5b48a9fea1799755696550582724e6450f0e13650419
     </div>
     <div class=\"title\"><span>VINO DEL MES</span></div>
     <div class=\"col-md-9 col-sm-6\" style=\"margin-top:20px;border:5px solid #000\">
-        <div class=\"col-md-2 image-wrapper\">
-            <img alt=\"Product\" src=\"";
+        <div class=\"col-md-2 image-wrapper\" style=\"width: 200px; text-align: center;\">
+           <a href=\"";
         // line 147
+        echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute((isset($context["mwine"]) ? $context["mwine"] : null), "id", array())));
+        echo "\"><img style=\"width:230px; height: 300px\" alt=\"Product\" src=\"";
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["mwine"]) ? $context["mwine"] : null), "featured_image", array()), "thumb", array(0 => 350, 1 => 250), "method"), "html", null, true);
-        echo "\">
+        echo "\"></a>
         </div>
         ";
         // line 149
@@ -293,11 +295,13 @@ class __TwigTemplate_f746ab97a14571a5b48a9fea1799755696550582724e6450f0e13650419
         echo $this->env->getExtension('CMS')->partialFunction("stock"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
         // line 150
-        echo "        <div class=\"col-md-10\" style=\"padding:20px\">
-            <h3>";
+        echo "        <div class=\"col-md-8\" style=\"padding:20px 0px 20px 0px\">
+            <h3><a href=\"";
         // line 151
+        echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute((isset($context["mwine"]) ? $context["mwine"] : null), "id", array())));
+        echo "\">";
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["mwine"]) ? $context["mwine"] : null), "title", array()), "html", null, true);
-        echo "</h3>
+        echo "</a></h3>
             <p style=\"padding-top:10px\">";
         // line 152
         echo $this->getAttribute((isset($context["mwine"]) ? $context["mwine"] : null), "description", array());
@@ -462,7 +466,7 @@ class __TwigTemplate_f746ab97a14571a5b48a9fea1799755696550582724e6450f0e13650419
 
     public function getDebugInfo()
     {
-        return array (  442 => 228,  432 => 223,  427 => 222,  421 => 219,  405 => 208,  402 => 207,  397 => 206,  392 => 204,  388 => 203,  383 => 200,  379 => 199,  362 => 185,  358 => 184,  346 => 174,  341 => 172,  336 => 171,  331 => 169,  326 => 168,  324 => 167,  318 => 164,  303 => 152,  299 => 151,  296 => 150,  291 => 149,  286 => 147,  276 => 139,  266 => 134,  261 => 133,  255 => 130,  239 => 119,  233 => 116,  229 => 115,  224 => 112,  220 => 111,  211 => 104,  201 => 99,  196 => 98,  190 => 95,  174 => 84,  171 => 83,  166 => 82,  161 => 80,  157 => 79,  152 => 76,  148 => 75,  130 => 60,  126 => 59,  113 => 49,  109 => 48,  81 => 22,  63 => 18,  58 => 16,  51 => 15,  34 => 14,  19 => 1,);
+        return array (  446 => 228,  436 => 223,  431 => 222,  425 => 219,  409 => 208,  406 => 207,  401 => 206,  396 => 204,  392 => 203,  387 => 200,  383 => 199,  366 => 185,  362 => 184,  350 => 174,  345 => 172,  340 => 171,  335 => 169,  330 => 168,  328 => 167,  322 => 164,  307 => 152,  301 => 151,  298 => 150,  293 => 149,  286 => 147,  276 => 139,  266 => 134,  261 => 133,  255 => 130,  239 => 119,  233 => 116,  229 => 115,  224 => 112,  220 => 111,  211 => 104,  201 => 99,  196 => 98,  190 => 95,  174 => 84,  171 => 83,  166 => 82,  161 => 80,  157 => 79,  152 => 76,  148 => 75,  130 => 60,  126 => 59,  113 => 49,  109 => 48,  81 => 22,  63 => 18,  58 => 16,  51 => 15,  34 => 14,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -620,12 +624,12 @@ class __TwigTemplate_f746ab97a14571a5b48a9fea1799755696550582724e6450f0e13650419
     </div>
     <div class=\"title\"><span>VINO DEL MES</span></div>
     <div class=\"col-md-9 col-sm-6\" style=\"margin-top:20px;border:5px solid #000\">
-        <div class=\"col-md-2 image-wrapper\">
-            <img alt=\"Product\" src=\"{{mwine.featured_image.thumb(350,250)}}\">
+        <div class=\"col-md-2 image-wrapper\" style=\"width: 200px; text-align: center;\">
+           <a href=\"{{\"producto-detalle\"|page({id: mwine.id})}}\"><img style=\"width:230px; height: 300px\" alt=\"Product\" src=\"{{mwine.featured_image.thumb(350,250)}}\"></a>
         </div>
         {% partial \"stock\" p = mwine %}
-        <div class=\"col-md-10\" style=\"padding:20px\">
-            <h3>{{mwine.title}}</h3>
+        <div class=\"col-md-8\" style=\"padding:20px 0px 20px 0px\">
+            <h3><a href=\"{{\"producto-detalle\"|page({id: mwine.id})}}\">{{mwine.title}}</a></h3>
             <p style=\"padding-top:10px\">{{mwine.description|raw}}</p>
             <div class=\"rating\">
                 <i class=\"fa fa-star\"></i>

@@ -51,7 +51,9 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
         echo "</span></p>
       <a ";
         // line 19
-        if (((isset($context["cart_total"]) ? $context["cart_total"] : null) < 1500)) {
+        if ((isset($context["now"]) ? $context["now"] : null)) {
+            echo " class=\"btn btn-theme\" data-toggle=\"modal\" data-target=\"#horario_minimo\" ";
+        } elseif (((isset($context["cart_total"]) ? $context["cart_total"] : null) < 1500)) {
             echo " data-toggle=\"modal\" data-target=\"#consumo_minimo\" ";
         } else {
             echo " href=\"";
@@ -153,6 +155,25 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
     </div>
   </div>
 </div>
+<!-- Lightbox -->
+
+<!-- Lightbox -->
+<div class=\"modal fade\" id=\"horario_minimo\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">
+  <div class=\"modal-dialog\" role=\"document\">
+    <div class=\"modal-content\">
+      <div class=\"modal-header\">
+        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+        <h4 class=\"modal-title\" id=\"myModalLabel\">Aviso</h4>
+      </div>
+      <div class=\"modal-body\">
+        Nuestros pedidos se realizan de Lunes a Domingo de 12:00 pm a 10:00 pm. Vulve a intentarlo mas tarde
+      </div>
+      <div class=\"modal-footer\">
+        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Lightbox -->";
     }
 
@@ -168,7 +189,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
 
     public function getDebugInfo()
     {
-        return array (  129 => 57,  119 => 52,  114 => 51,  108 => 48,  92 => 37,  83 => 31,  79 => 30,  74 => 27,  70 => 26,  54 => 19,  50 => 18,  45 => 16,  41 => 15,  34 => 10,  29 => 9,  19 => 1,);
+        return array (  131 => 57,  121 => 52,  116 => 51,  110 => 48,  94 => 37,  85 => 31,  81 => 30,  76 => 27,  72 => 26,  54 => 19,  50 => 18,  45 => 16,  41 => 15,  34 => 10,  29 => 9,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -199,7 +220,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
       <p class=\"detailbox-items\">costo:<span class=\"detailbox-content\" > RD\${{ cart_total|number_format}}</span></p>
       <p class=\"detailbox-items\">costo de envio:<span class=\"detailbox-content\"> RD\$90</span></p>
       <p class=\"detailbox-items\">costo total:<span class=\"detailbox-content\"> RD\${{ cart_total_envio|number_format}}</span></p>
-      <a {% if cart_total < 1500 %} data-toggle=\"modal\" data-target=\"#consumo_minimo\" {% else %} href=\"{{\"checkout\"|page}}\" {% endif %} class=\"btn btn-theme col-md-12\">procesar orden</a>
+      <a {% if now %} class=\"btn btn-theme\" data-toggle=\"modal\" data-target=\"#horario_minimo\" {% elseif cart_total < 1500 %} data-toggle=\"modal\" data-target=\"#consumo_minimo\" {% else %} href=\"{{\"checkout\"|page}}\" {% endif %} class=\"btn btn-theme col-md-12\">procesar orden</a>
     </div>
     <!-- Related Products -->
     <div class=\"row m-t-3\">
@@ -257,6 +278,25 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
       </div>
       <div class=\"modal-body\">
         Debes tener una orden de un minimo de RD \$1,500 pesos para ser procesada.
+      </div>
+      <div class=\"modal-footer\">
+        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Lightbox -->
+
+<!-- Lightbox -->
+<div class=\"modal fade\" id=\"horario_minimo\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">
+  <div class=\"modal-dialog\" role=\"document\">
+    <div class=\"modal-content\">
+      <div class=\"modal-header\">
+        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+        <h4 class=\"modal-title\" id=\"myModalLabel\">Aviso</h4>
+      </div>
+      <div class=\"modal-body\">
+        Nuestros pedidos se realizan de Lunes a Domingo de 12:00 pm a 10:00 pm. Vulve a intentarlo mas tarde
       </div>
       <div class=\"modal-footer\">
         <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Aceptar</button>

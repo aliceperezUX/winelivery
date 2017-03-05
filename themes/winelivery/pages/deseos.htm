@@ -13,7 +13,11 @@ use Andresalice\Winelivery\Models\Cart;
 
 function onStart()
 {
-    $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
+    $this['loggedIn'] = Auth::check();
+    if($this['loggedIn'])
+    {
+        $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
+    }
 }
 function onMoveToCart()
 {

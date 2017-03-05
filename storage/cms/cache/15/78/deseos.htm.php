@@ -1,11 +1,15 @@
 <?php 
-use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Cart;class Cms58b0a19cc26cb999323288_3880705282Class extends \Cms\Classes\PageCode
+use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Cart;class Cms58b69136cf868527313417_2877665894Class extends \Cms\Classes\PageCode
 {
 
 
 public function onStart()
 {
-    $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
+    $this['loggedIn'] = Auth::check();
+    if($this['loggedIn'])
+    {
+        $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
+    }
 }
 public function onMoveToCart()
 {

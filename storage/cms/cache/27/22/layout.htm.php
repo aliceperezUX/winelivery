@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Address;use Andresalice\Winelivery\Models\Sector;class Cms58b0c4fa144f0841073548_1784133882Class extends \Cms\Classes\LayoutCode
+use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Address;use Andresalice\Winelivery\Models\Sector;class Cms58bc1ccbbded3303966178_2306031114Class extends \Cms\Classes\LayoutCode
 {
 
 
@@ -18,12 +18,12 @@ public function onStart()
       $this['user'] = Auth::getUser();
       $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
       $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+      $this['addresses'] = Address::where("user_id",Auth::getUser()->id)->get();
+        if($this->param('id'))
+        {
+            $this['address'] = Address::find($this->param('id'));
+        }
     }
-    if($this->param('id'))
-    {
-        $this['address'] = Address::find($this->param('id'));
-    }
-    $this['addresses'] = Address::where("user_id",Auth::getUser()->id)->get();
     $this['sectors'] = Sector::get();
 }
 public function onAddToCart()

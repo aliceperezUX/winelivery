@@ -1,0 +1,11 @@
+list: $/andresalice/winelivery/models/comment/columns.yaml
+modelClass: Andresalice\Winelivery\Models\Comment
+title: Comment
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'andresalice/winelivery/comment/update/:id'

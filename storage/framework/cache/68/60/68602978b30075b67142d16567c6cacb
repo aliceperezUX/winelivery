@@ -1,9 +1,14 @@
-1488005488a:1:{s:12:"registro.htm";a:9:{s:8:"fileName";s:12:"registro.htm";s:7:"content";s:3072:"title = "Registro"
+1488744006a:1:{s:12:"registro.htm";a:9:{s:8:"fileName";s:12:"registro.htm";s:7:"content";s:3202:"title = "Registro"
 url = "/registro"
 layout = "layout"
 is_hidden = 0
 ==
 <?php
+function onStart()
+{
+    session()->put('from', URL::previous());
+}
+
 function onRegisterForm()
 {
     $user = Auth::register([
@@ -16,7 +21,10 @@ function onRegisterForm()
     
     Auth::login($user);
     $loggedIn = Auth::check();
-    if($loggedIn){return Redirect::to('/');}
+    if($loggedIn)
+    {
+        return redirect(session()->pull('from',$this->redirectTo));
+    }
 }
 ?>
 ==
@@ -84,7 +92,7 @@ function onRegisterForm()
     	else { return false; }
     }
 </script>
-{% endput %}";s:5:"mtime";i:1487455523;s:6:"markup";s:2607:"<!-- Main Content -->
+{% endput %}";s:5:"mtime";i:1488370098;s:6:"markup";s:2607:"<!-- Main Content -->
 <div style="width:40%; margin:0 auto;" class="container m-t-3">
   <div style="border:1px solid #ccc;border-radius:5px;padding:20px" class=" row">
     <!-- Login Form -->
@@ -148,7 +156,12 @@ function onRegisterForm()
     	else { return false; }
     }
 </script>
-{% endput %}";s:4:"code";s:380:"function onRegisterForm()
+{% endput %}";s:4:"code";s:510:"function onStart()
+{
+    session()->put('from', URL::previous());
+}
+
+function onRegisterForm()
 {
     $user = Auth::register([
     'name' => post('name'),
@@ -160,5 +173,8 @@ function onRegisterForm()
     
     Auth::login($user);
     $loggedIn = Auth::check();
-    if($loggedIn){return Redirect::to('/');}
+    if($loggedIn)
+    {
+        return redirect(session()->pull('from',$this->redirectTo));
+    }
 }";s:5:"title";s:8:"Registro";s:3:"url";s:9:"/registro";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}

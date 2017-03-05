@@ -15,14 +15,22 @@ function onStart()
     $category_id = $this->param('category');
     $this['regions'] = Region::where('country_id',"=",$country_id)->get();
     $products = array();
+    if(Input::has("desde") && Input::has("hasta")){$desde = Input::get("desde"); $hasta = Input::get("hasta");} else {$desde = false; $hasta = false;}
     if(!empty(Input::get("order"))){$this['orderBy'] = Input::get("order");} else {$this['orderBy'] = "ASC";}
+    
     if($this->param('region') > 0)
     {
-        $products[] = Product::orderBy("price",$this['orderBy'])->where('region_id','=',$this->param('region'))->where('category_id','=',$category_id)->get();
+        $products[] = Product::orderBy("price",$this['orderBy'])->where('region_id','=',$this->param('region'))->where('category_id','=',$category_id)->where(function($query) use ($desde, $hasta) {
+				if($desde){$query->where("price",">=",$desde);}
+				if($hasta){$query->where("price","<=",$hasta);}
+		})->get();
     }
     else
     {
-        $products[] = Product::orderBy("price",$this['orderBy'])->where('category_id','=',$category_id)->get();
+        $products[] = Product::orderBy("price",$this['orderBy'])->where('category_id','=',$category_id)->where(function($query) use ($desde, $hasta) {
+				if($desde){$query->where("price",">=",$desde);}
+				if($hasta){$query->where("price","<=",$hasta);}
+		})->get();
     }
 
     $this['products_by_cat'] = $products;
@@ -55,12 +63,13 @@ function onStart()
               <li>
                 <select id="priceRangeFilter" class="selectpicker" data-width="100%">
                   <option value="0">Todos los Precios</option>
-                  <option value="1-500">RD$1 - RD$500</option>
-                  <option value="501-1,000">RD$501 - RD$1,000</option>
-                  <option value="1,001-2,000">RD$1,001 - RD$2,000</option>
-                  <option value="2,001-3,000">RD$2,001- RD$3,000</option>
-                  <option value="3,001-4,000">RD$3,001- RD$4,000</option>
-                  <option value="4,001-5,000">RD$4,001- RD$5,000</option>
+                  <option value="?desde=1&hasta=500">RD$1 - RD$500</option>
+                  <option value="?desde=501&hasta=1000">RD$501 - RD$1,000</option>
+                  <option value="?desde=1001&hasta=2000">RD$1,001 - RD$2,000</option>
+                  <option value="?desde=2001&hasta=3000">RD$2,001- RD$3,000</option>
+                  <option value="?desde=3001&hasta=4000">RD$3,001- RD$4,000</option>
+                  <option value="?desde=4001&hasta=5000">RD$4,001- RD$5,000</option>
+                   <option value="?desde=5001&hasta=100000">RD$5,001 +</option>
                 </select>
               </li>
             </ul>
@@ -103,7 +112,7 @@ function onStart()
                               <i class="fa fa-star"></i>
                               <i class="fa fa-star"></i>
                               <i class="fa fa-star"></i>
-                              <i class="fa fa-star-half-o"></i>
+                              <i class="fa fa-star"></i>
                               <a href="#">(5 reviews)</a>
                           </div>
                           <div style="background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px">
@@ -143,7 +152,7 @@ $('#priceFilter').on('change', function() {
     location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}?order='+this.value;
 })
 $('#priceRangeFilter').on('change', function() {
-    location.href=window.location.href+'?price='+this.value;
+    location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}'+this.value;
 })
 </script>
 {% endput %}

@@ -52,12 +52,18 @@ class __TwigTemplate_0df843e7db329b12a5e0bf9501dea462c60f476c60a2881043c62b9aac0
         foreach ($context['_seq'] as $context["_key"] => $context["o"]) {
             // line 26
             echo "                <tr>
-                  <td>2 Vinos</td>
+                  <td>";
+            // line 27
+            echo twig_escape_filter($this->env, $this->getAttribute($context["o"], "total_quantity", array()), "html", null, true);
+            echo " Vinos</td>
                   <td>";
             // line 28
             echo twig_escape_filter($this->env, twig_date_format_filter($this->env, $this->getAttribute($context["o"], "created_at", array()), "Y-M-d"), "html", null, true);
             echo "</td>
-                  <td class=\"text-right\">\$74.00</td>
+                  <td class=\"text-right\">RD\$";
+            // line 29
+            echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute($context["o"], "total", array())), "html", null, true);
+            echo "</td>
                   <td class=\"text-center\"><span class=\"label label-warning\">";
             // line 30
             echo twig_escape_filter($this->env, $this->getAttribute($context["o"], "status", array()), "html", null, true);
@@ -95,7 +101,7 @@ class __TwigTemplate_0df843e7db329b12a5e0bf9501dea462c60f476c60a2881043c62b9aac0
 
     public function getDebugInfo()
     {
-        return array (  72 => 32,  63 => 30,  58 => 28,  54 => 26,  50 => 25,  29 => 6,  25 => 5,  19 => 1,);
+        return array (  78 => 32,  69 => 30,  65 => 29,  61 => 28,  57 => 27,  54 => 26,  50 => 25,  29 => 6,  25 => 5,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -134,9 +140,9 @@ class __TwigTemplate_0df843e7db329b12a5e0bf9501dea462c60f476c60a2881043c62b9aac0
               <tbody>
                 {% for o in orders %}
                 <tr>
-                  <td>2 Vinos</td>
+                  <td>{{o.total_quantity}} Vinos</td>
                   <td>{{o.created_at|date(\"Y-M-d\")}}</td>
-                  <td class=\"text-right\">\$74.00</td>
+                  <td class=\"text-right\">RD\${{o.total|number_format}}</td>
                   <td class=\"text-center\"><span class=\"label label-warning\">{{o.status}}</span></td>
                 </tr>
                 {% endfor %} 

@@ -1,24 +1,33 @@
 <?php 
-use Andresalice\Winelivery\Models\Cart;class Cms58b101ec6637f597827762_2729362277Class extends \Cms\Classes\PageCode
+use Andresalice\Winelivery\Models\Cart;class Cms58b776a2e0f7c446029338_3070228723Class extends \Cms\Classes\PageCode
 {
 
 public function onStart()
 {
-    $this['cart'] = Cart::where("user_id","=",$this['user']->id)->get();
-    $sum = 0;
-    foreach($this['cart'] as $c)
+    $this['loggedIn'] = Auth::check();
+    if($this['loggedIn'])
     {
-      $sum += $c->product->price * $c->quantity;
+        $this['cart'] = Cart::where("user_id","=",$this['user']->id)->get();
+        $sum = 0;
+        foreach($this['cart'] as $c)
+        {
+          $sum += $c->product->price * $c->quantity;
+        }
+        $this['cart_total'] = $sum;
+        $this['cart_total_envio'] = $sum + 90;
+        $date = date("Y-m-d H:i:s");
+        $now = new DateTime(); 
+        $now->setTimezone(new DateTimeZone('America/Santo_Domingo'));
+        if($now->format('H') > 11 and $now->format('H') < 21 and $now->format('A') == "PM")
+        {
+            $this['now'] = false;
+        }
+        else
+        {
+           // $this['now'] = true;
+           $this['now'] = false;
+        }
     }
-    $this['cart_total'] = $sum;
-    $this['cart_total_envio'] = $sum + 90;
-    $date = date("Y-m-d H:i:s");
-    /*echo $date;
-    $date = strtotime($date);
-    
-    echo "<br>";
-    echo date('H', $date);
-    die();*/
 }
 public function onUpdateQuantity()
 {
