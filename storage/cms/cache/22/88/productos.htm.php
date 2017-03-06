@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Region;use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Country;class Cms58bc6a286db83796708941_4072710880Class extends \Cms\Classes\PageCode
+use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Region;use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Country;class Cms58bcc7f8c39bd117481250_529790846Class extends \Cms\Classes\PageCode
 {
 
 

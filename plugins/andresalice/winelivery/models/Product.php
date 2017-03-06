@@ -43,4 +43,6 @@ class Product extends Model
     public $belongsToMany = [
         'uvas' => ['Andresalice\Winelivery\Models\Uva']
     ];
+
+    public $hasMany = [ 'stars' => ['Andresalice\Winelivery\Models\Rating']];
 }

@@ -1,4 +1,4 @@
-1488744006a:1:{s:10:"inicio.htm";a:9:{s:8:"fileName";s:10:"inicio.htm";s:7:"content";s:12385:"title = "Inicio"
+1488767512a:1:{s:10:"inicio.htm";a:9:{s:8:"fileName";s:10:"inicio.htm";s:7:"content";s:13591:"title = "Inicio"
 url = "/"
 layout = "layout"
 is_hidden = 0
@@ -11,10 +11,42 @@ use Andresalice\Winelivery\Models\Advertisement;
 function onStart()
 {
     $this['slideshows'] = Slideshow::get();
-    $this['recentProducts'] = Product::where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
-    $this['specialProducts'] = Product::where("offer","=",1)->take(4)->get();
-    $this['mwine'] = Product::where("month","=",1)->first();
     $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
+    $rp = Product::where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
+    $sp = Product::where("offer","=",1)->take(4)->get();
+    $wm = Product::where("month","=",1)->first();
+    //VINO DEL MES CALCULO DE ESTRELLAS
+    $wm->s5 = $wm->stars()->where("stars",5)->count();
+    $wm->s4 = $wm->stars()->where("stars",4)->count();
+    $wm->s3 = $wm->stars()->where("stars",3)->count();
+    $wm->s2 = $wm->stars()->where("stars",2)->count();
+    $wm->s1 = $wm->stars()->where("stars",1)->count();
+    $sc = 5 * $wm->s5 + 4 * $wm->s4 + 3 * $wm->s3 + 2 * $wm->s2 + 1 * $wm->s1;
+    if($sc == 0){$wm->total_stars = 5;}
+    else{$wm->total_stars = substr($sc/($wm->s5+$wm->s4+$wm->s3+$wm->s2+$wm->s1), 0, 1);}
+    
+    //PRODUCTOS RECIENTES CALCULO DE ESTRELLAS
+    
+    /*foreach($rp as $rp)
+    {
+        $rp->s5 = $rp->stars()->where("stars",5)->count();
+        $rp->s4 = $rp->stars()->where("stars",4)->count();
+        $rp->s3 = $rp->stars()->where("stars",3)->count();
+        $rp->s2 = $rp->stars()->where("stars",2)->count();
+        $rp->s1 = $rp->stars()->where("stars",1)->count();
+        $sc = 5 * $rp->s5 + 4 * $rp->s4 + 3 * $rp->s3 + 2 * $rp->s2 + 1 * $rp->s1;
+        if($sc == 0){$rp->total_stars = 5;}
+        else{$rp->total_stars = substr($sc/($rp->s5+$rp->s4+$rp->s3+$rp->s2+$rp->s1), 0, 1);}
+    }
+    var_dump($rp);
+    die();*/
+
+    
+    //PRODUCTOS ESPECIALES CALCULO DE ESTRELLAS
+    
+    $this['mwine'] = $wm;
+    $this['recentProducts'] = $rp;
+    $this['specialProducts'] = $sp;
 }
 ?>
 ==
@@ -171,11 +203,9 @@ function onStart()
             <h3><a href="{{"producto-detalle"|page({id: mwine.id})}}">{{mwine.title}}</a></h3>
             <p style="padding-top:10px">{{mwine.description|raw}}</p>
             <div class="rating">
+                {% for i in 0..mwine.total_stars -1 %}
                 <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half-o"></i>
+                {% endfor %}
                 <a href="#">(5 reviews)</a>
             </div>
             <p style="padding-top:10px; font-style:Italic">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua". Alice Perez Villanueva</p>
@@ -253,7 +283,7 @@ function onStart()
 </div>
 
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1488742742;s:6:"markup";s:11783:"<!-- Full Slider -->
+<!-- End Main Content -->";s:5:"mtime";i:1488766911;s:6:"markup";s:11686:"<!-- Full Slider -->
 <div class="container-fluid">
     <div class="row">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -406,11 +436,9 @@ function onStart()
             <h3><a href="{{"producto-detalle"|page({id: mwine.id})}}">{{mwine.title}}</a></h3>
             <p style="padding-top:10px">{{mwine.description|raw}}</p>
             <div class="rating">
+                {% for i in 0..mwine.total_stars -1 %}
                 <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half-o"></i>
+                {% endfor %}
                 <a href="#">(5 reviews)</a>
             </div>
             <p style="padding-top:10px; font-style:Italic">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua". Alice Perez Villanueva</p>
@@ -488,15 +516,47 @@ function onStart()
 </div>
 
 </div>
-<!-- End Main Content -->";s:4:"code";s:527:"use Andresalice\Winelivery\Models\Slideshow;
+<!-- End Main Content -->";s:4:"code";s:1830:"use Andresalice\Winelivery\Models\Slideshow;
 use Andresalice\Winelivery\Models\Product;
 use Andresalice\Winelivery\Models\Advertisement;
 
 function onStart()
 {
     $this['slideshows'] = Slideshow::get();
-    $this['recentProducts'] = Product::where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
-    $this['specialProducts'] = Product::where("offer","=",1)->take(4)->get();
-    $this['mwine'] = Product::where("month","=",1)->first();
     $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
+    $rp = Product::where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
+    $sp = Product::where("offer","=",1)->take(4)->get();
+    $wm = Product::where("month","=",1)->first();
+    //VINO DEL MES CALCULO DE ESTRELLAS
+    $wm->s5 = $wm->stars()->where("stars",5)->count();
+    $wm->s4 = $wm->stars()->where("stars",4)->count();
+    $wm->s3 = $wm->stars()->where("stars",3)->count();
+    $wm->s2 = $wm->stars()->where("stars",2)->count();
+    $wm->s1 = $wm->stars()->where("stars",1)->count();
+    $sc = 5 * $wm->s5 + 4 * $wm->s4 + 3 * $wm->s3 + 2 * $wm->s2 + 1 * $wm->s1;
+    if($sc == 0){$wm->total_stars = 5;}
+    else{$wm->total_stars = substr($sc/($wm->s5+$wm->s4+$wm->s3+$wm->s2+$wm->s1), 0, 1);}
+    
+    //PRODUCTOS RECIENTES CALCULO DE ESTRELLAS
+    
+    /*foreach($rp as $rp)
+    {
+        $rp->s5 = $rp->stars()->where("stars",5)->count();
+        $rp->s4 = $rp->stars()->where("stars",4)->count();
+        $rp->s3 = $rp->stars()->where("stars",3)->count();
+        $rp->s2 = $rp->stars()->where("stars",2)->count();
+        $rp->s1 = $rp->stars()->where("stars",1)->count();
+        $sc = 5 * $rp->s5 + 4 * $rp->s4 + 3 * $rp->s3 + 2 * $rp->s2 + 1 * $rp->s1;
+        if($sc == 0){$rp->total_stars = 5;}
+        else{$rp->total_stars = substr($sc/($rp->s5+$rp->s4+$rp->s3+$rp->s2+$rp->s1), 0, 1);}
+    }
+    var_dump($rp);
+    die();*/
+
+    
+    //PRODUCTOS ESPECIALES CALCULO DE ESTRELLAS
+    
+    $this['mwine'] = $wm;
+    $this['recentProducts'] = $rp;
+    $this['specialProducts'] = $sp;
 }";s:5:"title";s:6:"Inicio";s:3:"url";s:1:"/";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}
