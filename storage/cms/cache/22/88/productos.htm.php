@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Region;use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Country;class Cms58bcc7f8c39bd117481250_529790846Class extends \Cms\Classes\PageCode
+use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Region;use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Country;class Cms58be6e42df438771206515_1028000541Class extends \Cms\Classes\PageCode
 {
 
 
@@ -29,6 +29,23 @@ public function onStart()
 		})->get();
     }
 
+    //PRODUCTOS ESPECIALES CALCULO DE ESTRELLAS
+    foreach($products as $product)
+    {
+        foreach($product as $s)
+        {
+            $s->s5 = $s->stars()->where("stars",5)->count();
+            $s->s4 = $s->stars()->where("stars",4)->count();
+            $s->s3 = $s->stars()->where("stars",3)->count();
+            $s->s2 = $s->stars()->where("stars",2)->count();
+            $s->s1 = $s->stars()->where("stars",1)->count();
+            $sc = 5 * $s->s5 + 4 * $s->s4 + 3 * $s->s3 + 2 * $s->s2 + 1 * $s->s1;
+            if($sc == 0){$s->total_stars = 5;}
+            else{$s->total_stars = substr($sc/($s->s5+$s->s4+$s->s3+$s->s2+$s->s1), 0, 1);}
+        }
+        
+    }
+    
     $this['products_by_cat'] = $products;
     $this['country_title'] = Country::find($country_id);
     $this['category'] = Category::find($category_id);

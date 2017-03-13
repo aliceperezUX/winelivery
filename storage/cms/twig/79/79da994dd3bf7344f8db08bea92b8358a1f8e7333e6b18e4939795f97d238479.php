@@ -29,12 +29,25 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
         echo "\" type=\"image/x-icon\">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Home - Winelivery</title>
-    <link href=\"";
+    ";
         // line 11
-        echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter(array(0 => "assets/bootstrap/css/bootstrap.css", 1 => "assets/css/font-awesome.css", 2 => "assets/css/bootstrap-select.css", 3 => "assets/css/owl.carousel.css", 4 => "assets/css/owl.theme.default.css", 5 => "assets/css/style.teal.flat.css", 6 => "assets/css/animate.css"));
-        // line 19
-        echo "\" rel=\"stylesheet\">
-    <style>
+        if (($this->getAttribute($this->getAttribute((isset($context["this"]) ? $context["this"] : null), "page", array()), "title", array()) == "")) {
+            // line 12
+            echo "    <link href=\"";
+            echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter(array(0 => "assets/bootstrap/css/bootstrap.css", 1 => "assets/css/font-awesome.css", 2 => "assets/css/bootstrap-select.css", 3 => "assets/css/owl.carousel.css", 4 => "assets/css/owl.theme.default.css", 5 => "assets/css/style.teal.flat.css", 6 => "assets/css/animate.css", 7 => "assets/css/full-width-pics.css"));
+            // line 22
+            echo "\" rel=\"stylesheet\">
+    ";
+        } else {
+            // line 24
+            echo "    <link href=\"";
+            echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter(array(0 => "assets/bootstrap/css/bootstrap.css", 1 => "assets/css/font-awesome.css", 2 => "assets/css/bootstrap-select.css", 3 => "assets/css/owl.carousel.css", 4 => "assets/css/owl.theme.default.css", 5 => "assets/css/style.teal.flat.css", 6 => "assets/css/animate.css"));
+            // line 32
+            echo "\" rel=\"stylesheet\">
+    ";
+        }
+        // line 34
+        echo "    <style>
         Size para miniatura
         .wine-thumbnail
         {
@@ -135,7 +148,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
             <div class=\"row\">
                 <div class=\"col-md-2 \">
                     <a href=\"";
-        // line 120
+        // line 134
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("inicio");
         echo "\"><img alt=\"Logo\" src=\"";
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/winelivery-01.png");
@@ -143,7 +156,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                 </div>
                 <div class=\"col-sm-8 col-md-6 search-box m-t-2\">
                   <form method=\"POST\" action=\"";
-        // line 123
+        // line 137
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("busqueda");
         echo "\">
                     <div class=\"input-group\">
@@ -157,15 +170,15 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                 <div class=\"col-sm-4 col-md-4  hidden-xs m-t-2\">
                     <ul class=\"list-unstyled; list-inline\" style=\"font-size:12px;\">
                         <li><a href=\"";
-        // line 134
+        // line 148
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("nosotros");
         echo "\">Sobre nosotros</a></li>
                         <li><a href=\"";
-        // line 135
+        // line 149
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("terminos");
         echo "\">Terminos y condiciones</a></li>
                         <li ";
-        // line 136
+        // line 150
         if ((isset($context["user"]) ? $context["user"] : null)) {
             echo " class=\"hidden\" ";
         }
@@ -193,23 +206,23 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
             <div class=\"collapse navbar-collapse col-md-6\" id=\"navbar-ex1-collapse\">
                 <ul class=\"nav navbar-nav\">
                     ";
-        // line 157
+        // line 171
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["categories"]) ? $context["categories"] : null));
         foreach ($context['_seq'] as $context["_key"] => $context["c"]) {
-            // line 158
+            // line 172
             echo "                        <li class=\"dropdown\">
                             <a href=\"javascript:;\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">";
-            // line 159
+            // line 173
             echo twig_escape_filter($this->env, $this->getAttribute($context["c"], "title", array()), "html", null, true);
             echo "<span class=\"caret\"></span></a>
                             <ul class=\"dropdown-menu\">
                                 ";
-            // line 161
+            // line 175
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable($this->getAttribute($context["c"], "countries", array()));
             foreach ($context['_seq'] as $context["_key"] => $context["r"]) {
-                // line 162
+                // line 176
                 echo "                                    <li><a href=\"";
                 echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("productos", array("country" => $this->getAttribute($context["r"], "id", array()), "category" => $this->getAttribute($context["c"], "id", array())));
                 echo "\">";
@@ -220,7 +233,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['r'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 164
+            // line 178
             echo "                            </ul>
                         </li>
                     ";
@@ -228,38 +241,38 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['c'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 167
+        // line 181
         echo "                </ul>
             </div>
             <div style=\"float:right;\" class=\"col-md-6\">
                 <ul class=\"list-inline nav navbar-nav\">
                     ";
-        // line 171
+        // line 185
         if ((isset($context["loggedIn"]) ? $context["loggedIn"] : null)) {
-            // line 172
+            // line 186
             echo "                    <li class=\"dropdown\">
                         <a href=\"javascript:;\" class=\"dropdown-toggle white\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">
                             <i class=\"fa fa-user\"></i> Hola, ";
-            // line 174
+            // line 188
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : null), "name", array()), "html", null, true);
             echo " ";
             echo twig_escape_filter($this->env, $this->getAttribute((isset($context["user"]) ? $context["user"] : null), "surname", array()), "html", null, true);
             echo " <span class=\"caret\"></span></a>
                         <ul class=\"dropdown-menu white\">
                             <li><a href=\"";
-            // line 176
+            // line 190
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("perfil");
             echo "\">Editar mi perfil</a></li>
                             <li><a href=\"";
-            // line 177
+            // line 191
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("password");
             echo "\">Cambiar contrase&ntilde;a</a></li>
                             <li><a href=\"";
-            // line 178
+            // line 192
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("direcciones");
             echo "\">Editar informacion de envio</a></li>
                             <li><a href=\"";
-            // line 179
+            // line 193
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("historial");
             echo "\">Historial de compras</a></li>
                             <li><a data-request=\"onLogout\" data-request-data=\"redirect: '/good-bye'\">Salir</a></li>
@@ -267,35 +280,37 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                     </li>
                     ";
         } else {
-            // line 184
+            // line 198
             echo "                       <li>
                            <a style=\"border-color:transparent;color:#fff;padding:3px 15px; margin-top:5px; hover:color:#c1272d;\" href=\"";
-            // line 185
+            // line 199
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
             echo "\"> Iniciar Sesi&oacute;n</a>
                        </li>
                     ";
         }
-        // line 188
-        echo "
+        // line 202
+        echo "                     <li><a style=\"background-color:transparent;border:2px solid #fff; color:#fff; border-radius:25px; padding:3px 15px; margin-top:5px;\" href=\"";
+        echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("servicio");
+        echo "\">¿Cómo funciona ?</a></li>
                     <!-- <li class=\"club\"><a style=\"background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;\" href=\"\">¡Unete al club de vinos!</a></li> -->
                     <li id=\"wishlist_update_quantity\" class=\"white\">
                         ";
-        // line 191
+        // line 205
         $context['__cms_partial_params'] = [];
         $context['__cms_partial_params']['wishlist_counter'] = (isset($context["wishlist_counter"]) ? $context["wishlist_counter"] : null)        ;
         echo $this->env->getExtension('CMS')->partialFunction("quantity_wishlist"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 192
+        // line 206
         echo "                    </li>
                     <li id=\"cart_update_quantity\" class=\"white\">
                         ";
-        // line 194
+        // line 208
         $context['__cms_partial_params'] = [];
         $context['__cms_partial_params']['cart_counter'] = (isset($context["cart_counter"]) ? $context["cart_counter"] : null)        ;
         echo $this->env->getExtension('CMS')->partialFunction("quantity_cart"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 195
+        // line 209
         echo "                    </li>
                 </ul>
             </div>
@@ -304,9 +319,9 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
     <!-- End Navigation Bar -->
 
     ";
-        // line 202
+        // line 216
         echo $this->env->getExtension('CMS')->pageFunction();
-        // line 203
+        // line 217
         echo "
     <!-- Footer -->
     <div class=\"footer\">
@@ -324,19 +339,19 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                     <div class=\"title-footer\"><span>Informaci&oacute;n</span></div>
                     <ul>
                         <li><i class=\"fa fa-angle-double-right\"></i> <a href=\"";
-        // line 219
+        // line 233
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("preguntas-frecuentes");
         echo "\">Preguntas frecuentes</a></li>
                         <li><i class=\"fa fa-angle-double-right\"></i> <a href=\"";
-        // line 220
+        // line 234
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("politicas");
         echo "\">Politicas de privacidad</a></li>
                         <li><i class=\"fa fa-angle-double-right\"></i> <a href=\"";
-        // line 221
+        // line 235
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("terminos");
         echo "\">Terminos y condiciones</a></li>
                         <li><i class=\"fa fa-angle-double-right\"></i> <a href=\"";
-        // line 222
+        // line 236
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("metodo-de-envio");
         echo "\">Metodo de envio</a></li>
                     </ul>
@@ -346,11 +361,11 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                     <div class=\"title-footer\"><span>Categorias</span></div>
                     <ul>
                         ";
-        // line 229
+        // line 243
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["categories"]) ? $context["categories"] : null));
         foreach ($context['_seq'] as $context["_key"] => $context["c"]) {
-            // line 230
+            // line 244
             echo "                            <li><i class=\"fa fa-angle-double-right\"></i> <a href=\"#\">";
             echo twig_escape_filter($this->env, $this->getAttribute($context["c"], "title", array()), "html", null, true);
             echo "</a></li>
@@ -359,7 +374,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['c'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 232
+        // line 246
         echo "                    </ul>
                 </div>
                 <div class=\"col-md-3 col-sm-6\">
@@ -380,9 +395,9 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                 <div class=\"col-md-3 col-sm-6\">
                     <div class=\"title-footer\"><span>Contacto</span></div>
                     <ul class=\"footer-icon\">
-                        <li><span><i class=\"fa fa-map-marker\"></i></span> 212 Lorem Ipsum. Dolor Sit, Amet</li>
-                        <li><span><i class=\"fa fa-phone\"></i></span> (809)-456-789</li>
-                        <li><span><i class=\"fa fa-envelope\"></i></span> <a href=\"\">correo@domain.com</a></li>
+                        <li><span><i class=\"fa fa-map-marker\"></i></span> Gazcue, Calle César Nicolás Penson 76, Santo Domingo 10205</li>
+                        <li><span><i class=\"fa fa-phone\"></i></span>(809) 689-4027</li>
+                        <li><span><i class=\"fa fa-envelope\"></i></span> <a href=\"\">info@winelivery.com</a></li>
                     </ul>
                 </div>
                 <div class=\"clearfix visible-sm-block\"></div>
@@ -390,15 +405,15 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                     <div class=\"title-footer\"><span>M&eacute;todos de pago</span></div>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, soluta, tempora, ipsa voluptatibus porro vel laboriosam</p>
                     <img src=\"";
-        // line 261
+        // line 275
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/payment-1.png");
         echo "\" alt=\"Payment-1\">
                     <img src=\"";
-        // line 262
+        // line 276
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/payment-2.png");
         echo "\" alt=\"Payment-2\">
                     <img src=\"";
-        // line 263
+        // line 277
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/payment-4.png");
         echo "\" alt=\"Payment-4\">
                 </div>
@@ -406,15 +421,15 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                     <div class=\"title-footer\"><span>Mi cuenta</span></div>
                     <ul>
                         <li><i class=\"fa fa-angle-double-right\"></i> <a href=\"";
-        // line 268
+        // line 282
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("historial");
         echo "\">Ordenes</a></li>
                         <li><i class=\"fa fa-angle-double-right\"></i> <a href=\"";
-        // line 269
+        // line 283
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("direcciones");
         echo "\">Direcci&oacute;n</a></li>
                         <li><i class=\"fa fa-angle-double-right\"></i> <a href=\"";
-        // line 270
+        // line 284
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("perfil");
         echo "\">Perfil</a></li>
                         <li><i class=\"fa fa-angle-double-right\"></i> <a data-request=\"onLogout\" data-request-data=\"redirect: '/good-bye'\">Salir</a></li>
@@ -424,7 +439,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
         </div>
         <div class=\"text-center copyright\">
             Copyright &copy; ";
-        // line 277
+        // line 291
         echo twig_escape_filter($this->env, twig_date_format_filter($this->env, (isset($context["date"]) ? $context["date"] : null), "Y"), "html", null, true);
         echo " Winelivery All right reserved
         </div>
@@ -436,62 +451,62 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
     </a>
 
     <script src=\"";
-        // line 286
+        // line 300
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter(array(0 => "@jquery", 1 => "@framework", 2 => "@framework.extras"));
         echo "\"></script>
     <script src=\"";
-        // line 287
+        // line 301
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/bootstrap/js/bootstrap.js");
         echo "\"></script>
     <script src=\"";
-        // line 288
+        // line 302
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/bootstrap-select.js");
         echo "\"></script>
     <script src=\"";
-        // line 289
+        // line 303
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/owl.carousel.js");
         echo "\"></script>
     <script src=\"";
-        // line 290
+        // line 304
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/jquery.ez-plus.js");
         echo "\"></script>
     <script src=\"";
-        // line 291
+        // line 305
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/jquery.bootstrap-touchspin.js");
         echo "\"></script>
     <script src=\"";
-        // line 292
+        // line 306
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/jquery.raty-fa.js");
         echo "\"></script>
     <script src=\"";
-        // line 293
+        // line 307
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/nouislider.js");
         echo "\"></script>
     <script src=\"";
-        // line 294
+        // line 308
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/mimity.js");
         echo "\"></script>
     <script src=\"";
-        // line 295
+        // line 309
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/mimity.detail.js");
         echo "\"></script>
     <script src=\"";
-        // line 296
+        // line 310
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/mimity.filter-sidebar.js");
         echo "\"></script>
     <script src=\"";
-        // line 297
+        // line 311
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/jquery.mask.js");
         echo "\"></script>
     <script src=\"";
-        // line 298
+        // line 312
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/js/jqFunctions.js");
         echo "\"></script>
     ";
-        // line 299
+        // line 313
         echo $this->env->getExtension('CMS')->assetsFunction('js');
         echo $this->env->getExtension('CMS')->displayBlock('scripts');
-        // line 300
+        // line 314
         echo "    <script>
     \$('.fa-shopping-cart').click(function(){
         \$(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
@@ -539,7 +554,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
 
     public function getDebugInfo()
     {
-        return array (  495 => 300,  492 => 299,  488 => 298,  484 => 297,  480 => 296,  476 => 295,  472 => 294,  468 => 293,  464 => 292,  460 => 291,  456 => 290,  452 => 289,  448 => 288,  444 => 287,  440 => 286,  428 => 277,  418 => 270,  414 => 269,  410 => 268,  402 => 263,  398 => 262,  394 => 261,  363 => 232,  354 => 230,  350 => 229,  340 => 222,  336 => 221,  332 => 220,  328 => 219,  310 => 203,  308 => 202,  299 => 195,  294 => 194,  290 => 192,  285 => 191,  280 => 188,  274 => 185,  271 => 184,  263 => 179,  259 => 178,  255 => 177,  251 => 176,  244 => 174,  240 => 172,  238 => 171,  232 => 167,  224 => 164,  213 => 162,  209 => 161,  204 => 159,  201 => 158,  197 => 157,  169 => 136,  165 => 135,  161 => 134,  147 => 123,  139 => 120,  36 => 19,  34 => 11,  28 => 8,  19 => 1,);
+        return array (  510 => 314,  507 => 313,  503 => 312,  499 => 311,  495 => 310,  491 => 309,  487 => 308,  483 => 307,  479 => 306,  475 => 305,  471 => 304,  467 => 303,  463 => 302,  459 => 301,  455 => 300,  443 => 291,  433 => 284,  429 => 283,  425 => 282,  417 => 277,  413 => 276,  409 => 275,  378 => 246,  369 => 244,  365 => 243,  355 => 236,  351 => 235,  347 => 234,  343 => 233,  325 => 217,  323 => 216,  314 => 209,  309 => 208,  305 => 206,  300 => 205,  293 => 202,  287 => 199,  284 => 198,  276 => 193,  272 => 192,  268 => 191,  264 => 190,  257 => 188,  253 => 186,  251 => 185,  245 => 181,  237 => 178,  226 => 176,  222 => 175,  217 => 173,  214 => 172,  210 => 171,  182 => 150,  178 => 149,  174 => 148,  160 => 137,  152 => 134,  50 => 34,  46 => 32,  43 => 24,  39 => 22,  36 => 12,  34 => 11,  28 => 8,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -562,6 +577,19 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
     <link rel=\"icon\" href=\"{{\"assets/images/favicon.ico\"|theme}}\" type=\"image/x-icon\">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Home - Winelivery</title>
+    {% if this.page.title == \"\" %}
+    <link href=\"{{ [
+        'assets/bootstrap/css/bootstrap.css',
+        'assets/css/font-awesome.css',
+        'assets/css/bootstrap-select.css',
+        'assets/css/owl.carousel.css',
+        'assets/css/owl.theme.default.css',
+        'assets/css/style.teal.flat.css',
+        'assets/css/animate.css',
+        'assets/css/full-width-pics.css'
+        
+    ]|theme }}\" rel=\"stylesheet\">
+    {% else %}
     <link href=\"{{ [
         'assets/bootstrap/css/bootstrap.css',
         'assets/css/font-awesome.css',
@@ -571,6 +599,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
         'assets/css/style.teal.flat.css',
         'assets/css/animate.css'
     ]|theme }}\" rel=\"stylesheet\">
+    {% endif %}
     <style>
         Size para miniatura
         .wine-thumbnail
@@ -739,7 +768,7 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                            <a style=\"border-color:transparent;color:#fff;padding:3px 15px; margin-top:5px; hover:color:#c1272d;\" href=\"{{\"login\"|page}}\"> Iniciar Sesi&oacute;n</a>
                        </li>
                     {% endif %}
-
+                     <li><a style=\"background-color:transparent;border:2px solid #fff; color:#fff; border-radius:25px; padding:3px 15px; margin-top:5px;\" href=\"{{\"servicio\"|page}}\">¿Cómo funciona ?</a></li>
                     <!-- <li class=\"club\"><a style=\"background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;\" href=\"\">¡Unete al club de vinos!</a></li> -->
                     <li id=\"wishlist_update_quantity\" class=\"white\">
                         {% partial \"quantity_wishlist\" wishlist_counter = wishlist_counter %}
@@ -803,9 +832,9 @@ class __TwigTemplate_512197f519e59ce8c9933586ae75226f01d2503ad42cef7a6d28c2aa97c
                 <div class=\"col-md-3 col-sm-6\">
                     <div class=\"title-footer\"><span>Contacto</span></div>
                     <ul class=\"footer-icon\">
-                        <li><span><i class=\"fa fa-map-marker\"></i></span> 212 Lorem Ipsum. Dolor Sit, Amet</li>
-                        <li><span><i class=\"fa fa-phone\"></i></span> (809)-456-789</li>
-                        <li><span><i class=\"fa fa-envelope\"></i></span> <a href=\"\">correo@domain.com</a></li>
+                        <li><span><i class=\"fa fa-map-marker\"></i></span> Gazcue, Calle César Nicolás Penson 76, Santo Domingo 10205</li>
+                        <li><span><i class=\"fa fa-phone\"></i></span>(809) 689-4027</li>
+                        <li><span><i class=\"fa fa-envelope\"></i></span> <a href=\"\">info@winelivery.com</a></li>
                     </ul>
                 </div>
                 <div class=\"clearfix visible-sm-block\"></div>

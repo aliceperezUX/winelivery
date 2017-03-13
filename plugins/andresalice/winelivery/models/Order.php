@@ -25,4 +25,9 @@ class Order extends Model
      * @var string The database table used by the model.
      */
     public $table = 'andresalice_winelivery_orders';
+
+    public $belongsTo = [
+        'user' => 'RainLab\User\Models\User',
+        'address' => 'Andresalice\Winelivery\Models\Address'
+    ];
 }

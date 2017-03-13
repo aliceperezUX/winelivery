@@ -44,5 +44,7 @@ class Product extends Model
         'uvas' => ['Andresalice\Winelivery\Models\Uva']
     ];
 
-    public $hasMany = [ 'stars' => ['Andresalice\Winelivery\Models\Rating']];
+    public $hasMany = ['stars' => ['Andresalice\Winelivery\Models\Rating'], 'comments' => ['Andresalice\Winelivery\Models\Comment']];
+
+
 }

@@ -12,7 +12,20 @@ function onStart()
 {
     $this['loggedIn'] = Auth::check();
     $this['categories'] = Category::get();
-    $this['randomProducts'] = Product::orderByRaw("RAND()")->take(12)->get();
+    $rp = Product::orderByRaw("RAND()")->take(12)->get();
+    //PRODUCTOS RANDOM CALCULO DE ESTRELLAS
+    foreach($rp as $r)
+    {
+        $r->s5 = $r->stars()->where("stars",5)->count();
+        $r->s4 = $r->stars()->where("stars",4)->count();
+        $r->s3 = $r->stars()->where("stars",3)->count();
+        $r->s2 = $r->stars()->where("stars",2)->count();
+        $r->s1 = $r->stars()->where("stars",1)->count();
+        $sc = 5 * $r->s5 + 4 * $r->s4 + 3 * $r->s3 + 2 * $r->s2 + 1 * $r->s1;
+        if($sc == 0){$r->total_stars = 5;}
+        else{$r->total_stars = substr($sc/($r->s5+$r->s4+$r->s3+$r->s2+$r->s1), 0, 1);}
+    }
+    $this['randomProducts'] = $rp;
     if($this['loggedIn'])
     {
       $this['user'] = Auth::getUser();
@@ -162,6 +175,19 @@ function onLogout()
     <link rel="icon" href="{{"assets/images/favicon.ico"|theme}}" type="image/x-icon">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Home - Winelivery</title>
+    {% if this.page.title == "" %}
+    <link href="{{ [
+        'assets/bootstrap/css/bootstrap.css',
+        'assets/css/font-awesome.css',
+        'assets/css/bootstrap-select.css',
+        'assets/css/owl.carousel.css',
+        'assets/css/owl.theme.default.css',
+        'assets/css/style.teal.flat.css',
+        'assets/css/animate.css',
+        'assets/css/full-width-pics.css'
+        
+    ]|theme }}" rel="stylesheet">
+    {% else %}
     <link href="{{ [
         'assets/bootstrap/css/bootstrap.css',
         'assets/css/font-awesome.css',
@@ -171,6 +197,7 @@ function onLogout()
         'assets/css/style.teal.flat.css',
         'assets/css/animate.css'
     ]|theme }}" rel="stylesheet">
+    {% endif %}
     <style>
         Size para miniatura
         .wine-thumbnail
@@ -339,7 +366,7 @@ function onLogout()
                            <a style="border-color:transparent;color:#fff;padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="{{"login"|page}}"> Iniciar Sesi&oacute;n</a>
                        </li>
                     {% endif %}
-
+                     <li><a style="background-color:transparent;border:2px solid #fff; color:#fff; border-radius:25px; padding:3px 15px; margin-top:5px;" href="{{"servicio"|page}}">¿Cómo funciona ?</a></li>
                     <!-- <li class="club"><a style="background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="">¡Unete al club de vinos!</a></li> -->
                     <li id="wishlist_update_quantity" class="white">
                         {% partial "quantity_wishlist" wishlist_counter = wishlist_counter %}
@@ -403,9 +430,9 @@ function onLogout()
                 <div class="col-md-3 col-sm-6">
                     <div class="title-footer"><span>Contacto</span></div>
                     <ul class="footer-icon">
-                        <li><span><i class="fa fa-map-marker"></i></span> 212 Lorem Ipsum. Dolor Sit, Amet</li>
-                        <li><span><i class="fa fa-phone"></i></span> (809)-456-789</li>
-                        <li><span><i class="fa fa-envelope"></i></span> <a href="">correo@domain.com</a></li>
+                        <li><span><i class="fa fa-map-marker"></i></span> Gazcue, Calle César Nicolás Penson 76, Santo Domingo 10205</li>
+                        <li><span><i class="fa fa-phone"></i></span>(809) 689-4027</li>
+                        <li><span><i class="fa fa-envelope"></i></span> <a href="">info@winelivery.com</a></li>
                     </ul>
                 </div>
                 <div class="clearfix visible-sm-block"></div>

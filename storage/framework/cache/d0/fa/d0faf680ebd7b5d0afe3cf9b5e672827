@@ -1,4 +1,4 @@
-1488767388a:1:{s:20:"producto-detalle.htm";a:9:{s:8:"fileName";s:20:"producto-detalle.htm";s:7:"content";s:13750:"title = "Producto Detalle"
+1489406824a:1:{s:20:"producto-detalle.htm";a:9:{s:8:"fileName";s:20:"producto-detalle.htm";s:7:"content";s:13855:"title = "Producto Detalle"
 url = "/producto/:id"
 layout = "layout"
 is_hidden = 0
@@ -77,6 +77,7 @@ function onCommentForm()
             <p class="detail">Tipo: <span class="detail-content">{{product.category.title}}</span></p>
             <p class="detail">Productor: <span class="detail-content">{{product.productor}}</span></p>
             <p class="detail">Pais: <span class="detail-content">{{product.region.country.name}}</span></p>
+            <p class="detail">Región: <span class="detail-content">{{product.region.title}}</span></p>
             <p class="detail">Uvas: <span class="detail-content">{% for u in product.uvas %}{{u.title}}{% if loop.last %}.{% else %},&nbsp;{% endif %}{% endfor %}
             </span></p>
             <p class="detail">Capacidad: <span class="detail-content">{{product.capacity}}</span></p>
@@ -280,7 +281,7 @@ function onCommentForm()
     	else { return false; }
     }
 </script>
-{% endput %}";s:5:"mtime";i:1488735314;s:6:"markup";s:11447:"<!-- Main Content -->
+{% endput %}";s:5:"mtime";i:1489169058;s:6:"markup";s:11552:"<!-- Main Content -->
 <div class="container m-t-3">
     <div class="row">
         <!-- Image List -->
@@ -297,6 +298,7 @@ function onCommentForm()
             <p class="detail">Tipo: <span class="detail-content">{{product.category.title}}</span></p>
             <p class="detail">Productor: <span class="detail-content">{{product.productor}}</span></p>
             <p class="detail">Pais: <span class="detail-content">{{product.region.country.name}}</span></p>
+            <p class="detail">Región: <span class="detail-content">{{product.region.title}}</span></p>
             <p class="detail">Uvas: <span class="detail-content">{% for u in product.uvas %}{{u.title}}{% if loop.last %}.{% else %},&nbsp;{% endif %}{% endfor %}
             </span></p>
             <p class="detail">Capacidad: <span class="detail-content">{{product.capacity}}</span></p>

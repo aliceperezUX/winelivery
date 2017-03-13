@@ -1,4 +1,4 @@
-1488767388a:1:{s:13:"productos.htm";a:9:{s:8:"fileName";s:13:"productos.htm";s:7:"content";s:6894:"title = "Productos"
+1489406824a:1:{s:13:"productos.htm";a:9:{s:8:"fileName";s:13:"productos.htm";s:7:"content";s:7501:"title = "Productos"
 url = "/productos/:country/:category/:region?"
 layout = "layout"
 is_hidden = 0
@@ -33,6 +33,23 @@ function onStart()
 		})->get();
     }
 
+    //PRODUCTOS ESPECIALES CALCULO DE ESTRELLAS
+    foreach($products as $product)
+    {
+        foreach($product as $s)
+        {
+            $s->s5 = $s->stars()->where("stars",5)->count();
+            $s->s4 = $s->stars()->where("stars",4)->count();
+            $s->s3 = $s->stars()->where("stars",3)->count();
+            $s->s2 = $s->stars()->where("stars",2)->count();
+            $s->s1 = $s->stars()->where("stars",1)->count();
+            $sc = 5 * $s->s5 + 4 * $s->s4 + 3 * $s->s3 + 2 * $s->s2 + 1 * $s->s1;
+            if($sc == 0){$s->total_stars = 5;}
+            else{$s->total_stars = substr($sc/($s->s5+$s->s4+$s->s3+$s->s2+$s->s1), 0, 1);}
+        }
+        
+    }
+    
     $this['products_by_cat'] = $products;
     $this['country_title'] = Country::find($country_id);
     $this['category'] = Category::find($category_id);
@@ -108,12 +125,10 @@ function onStart()
                           </div>
                           <h6><a href="{{"producto-detalle"|page({id:p.id})}}">{{p.title}}</a></h6>
                           <div class="rating">
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <a href="#">(5 reviews)</a>
+                              {% for i in 0..p.total_stars -1 %}
+                                    <i class="fa fa-star"></i>
+                              {% endfor %}
+                              <a href="#">({{p.comments.count}} reviews)</a>
                           </div>
                           <div style="background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px">
                               <div style="color:#fff" class="price col-lg-6 ">
@@ -155,7 +170,7 @@ $('#priceRangeFilter').on('change', function() {
     location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}'+this.value;
 })
 </script>
-{% endput %}";s:5:"mtime";i:1488742949;s:6:"markup";s:5292:"<!-- Main Content -->
+{% endput %}";s:5:"mtime";i:1488875069;s:6:"markup";s:5195:"<!-- Main Content -->
     <div class="container m-t-3">
       <div class="row">
         <!-- Filter Sidebar -->
@@ -224,12 +239,10 @@ $('#priceRangeFilter').on('change', function() {
                           </div>
                           <h6><a href="{{"producto-detalle"|page({id:p.id})}}">{{p.title}}</a></h6>
                           <div class="rating">
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <i class="fa fa-star"></i>
-                              <a href="#">(5 reviews)</a>
+                              {% for i in 0..p.total_stars -1 %}
+                                    <i class="fa fa-star"></i>
+                              {% endfor %}
+                              <a href="#">({{p.comments.count}} reviews)</a>
                           </div>
                           <div style="background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px">
                               <div style="color:#fff" class="price col-lg-6 ">
@@ -271,7 +284,7 @@ $('#priceRangeFilter').on('change', function() {
     location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}'+this.value;
 })
 </script>
-{% endput %}";s:4:"code";s:1487:"use Andresalice\Winelivery\Models\Product;
+{% endput %}";s:4:"code";s:2191:"use Andresalice\Winelivery\Models\Product;
 use Andresalice\Winelivery\Models\Region;
 use Andresalice\Winelivery\Models\Category;
 use Andresalice\Winelivery\Models\Country;
@@ -300,6 +313,23 @@ function onStart()
 		})->get();
     }
 
+    //PRODUCTOS ESPECIALES CALCULO DE ESTRELLAS
+    foreach($products as $product)
+    {
+        foreach($product as $s)
+        {
+            $s->s5 = $s->stars()->where("stars",5)->count();
+            $s->s4 = $s->stars()->where("stars",4)->count();
+            $s->s3 = $s->stars()->where("stars",3)->count();
+            $s->s2 = $s->stars()->where("stars",2)->count();
+            $s->s1 = $s->stars()->where("stars",1)->count();
+            $sc = 5 * $s->s5 + 4 * $s->s4 + 3 * $s->s3 + 2 * $s->s2 + 1 * $s->s1;
+            if($sc == 0){$s->total_stars = 5;}
+            else{$s->total_stars = substr($sc/($s->s5+$s->s4+$s->s3+$s->s2+$s->s1), 0, 1);}
+        }
+        
+    }
+    
     $this['products_by_cat'] = $products;
     $this['country_title'] = Country::find($country_id);
     $this['category'] = Category::find($category_id);

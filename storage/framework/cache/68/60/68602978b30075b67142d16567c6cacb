@@ -1,4 +1,4 @@
-1488767388a:1:{s:12:"registro.htm";a:9:{s:8:"fileName";s:12:"registro.htm";s:7:"content";s:3202:"title = "Registro"
+1489406824a:1:{s:12:"registro.htm";a:9:{s:8:"fileName";s:12:"registro.htm";s:7:"content";s:4332:"title = "Registro"
 url = "/registro"
 layout = "layout"
 is_hidden = 0
@@ -20,10 +20,10 @@ function onRegisterForm()
     ],true);
     
     Auth::login($user);
-    $loggedIn = Auth::check();
-    if($loggedIn)
+    if(Auth::check())
     {
-        return redirect(session()->pull('from',$this->redirectTo));
+        //return redirect(session()->pull('from',$this->redirectTo));
+        return Redirect::to('/');
     }
 }
 ?>
@@ -58,8 +58,21 @@ function onRegisterForm()
           <label>confirmar contraseña</label>
           <input name="password_confirmation" type="password" class="form-control">
         </div>
-        <button onClick="onRegisterForm();" type="button" class="btn btn-default btn-theme pull-right col-md-12">Crear cuenta</button>
+        <div class="checkbox">
+          <label>
+            <input name="years" type="checkbox" id="blankCheckbox" value="1" aria-label="..."> Soy mayor de 18 años
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="blankCheckbox2" value="option1" aria-label="..."> <a target="_blank" href="{{"terminos"|page}}">Acepto los terminos y condiciones</a>
+          </label>
+        </div>
+        <button onClick="onRegisterForm();" type="button" class="btn btn-default btn-theme pull-right col-md-12">Crear cuenta</button><br><br>
+      <div id="years18" style="display:none;" class="alert alert-danger"><strong>Lo sentimos, debes ser mayor de edad para poder registrarte.</strong></div>
+      <div id="termsc" style="display:none;" class="alert alert-danger"><strong>Debes aceptar los terminos y condiciones.</strong></div>
       </form>
+      
       <div style="margin-top:100px">
         <HR>
           <p>ya tienes una cuenta?</p>
@@ -75,7 +88,7 @@ function onRegisterForm()
     function onRegisterForm()
     {
         var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        
+        $('#years18').fadeOut();
     	if($('input[name=name]').val() === ''){$('input[name=name]').css('border', '1px solid red');error = false;} 
     	else{$('input[name=name]').css('border', '');}
     	
@@ -85,6 +98,18 @@ function onRegisterForm()
     	if(!regex.test($('input[name=email]').val())){$('input[name=email]').css('border', '1px solid red');error = false;} 
     	else {$('input[name=email]').css('border', '');}
     	
+    	if (!$('#blankCheckbox').is(':checked'))
+    	{
+    	    $('#years18').fadeIn();
+    	    error = false;
+    	}
+    	else {$('#years18').fadeOut();}
+    	if (!$('#blankCheckbox2').is(':checked'))
+    	{
+    	    $('#termsc').fadeIn();
+    	    error = false;
+    	}
+    	else {$('#termsc').fadeOut();}
     	if(error)
     	{
     		$('#registerForm').request('onRegisterForm', {data: $('#registerForm').serialize()});
@@ -92,7 +117,7 @@ function onRegisterForm()
     	else { return false; }
     }
 </script>
-{% endput %}";s:5:"mtime";i:1488370098;s:6:"markup";s:2607:"<!-- Main Content -->
+{% endput %}";s:5:"mtime";i:1489178714;s:6:"markup";s:3728:"<!-- Main Content -->
 <div style="width:40%; margin:0 auto;" class="container m-t-3">
   <div style="border:1px solid #ccc;border-radius:5px;padding:20px" class=" row">
     <!-- Login Form -->
@@ -122,8 +147,21 @@ function onRegisterForm()
           <label>confirmar contraseña</label>
           <input name="password_confirmation" type="password" class="form-control">
         </div>
-        <button onClick="onRegisterForm();" type="button" class="btn btn-default btn-theme pull-right col-md-12">Crear cuenta</button>
+        <div class="checkbox">
+          <label>
+            <input name="years" type="checkbox" id="blankCheckbox" value="1" aria-label="..."> Soy mayor de 18 años
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" id="blankCheckbox2" value="option1" aria-label="..."> <a target="_blank" href="{{"terminos"|page}}">Acepto los terminos y condiciones</a>
+          </label>
+        </div>
+        <button onClick="onRegisterForm();" type="button" class="btn btn-default btn-theme pull-right col-md-12">Crear cuenta</button><br><br>
+      <div id="years18" style="display:none;" class="alert alert-danger"><strong>Lo sentimos, debes ser mayor de edad para poder registrarte.</strong></div>
+      <div id="termsc" style="display:none;" class="alert alert-danger"><strong>Debes aceptar los terminos y condiciones.</strong></div>
       </form>
+      
       <div style="margin-top:100px">
         <HR>
           <p>ya tienes una cuenta?</p>
@@ -139,7 +177,7 @@ function onRegisterForm()
     function onRegisterForm()
     {
         var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        
+        $('#years18').fadeOut();
     	if($('input[name=name]').val() === ''){$('input[name=name]').css('border', '1px solid red');error = false;} 
     	else{$('input[name=name]').css('border', '');}
     	
@@ -149,6 +187,18 @@ function onRegisterForm()
     	if(!regex.test($('input[name=email]').val())){$('input[name=email]').css('border', '1px solid red');error = false;} 
     	else {$('input[name=email]').css('border', '');}
     	
+    	if (!$('#blankCheckbox').is(':checked'))
+    	{
+    	    $('#years18').fadeIn();
+    	    error = false;
+    	}
+    	else {$('#years18').fadeOut();}
+    	if (!$('#blankCheckbox2').is(':checked'))
+    	{
+    	    $('#termsc').fadeIn();
+    	    error = false;
+    	}
+    	else {$('#termsc').fadeOut();}
     	if(error)
     	{
     		$('#registerForm').request('onRegisterForm', {data: $('#registerForm').serialize()});
@@ -156,7 +206,7 @@ function onRegisterForm()
     	else { return false; }
     }
 </script>
-{% endput %}";s:4:"code";s:510:"function onStart()
+{% endput %}";s:4:"code";s:519:"function onStart()
 {
     session()->put('from', URL::previous());
 }
@@ -172,9 +222,9 @@ function onRegisterForm()
     ],true);
     
     Auth::login($user);
-    $loggedIn = Auth::check();
-    if($loggedIn)
+    if(Auth::check())
     {
-        return redirect(session()->pull('from',$this->redirectTo));
+        //return redirect(session()->pull('from',$this->redirectTo));
+        return Redirect::to('/');
     }
 }";s:5:"title";s:8:"Registro";s:3:"url";s:9:"/registro";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}

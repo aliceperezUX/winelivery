@@ -1,6 +1,25 @@
 columns:
-    id:
-        label: ID
+    user_id:
+        label: NOMBRE
         type: text
+        searchable: true
+        sortable: true
+        select: name
+        relation: user
+    address_id:
+        label: DIRECCION
+        type: text
+        searchable: true
+        sortable: true
+        select: calle
+        relation: address
+    status:
+        label: ESTADO
+        type: text
+        searchable: true
+        sortable: true
+    created_at:
+        label: FECHA
+        type: date
         searchable: true
         sortable: true

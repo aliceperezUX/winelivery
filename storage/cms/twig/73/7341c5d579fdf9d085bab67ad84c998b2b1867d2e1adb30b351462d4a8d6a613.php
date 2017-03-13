@@ -59,8 +59,12 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
         // line 17
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($this->getAttribute((isset($context["product"]) ? $context["product"] : null), "region", array()), "country", array()), "name", array()), "html", null, true);
         echo "</span></p>
-            <p class=\"detail\">Uvas: <span class=\"detail-content\">";
+            <p class=\"detail\">Región: <span class=\"detail-content\">";
         // line 18
+        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["product"]) ? $context["product"] : null), "region", array()), "title", array()), "html", null, true);
+        echo "</span></p>
+            <p class=\"detail\">Uvas: <span class=\"detail-content\">";
+        // line 19
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable($this->getAttribute((isset($context["product"]) ? $context["product"] : null), "uvas", array()));
         $context['loop'] = array(
@@ -95,26 +99,26 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['u'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 19
+        // line 20
         echo "            </span></p>
             <p class=\"detail\">Capacidad: <span class=\"detail-content\">";
-        // line 20
+        // line 21
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["product"]) ? $context["product"] : null), "capacity", array()), "html", null, true);
         echo "</span></p>
             <p class=\"detail\">Volumen de alcohol: <span class=\"detail-content\">";
-        // line 21
+        // line 22
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["product"]) ? $context["product"] : null), "volume", array()), "html", null, true);
         echo "%</span></p>
             <p class=\"detail\">Maridaje: <span class=\"detail-content\">";
-        // line 22
+        // line 23
         echo twig_escape_filter($this->env, $this->getAttribute((isset($context["product"]) ? $context["product"] : null), "maridaje", array()), "html", null, true);
         echo "</span></p>
             
             
             ";
-        // line 25
+        // line 26
         if ((isset($context["loggedIn"]) ? $context["loggedIn"] : null)) {
-            // line 26
+            // line 27
             echo "            <button type=\"button\" ";
             if (($this->getAttribute((isset($context["product"]) ? $context["product"] : null), "stock", array()) > 0)) {
                 echo " onClick=\"addToCart('";
@@ -123,7 +127,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
             }
             echo " class=\"btn btn-theme m-b-1\" type=\"button\"><i class=\"fa fa-shopping-cart\" aria-hidden=\"true\"></i>Agregar al carrito</button>
             <button type=\"button\" ";
-            // line 27
+            // line 28
             if (($this->getAttribute((isset($context["product"]) ? $context["product"] : null), "stock", array()) > 0)) {
                 echo " onClick=\"addToWishlist('";
                 echo twig_escape_filter($this->env, $this->getAttribute((isset($context["product"]) ? $context["product"] : null), "id", array()), "html", null, true);
@@ -132,17 +136,17 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
             echo " class=\"btn btn-theme1 m-b-1\" type=\"button\"><i class=\"fa fa-heart\" aria-hidden=\"true\"></i>Agregar a la lista de deseos</button>
             ";
         } else {
-            // line 29
+            // line 30
             echo "            <a href=\"";
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
             echo "\" class=\"btn btn-theme m-b-1\"><i class=\"fa fa-shopping-cart\" aria-hidden=\"true\"></i>Agregar al carrito</a>
             <a href=\"";
-            // line 30
+            // line 31
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
             echo "\" class=\"btn btn-theme1 m-b-1\"><i class=\"fa fa-heart\" aria-hidden=\"true\"></i>Agregar a la lista de deseos</a>
             ";
         }
-        // line 32
+        // line 33
         echo "
             
         </div>
@@ -156,7 +160,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                         <h4>Nota de cata</h4>
                         <p>
                             ";
-        // line 44
+        // line 45
         echo $this->getAttribute((isset($context["product"]) ? $context["product"] : null), "description", array());
         echo "
                         </p>
@@ -168,16 +172,16 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                     <div class=\"title\"><span>Review de catadores</span></div>
                     <div class=\"well\">
                         ";
-        // line 53
+        // line 54
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["reviews"]) ? $context["reviews"] : null));
         foreach ($context['_seq'] as $context["_key"] => $context["r"]) {
-            // line 54
+            // line 55
             echo "                        <div class=\"media\">
                             <div class=\"media-left\">
                                 <a href=\"javascript:;\">
                                     <img style=\"width: 76px; height: 76px\" class=\"media-object img-thumbnail\" alt=\"";
-            // line 57
+            // line 58
             echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["r"], "taste", array()), "name", array()), "html", null, true);
             echo "\" src=\"";
             echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($this->getAttribute($context["r"], "taste", array()), "featured_image", array()), "getPath", array()), "html", null, true);
@@ -185,23 +189,23 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                                 </a>
                                 <div class=\"product-rating\">
                                     ";
-            // line 60
+            // line 61
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(range(1, $this->getAttribute($context["r"], "stars", array())));
             foreach ($context['_seq'] as $context["_key"] => $context["i"]) {
-                // line 61
+                // line 62
                 echo "                                        <i class=\"fa fa-star\"></i>
                                     ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['i'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 63
+            // line 64
             echo "                                </div>
                             </div>
                             <div class=\"media-body\">
                                 <h5 class=\"media-heading\"><strong>";
-            // line 66
+            // line 67
             echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["r"], "taste", array()), "name", array()), "html", null, true);
             echo "</strong></h5> ";
             echo twig_escape_filter($this->env, $this->getAttribute($context["r"], "comment", array()), "html", null, true);
@@ -213,7 +217,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['r'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 70
+        // line 71
         echo "                    </div>
                 </div>
                 <!-- End Review Tab Content -->
@@ -230,35 +234,35 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
             <form id=\"starForm\" class=\"evaluacion-detalle\">
               <p class=\"clasificacion\">
                 <input ";
-        // line 85
+        // line 86
         if (($this->getAttribute((isset($context["rating"]) ? $context["rating"] : null), "stars", array()) == 5)) {
             echo "checked";
         }
         echo " class=\"stars\" id=\"radio1\" type=\"radio\" name=\"estrellas\" value=\"5\"><!--
                 --><label for=\"radio1\">★</label><!--
                 --><input ";
-        // line 87
+        // line 88
         if (($this->getAttribute((isset($context["rating"]) ? $context["rating"] : null), "stars", array()) == 4)) {
             echo "checked";
         }
         echo " class=\"stars\" id=\"radio2\" type=\"radio\" name=\"estrellas\" value=\"4\"><!--
                 --><label for=\"radio2\">★</label><!--
                 --><input ";
-        // line 89
+        // line 90
         if (($this->getAttribute((isset($context["rating"]) ? $context["rating"] : null), "stars", array()) == 3)) {
             echo "checked";
         }
         echo " class=\"stars\" id=\"radio3\" type=\"radio\" name=\"estrellas\" value=\"3\"><!--
                 --><label for=\"radio3\">★</label><!--
                 --><input ";
-        // line 91
+        // line 92
         if (($this->getAttribute((isset($context["rating"]) ? $context["rating"] : null), "stars", array()) == 2)) {
             echo "checked";
         }
         echo " class=\"stars\" id=\"radio4\" type=\"radio\" name=\"estrellas\" value=\"2\"><!--
                 --><label for=\"radio4\">★</label><!--
                 --><input ";
-        // line 93
+        // line 94
         if (($this->getAttribute((isset($context["rating"]) ? $context["rating"] : null), "stars", array()) == 1)) {
             echo "checked";
         }
@@ -266,11 +270,11 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                 --><label for=\"radio5\">★</label>
               </p>
               <input name=\"product_id\" value=\"";
-        // line 96
+        // line 97
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["this"]) ? $context["this"] : null), "param", array()), "id", array()), "html", null, true);
         echo "\" type=\"hidden\">
             <a ";
-        // line 97
+        // line 98
         if ((isset($context["loggedIn"]) ? $context["loggedIn"] : null)) {
             echo " href=\"javascript:;\" onClick=\"starForm();\" ";
         } else {
@@ -291,7 +295,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                 <i class=\"fa fa-star\"></i>
                 <i class=\"fa fa-star\"></i>
                 <a href=\"javascript:;\" style=\"pointer-events: none;\">(";
-        // line 109
+        // line 110
         if ((isset($context["stars5"]) ? $context["stars5"] : null)) {
             echo twig_escape_filter($this->env, (isset($context["stars5"]) ? $context["stars5"] : null), "html", null, true);
             echo " ";
@@ -306,7 +310,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                 <i class=\"fa fa-star\"></i>
                 <i class=\"fa fa-star\"></i>
                 <a href=\"javascript:;\" style=\"pointer-events: none;\">(";
-        // line 116
+        // line 117
         if ((isset($context["stars4"]) ? $context["stars4"] : null)) {
             echo twig_escape_filter($this->env, (isset($context["stars4"]) ? $context["stars4"] : null), "html", null, true);
             echo " ";
@@ -320,7 +324,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                 <i class=\"fa fa-star\"></i>
                 <i class=\"fa fa-star\"></i>
                 <a href=\"javascript:;\" style=\"pointer-events: none;\">(";
-        // line 122
+        // line 123
         if ((isset($context["stars3"]) ? $context["stars3"] : null)) {
             echo twig_escape_filter($this->env, (isset($context["stars3"]) ? $context["stars3"] : null), "html", null, true);
             echo " ";
@@ -333,7 +337,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                 <i class=\"fa fa-star\"></i>
                 <i class=\"fa fa-star\"></i>
                 <a href=\"javascript:;\" style=\"pointer-events: none;\">(";
-        // line 127
+        // line 128
         if ((isset($context["stars2"]) ? $context["stars2"] : null)) {
             echo twig_escape_filter($this->env, (isset($context["stars2"]) ? $context["stars2"] : null), "html", null, true);
             echo " ";
@@ -345,7 +349,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
             <div class=\"rating\">
                 <i class=\"fa fa-star\"></i>
                 <a href=\"javascript:;\" style=\"pointer-events: none;\">(";
-        // line 131
+        // line 132
         if ((isset($context["stars1"]) ? $context["stars1"] : null)) {
             echo twig_escape_filter($this->env, (isset($context["stars1"]) ? $context["stars1"] : null), "html", null, true);
             echo " ";
@@ -361,12 +365,12 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
             <textarea name=\"comment\" id=\"Review\" class=\"form-control\" rows=\"5\"></textarea>
         </div>
         <input name=\"product_id\" value=\"";
-        // line 139
+        // line 140
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["this"]) ? $context["this"] : null), "param", array()), "id", array()), "html", null, true);
         echo "\" type=\"hidden\">
         <div class=\"form-group col-md-12\">
             <a ";
-        // line 141
+        // line 142
         if ((isset($context["loggedIn"]) ? $context["loggedIn"] : null)) {
             echo " href=\"javascript:;\" onClick=\"commentForm();\" ";
         } else {
@@ -379,12 +383,12 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
     </form>
    <div id=\"comment\">
    ";
-        // line 145
+        // line 146
         $context['__cms_partial_params'] = [];
         $context['__cms_partial_params']['comments'] = (isset($context["comments"]) ? $context["comments"] : null)        ;
         echo $this->env->getExtension('CMS')->partialFunction("comments"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 146
+        // line 147
         echo "   </div>
 </div>
 
@@ -394,17 +398,17 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
             <div class=\"title\"><span>Productos relacionados</span></div>
             <div class=\"related-product-slider owl-controls-top-offset\">
                 ";
-        // line 154
+        // line 155
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["products"]) ? $context["products"] : null));
         foreach ($context['_seq'] as $context["_key"] => $context["p"]) {
-            // line 155
+            // line 156
             echo "                    <div class=\"box-product-outer\">
                         <div class=\"box-product\">
                             <div class=\"img-wrapper\">
                                 <a href=\"detail.html\">
                                     <img alt=\"Product\" src=\"";
-            // line 159
+            // line 160
             echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["p"], "featured_image", array()), "getPath", array()), "html", null, true);
             echo "\">
                                 </a>
@@ -413,7 +417,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                                 </div> -->
                             </div>
                             <h6><a href=\"";
-            // line 165
+            // line 166
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
             echo "\">";
             echo twig_escape_filter($this->env, $this->getAttribute($context["p"], "title", array()), "html", null, true);
@@ -429,7 +433,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
                             <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 2px 30px 5px\">
                                 <div style=\"color:#fff\" class=\"price col-lg-6 \">
                                     <div>RD\$";
-            // line 176
+            // line 177
             echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute($context["p"], "price", array())), "html", null, true);
             echo "<span class=\"label-tags\"></span></div>
                                 </div>
@@ -445,7 +449,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['p'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 186
+        // line 187
         echo "            </div>
         </div>
     </div>
@@ -456,9 +460,9 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
 <!-- End Main Content -->
 
 ";
-        // line 195
-        echo $this->env->getExtension('CMS')->startBlock('scripts'        );
         // line 196
+        echo $this->env->getExtension('CMS')->startBlock('scripts'        );
+        // line 197
         echo "<script>
     function starForm()
     {
@@ -485,7 +489,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
     }
 </script>
 ";
-        // line 195
+        // line 196
         echo $this->env->getExtension('CMS')->endBlock(true        );
     }
 
@@ -501,7 +505,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
 
     public function getDebugInfo()
     {
-        return array (  489 => 195,  462 => 196,  460 => 195,  449 => 186,  433 => 176,  417 => 165,  408 => 159,  402 => 155,  398 => 154,  388 => 146,  383 => 145,  370 => 141,  365 => 139,  349 => 131,  337 => 127,  324 => 122,  310 => 116,  295 => 109,  274 => 97,  270 => 96,  262 => 93,  255 => 91,  248 => 89,  241 => 87,  234 => 85,  217 => 70,  205 => 66,  200 => 63,  193 => 61,  189 => 60,  181 => 57,  176 => 54,  172 => 53,  160 => 44,  146 => 32,  141 => 30,  136 => 29,  127 => 27,  118 => 26,  116 => 25,  110 => 22,  106 => 21,  102 => 20,  99 => 19,  64 => 18,  60 => 17,  56 => 16,  52 => 15,  48 => 14,  44 => 13,  38 => 9,  33 => 8,  27 => 7,  19 => 1,);
+        return array (  493 => 196,  466 => 197,  464 => 196,  453 => 187,  437 => 177,  421 => 166,  412 => 160,  406 => 156,  402 => 155,  392 => 147,  387 => 146,  374 => 142,  369 => 140,  353 => 132,  341 => 128,  328 => 123,  314 => 117,  299 => 110,  278 => 98,  274 => 97,  266 => 94,  259 => 92,  252 => 90,  245 => 88,  238 => 86,  221 => 71,  209 => 67,  204 => 64,  197 => 62,  193 => 61,  185 => 58,  180 => 55,  176 => 54,  164 => 45,  150 => 33,  145 => 31,  140 => 30,  131 => 28,  122 => 27,  120 => 26,  114 => 23,  110 => 22,  106 => 21,  103 => 20,  68 => 19,  64 => 18,  60 => 17,  56 => 16,  52 => 15,  48 => 14,  44 => 13,  38 => 9,  33 => 8,  27 => 7,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -531,6 +535,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
             <p class=\"detail\">Tipo: <span class=\"detail-content\">{{product.category.title}}</span></p>
             <p class=\"detail\">Productor: <span class=\"detail-content\">{{product.productor}}</span></p>
             <p class=\"detail\">Pais: <span class=\"detail-content\">{{product.region.country.name}}</span></p>
+            <p class=\"detail\">Región: <span class=\"detail-content\">{{product.region.title}}</span></p>
             <p class=\"detail\">Uvas: <span class=\"detail-content\">{% for u in product.uvas %}{{u.title}}{% if loop.last %}.{% else %},&nbsp;{% endif %}{% endfor %}
             </span></p>
             <p class=\"detail\">Capacidad: <span class=\"detail-content\">{{product.capacity}}</span></p>

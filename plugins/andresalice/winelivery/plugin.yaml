@@ -54,3 +54,7 @@ navigation:
                 label: Slideshows
                 url: andresalice/winelivery/slideshow
                 icon: icon-image
+            orders:
+                label: Ordenes
+                url: andresalice/winelivery/order
+                icon: icon-cart-arrow-down

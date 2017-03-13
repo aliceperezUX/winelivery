@@ -9,3 +9,8 @@ columns:
         type: number
         searchable: true
         sortable: true
+    stock:
+        label: STOCK
+        type: number
+        searchable: true
+        sortable: true

@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Address;use Andresalice\Winelivery\Models\Sector;class Cms58bca03dbdd3c752116612_1284799996Class extends \Cms\Classes\LayoutCode
+use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Address;use Andresalice\Winelivery\Models\Sector;class Cms58c2f805b9a10019803189_3227900740Class extends \Cms\Classes\LayoutCode
 {
 
 
@@ -12,7 +12,20 @@ public function onStart()
 {
     $this['loggedIn'] = Auth::check();
     $this['categories'] = Category::get();
-    $this['randomProducts'] = Product::orderByRaw("RAND()")->take(12)->get();
+    $rp = Product::orderByRaw("RAND()")->take(12)->get();
+    //PRODUCTOS RANDOM CALCULO DE ESTRELLAS
+    foreach($rp as $r)
+    {
+        $r->s5 = $r->stars()->where("stars",5)->count();
+        $r->s4 = $r->stars()->where("stars",4)->count();
+        $r->s3 = $r->stars()->where("stars",3)->count();
+        $r->s2 = $r->stars()->where("stars",2)->count();
+        $r->s1 = $r->stars()->where("stars",1)->count();
+        $sc = 5 * $r->s5 + 4 * $r->s4 + 3 * $r->s3 + 2 * $r->s2 + 1 * $r->s1;
+        if($sc == 0){$r->total_stars = 5;}
+        else{$r->total_stars = substr($sc/($r->s5+$r->s4+$r->s3+$r->s2+$r->s1), 0, 1);}
+    }
+    $this['randomProducts'] = $rp;
     if($this['loggedIn'])
     {
       $this['user'] = Auth::getUser();
