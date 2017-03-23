@@ -99,10 +99,15 @@ function onDeleteFromCart()
                             </div>
                             <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                             <div class="rating">
-                                {% for i in 0..p.total_stars -1 %}
+                                {% for i in 1..p.total_stars %}
                                     <i class="fa fa-star"></i>
                                 {% endfor %}
-                                <a href="#">(5 reviews)</a>
+                                {% if p.total_stars < 5 %}
+                                {% for j in p.total_stars..5 - 1 %}
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                {% endfor %}
+                                {% endif %}
+                                <a href="#">({{p.comments.count}} reviews)</a>
                             </div>
                            <div class="price-box">
                             <div style="color:#fff" class="price col-lg-6 ">

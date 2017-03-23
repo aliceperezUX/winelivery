@@ -1,4 +1,4 @@
-1490262205a:1:{s:13:"productos.htm";a:9:{s:8:"fileName";s:13:"productos.htm";s:7:"content";s:7476:"title = "Productos"
+1490308028a:1:{s:13:"productos.htm";a:9:{s:8:"fileName";s:13:"productos.htm";s:7:"content";s:7782:"title = "Productos"
 url = "/productos/:country/:category/:region?"
 layout = "layout"
 is_hidden = 0
@@ -125,10 +125,15 @@ function onStart()
                           </div>
                           <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                           <div class="rating">
-                              {% for i in 0..p.total_stars -1 %}
+                              {% for i in 1..p.total_stars %}
                                     <i class="fa fa-star"></i>
-                              {% endfor %}
-                              <a href="#">({{p.comments.count}} reviews)</a>
+                                {% endfor %}
+                                {% if p.total_stars < 5 %}
+                                {% for j in p.total_stars..5 - 1 %}
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                {% endfor %}
+                                {% endif %}
+                                <a href="#">({{p.comments.count}} reviews)</a>
                           </div>
                           <div class="price-box">
                             <div style="color:#fff" class="price col-lg-6 ">
@@ -170,7 +175,7 @@ $('#priceRangeFilter').on('change', function() {
     location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}'+this.value;
 })
 </script>
-{% endput %}";s:5:"mtime";i:1489528089;s:6:"markup";s:5170:"<!-- Main Content -->
+{% endput %}";s:5:"mtime";i:1490306764;s:6:"markup";s:5476:"<!-- Main Content -->
     <div class="container m-t-3">
       <div class="row">
         <!-- Filter Sidebar -->
@@ -239,10 +244,15 @@ $('#priceRangeFilter').on('change', function() {
                           </div>
                           <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                           <div class="rating">
-                              {% for i in 0..p.total_stars -1 %}
+                              {% for i in 1..p.total_stars %}
                                     <i class="fa fa-star"></i>
-                              {% endfor %}
-                              <a href="#">({{p.comments.count}} reviews)</a>
+                                {% endfor %}
+                                {% if p.total_stars < 5 %}
+                                {% for j in p.total_stars..5 - 1 %}
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                {% endfor %}
+                                {% endif %}
+                                <a href="#">({{p.comments.count}} reviews)</a>
                           </div>
                           <div class="price-box">
                             <div style="color:#fff" class="price col-lg-6 ">

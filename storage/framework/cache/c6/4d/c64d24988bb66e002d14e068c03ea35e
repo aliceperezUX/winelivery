@@ -1,4 +1,4 @@
-1490262205a:1:{s:10:"inicio.htm";a:9:{s:8:"fileName";s:10:"inicio.htm";s:7:"content";s:13685:"title = "Inicio"
+1490308028a:1:{s:10:"inicio.htm";a:9:{s:8:"fileName";s:10:"inicio.htm";s:7:"content";s:14785:"title = "Inicio"
 url = "/"
 layout = "layout"
 is_hidden = 0
@@ -139,9 +139,14 @@ function onStart()
                         </div>
                         <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                         <div class="rating">
-                            {% for i in 0..p.total_stars -1 %}
+                            {% for i in 1..p.total_stars %}
                                 <i class="fa fa-star"></i>
                             {% endfor %}
+                            {% if p.total_stars < 5 %}
+                            {% for j in p.total_stars..5 - 1 %}
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            {% endfor %}
+                            {% endif %}
                             <a href="#">({{p.comments.count}} reviews)</a>
                         </div>
                         <div class="price-box">
@@ -172,9 +177,14 @@ function onStart()
                         </div>
                         <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                         <div class="rating">
-                            {% for i in 0..p.total_stars -1 %}
+                            {% for i in 1..p.total_stars %}
                                 <i class="fa fa-star"></i>
                             {% endfor %}
+                            {% if p.total_stars < 5 %}
+                            {% for j in p.total_stars..5 - 1 %}
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            {% endfor %}
+                            {% endif %}
                             <a href="#">({{p.comments.count}} reviews)</a>
                         </div>
                         <div class="price-box">
@@ -203,9 +213,14 @@ function onStart()
             <h3><a href="{{"producto-detalle"|page({id: mwine.id})}}">{{mwine.title}}</a></h3>
             <p style="padding-top:10px">{{mwine.description|raw}}</p>
             <div class="rating">
-                {% for i in 0..mwine.total_stars -1 %}
-                <i class="fa fa-star"></i>
+                {% for i in 1..mwine.total_stars %}
+                    <i class="fa fa-star"></i>
                 {% endfor %}
+                {% if mwine.total_stars < 5 %}
+                {% for j in mwine.total_stars..5 - 1 %}
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                {% endfor %}
+                {% endif %}
                 <a href="#">({{mwine.comments.count}} reviews)</a>
             </div>
             <p style="padding-top:10px; font-style:Italic">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua". Alice Perez Villanueva</p>
@@ -257,9 +272,14 @@ function onStart()
                             </div>
                             <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                             <div class="rating">
-                                {% for i in 0..p.total_stars -1 %}
+                                {% for i in 1..p.total_stars %}
                                     <i class="fa fa-star"></i>
                                 {% endfor %}
+                                {% if p.total_stars < 5 %}
+                                {% for j in p.total_stars..5 - 1 %}
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                {% endfor %}
+                                {% endif %}
                                 <a href="#">({{p.comments.count}} reviews)</a>
                             </div>
                             <div class="price-box">
@@ -281,7 +301,7 @@ function onStart()
 </div>
 
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1489528073;s:6:"markup";s:11325:"<!-- Full Slider -->
+<!-- End Main Content -->";s:5:"mtime";i:1490304503;s:6:"markup";s:12425:"<!-- Full Slider -->
 <div class="container-fluid">
     <div class="row">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -366,9 +386,14 @@ function onStart()
                         </div>
                         <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                         <div class="rating">
-                            {% for i in 0..p.total_stars -1 %}
+                            {% for i in 1..p.total_stars %}
                                 <i class="fa fa-star"></i>
                             {% endfor %}
+                            {% if p.total_stars < 5 %}
+                            {% for j in p.total_stars..5 - 1 %}
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            {% endfor %}
+                            {% endif %}
                             <a href="#">({{p.comments.count}} reviews)</a>
                         </div>
                         <div class="price-box">
@@ -399,9 +424,14 @@ function onStart()
                         </div>
                         <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                         <div class="rating">
-                            {% for i in 0..p.total_stars -1 %}
+                            {% for i in 1..p.total_stars %}
                                 <i class="fa fa-star"></i>
                             {% endfor %}
+                            {% if p.total_stars < 5 %}
+                            {% for j in p.total_stars..5 - 1 %}
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            {% endfor %}
+                            {% endif %}
                             <a href="#">({{p.comments.count}} reviews)</a>
                         </div>
                         <div class="price-box">
@@ -430,9 +460,14 @@ function onStart()
             <h3><a href="{{"producto-detalle"|page({id: mwine.id})}}">{{mwine.title}}</a></h3>
             <p style="padding-top:10px">{{mwine.description|raw}}</p>
             <div class="rating">
-                {% for i in 0..mwine.total_stars -1 %}
-                <i class="fa fa-star"></i>
+                {% for i in 1..mwine.total_stars %}
+                    <i class="fa fa-star"></i>
                 {% endfor %}
+                {% if mwine.total_stars < 5 %}
+                {% for j in mwine.total_stars..5 - 1 %}
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                {% endfor %}
+                {% endif %}
                 <a href="#">({{mwine.comments.count}} reviews)</a>
             </div>
             <p style="padding-top:10px; font-style:Italic">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua". Alice Perez Villanueva</p>
@@ -484,9 +519,14 @@ function onStart()
                             </div>
                             <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                             <div class="rating">
-                                {% for i in 0..p.total_stars -1 %}
+                                {% for i in 1..p.total_stars %}
                                     <i class="fa fa-star"></i>
                                 {% endfor %}
+                                {% if p.total_stars < 5 %}
+                                {% for j in p.total_stars..5 - 1 %}
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                {% endfor %}
+                                {% endif %}
                                 <a href="#">({{p.comments.count}} reviews)</a>
                             </div>
                             <div class="price-box">

@@ -395,7 +395,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
     <div class=\"row m-t-3\">
         <div class=\"col-xs-12\">
             <div style=\"padding-top:15px;\" class=\"title\"><span>Vinos Recomendados</span></div>
-            <div class=\"related-product-slider owl-controls-top-offset\">
+            <div class=\"related-product-slider owl-controls-top-offset box-product-fixed\">
                 ";
         // line 155
         $context['_parent'] = $context;
@@ -692,7 +692,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
     <div class=\"row m-t-3\">
         <div class=\"col-xs-12\">
             <div style=\"padding-top:15px;\" class=\"title\"><span>Vinos Recomendados</span></div>
-            <div class=\"related-product-slider owl-controls-top-offset\">
+            <div class=\"related-product-slider owl-controls-top-offset box-product-fixed\">
                 {% for p in randomProducts %}
                     <div class=\"box-product-outer\">
                         <div class=\"box-product\">

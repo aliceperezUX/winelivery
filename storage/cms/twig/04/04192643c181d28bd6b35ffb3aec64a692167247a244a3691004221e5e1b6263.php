@@ -67,7 +67,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
     <div class=\"row m-t-3\">
       <div class=\"col-xs-12\">
         <div class=\"title\"><span>PODRIA INTERESARTE</span></div>
-        <div class=\"related-product-slider owl-controls-top-offset\">
+        <div class=\"related-product-slider owl-controls-top-offset box-product-fixed\">
                 ";
         // line 27
         $context['_parent'] = $context;
@@ -100,7 +100,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
                                 ";
             // line 40
             $context['_parent'] = $context;
-            $context['_seq'] = twig_ensure_traversable(range(0, ($this->getAttribute($context["p"], "total_stars", array()) - 1)));
+            $context['_seq'] = twig_ensure_traversable(range(1, $this->getAttribute($context["p"], "total_stars", array())));
             foreach ($context['_seq'] as $context["_key"] => $context["i"]) {
                 // line 41
                 echo "                                    <i class=\"fa fa-star\"></i>
@@ -110,25 +110,45 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['i'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
             // line 43
-            echo "                                <a href=\"#\">(5 reviews)</a>
+            echo "                                ";
+            if (($this->getAttribute($context["p"], "total_stars", array()) < 5)) {
+                // line 44
+                echo "                                ";
+                $context['_parent'] = $context;
+                $context['_seq'] = twig_ensure_traversable(range($this->getAttribute($context["p"], "total_stars", array()), (5 - 1)));
+                foreach ($context['_seq'] as $context["_key"] => $context["j"]) {
+                    // line 45
+                    echo "                                    <i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>
+                                ";
+                }
+                $_parent = $context['_parent'];
+                unset($context['_seq'], $context['_iterated'], $context['_key'], $context['j'], $context['_parent'], $context['loop']);
+                $context = array_intersect_key($context, $_parent) + $_parent;
+                // line 47
+                echo "                                ";
+            }
+            // line 48
+            echo "                                <a href=\"#\">(";
+            echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["p"], "comments", array()), "count", array()), "html", null, true);
+            echo " reviews)</a>
                             </div>
-                            <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 2px 30px 5px\">
-                                <div style=\"color:#fff\" class=\"price col-lg-6 \">
-                                    <div>RD\$";
-            // line 47
+                           <div class=\"price-box\">
+                            <div style=\"color:#fff\" class=\"price col-lg-6 \">
+                                <div>RD\$";
+            // line 52
             echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute($context["p"], "price", array())), "html", null, true);
-            echo "<span class=\"label-tags\"></span></div>
-                                </div>
-                                <div class=\"col-lg-6\">
-                                    ";
-            // line 50
+            echo " <span class=\"label-tags\"></span></div>
+                            </div>
+                            <div class=\"col-lg-6\">
+                                ";
+            // line 55
             $context['__cms_partial_params'] = [];
             $context['__cms_partial_params']['p'] = $context["p"]            ;
             echo $this->env->getExtension('CMS')->partialFunction("botones"            , $context['__cms_partial_params']            );
             unset($context['__cms_partial_params']);
-            // line 51
-            echo "                                </div>
-                            </div>
+            // line 56
+            echo "                            </div>
+                        </div>
                         </div>
                     </div>
                 ";
@@ -136,7 +156,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['p'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 56
+        // line 61
         echo "            </div>
         </div>
       </div>
@@ -198,7 +218,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
 
     public function getDebugInfo()
     {
-        return array (  140 => 56,  130 => 51,  125 => 50,  119 => 47,  113 => 43,  106 => 41,  102 => 40,  95 => 38,  86 => 32,  82 => 31,  77 => 28,  73 => 27,  55 => 20,  50 => 18,  45 => 16,  41 => 15,  34 => 10,  29 => 9,  19 => 1,);
+        return array (  160 => 61,  150 => 56,  145 => 55,  139 => 52,  131 => 48,  128 => 47,  121 => 45,  116 => 44,  113 => 43,  106 => 41,  102 => 40,  95 => 38,  86 => 32,  82 => 31,  77 => 28,  73 => 27,  55 => 20,  50 => 18,  45 => 16,  41 => 15,  34 => 10,  29 => 9,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -236,7 +256,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
     <div class=\"row m-t-3\">
       <div class=\"col-xs-12\">
         <div class=\"title\"><span>PODRIA INTERESARTE</span></div>
-        <div class=\"related-product-slider owl-controls-top-offset\">
+        <div class=\"related-product-slider owl-controls-top-offset box-product-fixed\">
                 {% for p in randomProducts %}
                     <div class=\"box-product-outer\">
                         <div class=\"box-product\">
@@ -250,19 +270,24 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
                             </div>
                             <div class=\"name-box\"><h6><a href=\"{{\"producto-detalle\"|page({id: p.id})}}\">{{p.title}}</a></h6></div>
                             <div class=\"rating\">
-                                {% for i in 0..p.total_stars -1 %}
+                                {% for i in 1..p.total_stars %}
                                     <i class=\"fa fa-star\"></i>
                                 {% endfor %}
-                                <a href=\"#\">(5 reviews)</a>
+                                {% if p.total_stars < 5 %}
+                                {% for j in p.total_stars..5 - 1 %}
+                                    <i class=\"fa fa-star-o\" aria-hidden=\"true\"></i>
+                                {% endfor %}
+                                {% endif %}
+                                <a href=\"#\">({{p.comments.count}} reviews)</a>
                             </div>
-                            <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 2px 30px 5px\">
-                                <div style=\"color:#fff\" class=\"price col-lg-6 \">
-                                    <div>RD\${{ p.price|number_format}}<span class=\"label-tags\"></span></div>
-                                </div>
-                                <div class=\"col-lg-6\">
-                                    {% partial \"botones\" p = p %}
-                                </div>
+                           <div class=\"price-box\">
+                            <div style=\"color:#fff\" class=\"price col-lg-6 \">
+                                <div>RD\${{ p.price|number_format}} <span class=\"label-tags\"></span></div>
                             </div>
+                            <div class=\"col-lg-6\">
+                                {% partial \"botones\" p = p %}
+                            </div>
+                        </div>
                         </div>
                     </div>
                 {% endfor %}

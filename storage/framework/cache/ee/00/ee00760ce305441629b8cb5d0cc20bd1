@@ -1,4 +1,4 @@
-1490262206a:1:{s:12:"busqueda.htm";a:9:{s:8:"fileName";s:12:"busqueda.htm";s:7:"content";s:2624:"title = "Busqueda"
+1490308028a:1:{s:12:"busqueda.htm";a:9:{s:8:"fileName";s:12:"busqueda.htm";s:7:"content";s:3359:"title = "Busqueda"
 url = "/busqueda"
 layout = "layout"
 is_hidden = 0
@@ -8,7 +8,20 @@ use Andresalice\Winelivery\Models\Product;
 
 function onStart()
 {
-    $this['products_search'] = Product::where('title', 'LIKE', '%'.Input::get('search').'%')->take(4)->get();
+    $rp = Product::where('title', 'LIKE', '%'.Input::get('search').'%')->take(4)->get();
+    foreach($rp as $r)
+    {
+        $r->s5 = $r->stars()->where("stars",5)->count();
+        $r->s4 = $r->stars()->where("stars",4)->count();
+        $r->s3 = $r->stars()->where("stars",3)->count();
+        $r->s2 = $r->stars()->where("stars",2)->count();
+        $r->s1 = $r->stars()->where("stars",1)->count();
+        $sc = 5 * $r->s5 + 4 * $r->s4 + 3 * $r->s3 + 2 * $r->s2 + 1 * $r->s1;
+        if($sc == 0){$r->total_stars = 5;}
+        else{$r->total_stars = substr($sc/($r->s5+$r->s4+$r->s3+$r->s2+$r->s1), 0, 1);}
+    }
+    
+    $this['products_search'] = $rp;
 }
 ?>
 ==
@@ -25,19 +38,22 @@ function onStart()
           <div class="col-sm-4 col-lg-2 box-product-outer">
               <div class="box-product">
                   <div class="img-wrapper">
-                      <a href="detail.html">
+                      <a href="{{"producto-detalle"|page({id: p.id})}}">
                           <img alt="Product" src="{{p.featured_image.getPath}}">
                       </a>
                       {% partial "stock" p = p %}
                   </div>
                   <h6><a href="{{"producto-detalle"|page({id:p.id})}}">{{p.title}}</a></h6>
                   <div class="rating">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-half-o"></i>
-                      <a href="#">(5 reviews)</a>
+                    {% for i in 1..p.total_stars %}
+                        <i class="fa fa-star"></i>
+                    {% endfor %}
+                    {% if p.total_stars < 5 %}
+                    {% for j in p.total_stars..5 - 1 %}
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    {% endfor %}
+                    {% endif %}
+                     <a href="#">({{p.comments.count}} reviews)</a>
                   </div>
                   <div style="background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 0px">
                       <div style="color:#fff" class="price col-lg-6 ">
@@ -62,7 +78,7 @@ function onStart()
 
   </div>
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1487674876;s:6:"markup";s:2358:"<!-- Main Content -->
+<!-- End Main Content -->";s:5:"mtime";i:1490304892;s:6:"markup";s:2531:"<!-- Main Content -->
 <div class="container m-t-3">
   <div class="row">
     <!-- Product List -->
@@ -75,19 +91,22 @@ function onStart()
           <div class="col-sm-4 col-lg-2 box-product-outer">
               <div class="box-product">
                   <div class="img-wrapper">
-                      <a href="detail.html">
+                      <a href="{{"producto-detalle"|page({id: p.id})}}">
                           <img alt="Product" src="{{p.featured_image.getPath}}">
                       </a>
                       {% partial "stock" p = p %}
                   </div>
                   <h6><a href="{{"producto-detalle"|page({id:p.id})}}">{{p.title}}</a></h6>
                   <div class="rating">
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star"></i>
-                      <i class="fa fa-star-half-o"></i>
-                      <a href="#">(5 reviews)</a>
+                    {% for i in 1..p.total_stars %}
+                        <i class="fa fa-star"></i>
+                    {% endfor %}
+                    {% if p.total_stars < 5 %}
+                    {% for j in p.total_stars..5 - 1 %}
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    {% endfor %}
+                    {% endif %}
+                     <a href="#">({{p.comments.count}} reviews)</a>
                   </div>
                   <div style="background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 0px">
                       <div style="color:#fff" class="price col-lg-6 ">
@@ -112,9 +131,22 @@ function onStart()
 
   </div>
 </div>
-<!-- End Main Content -->";s:4:"code";s:181:"use Andresalice\Winelivery\Models\Product;
+<!-- End Main Content -->";s:4:"code";s:743:"use Andresalice\Winelivery\Models\Product;
 
 function onStart()
 {
-    $this['products_search'] = Product::where('title', 'LIKE', '%'.Input::get('search').'%')->take(4)->get();
+    $rp = Product::where('title', 'LIKE', '%'.Input::get('search').'%')->take(4)->get();
+    foreach($rp as $r)
+    {
+        $r->s5 = $r->stars()->where("stars",5)->count();
+        $r->s4 = $r->stars()->where("stars",4)->count();
+        $r->s3 = $r->stars()->where("stars",3)->count();
+        $r->s2 = $r->stars()->where("stars",2)->count();
+        $r->s1 = $r->stars()->where("stars",1)->count();
+        $sc = 5 * $r->s5 + 4 * $r->s4 + 3 * $r->s3 + 2 * $r->s2 + 1 * $r->s1;
+        if($sc == 0){$r->total_stars = 5;}
+        else{$r->total_stars = substr($sc/($r->s5+$r->s4+$r->s3+$r->s2+$r->s1), 0, 1);}
+    }
+    
+    $this['products_search'] = $rp;
 }";s:5:"title";s:8:"Busqueda";s:3:"url";s:9:"/busqueda";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}
