@@ -1,20 +1,21 @@
 columns:
-    user_id:
+    name:
         label: NOMBRE
+        type: number
+        searchable: true
+        sortable: true
+    surname:
+        label: APELLIDO
         type: text
         searchable: true
         sortable: true
-        select: name
-        relation: user
-    address_id:
-        label: DIRECCION
+    address:
+        label: address
         type: text
         searchable: true
         sortable: true
-        select: calle
-        relation: address
-    status:
-        label: ESTADO
+    total:
+        label: total
         type: text
         searchable: true
         sortable: true

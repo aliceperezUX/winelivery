@@ -27,26 +27,26 @@ class __TwigTemplate_1feefe5dd5d7437ce89831f145388c834f4bcb2c069e4c34c8e43e66ebe
         echo "\" style=\"width:50%;margin:0 auto;\" class=\"img-responsive\" />
       </div>
       <HR>
-        <h4>Crear cuenta</h4>
+        <h4>Crear Cuenta</h4>
       <form id=\"registerForm\">
         <div class=\"form-group\">
-          <label >nombre</label>
+          <label >Nombre</label>
           <input name=\"name\" type=\"text\" class=\"form-control\" >
         </div>
         <div class=\"form-group\">
-          <label >apellido</label>
+          <label >Apellido</label>
           <input name=\"last_name\" type=\"text\" class=\"form-control\" >
         </div>
         <div class=\"form-group\">
-          <label >correo</label>
+          <label >Correo</label>
           <input name=\"email\" type=\"email\" class=\"form-control\" >
         </div>
         <div class=\"form-group\">
-          <label >contraseña</label>
+          <label >Contraseña</label>
           <input name=\"password\" type=\"password\" class=\"form-control\">
         </div>
         <div class=\"form-group\">
-          <label>confirmar contraseña</label>
+          <label>Confirmar Contraseña</label>
           <input name=\"password_confirmation\" type=\"password\" class=\"form-control\">
         </div>
         <div class=\"checkbox\">
@@ -69,11 +69,11 @@ class __TwigTemplate_1feefe5dd5d7437ce89831f145388c834f4bcb2c069e4c34c8e43e66ebe
       
       <div style=\"margin-top:100px\">
         <HR>
-          <p>ya tienes una cuenta?</p>
+          <p>¿ya tienes una cuenta?</p>
           <a href=\"";
         // line 49
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("login");
-        echo "\" class=\"btn btn-default btn-theme1 col-md-12\">iniciar sesion</a>
+        echo "\" class=\"btn btn-default btn-theme1 col-md-12\">Iniciar Sesión</a>
       </div>
     </div>
     <!-- End Login Form -->
@@ -155,26 +155,26 @@ class __TwigTemplate_1feefe5dd5d7437ce89831f145388c834f4bcb2c069e4c34c8e43e66ebe
           <img alt=\"Logo\" src=\"{{\"assets/images/winelivery-01.png\"|theme}}\" style=\"width:50%;margin:0 auto;\" class=\"img-responsive\" />
       </div>
       <HR>
-        <h4>Crear cuenta</h4>
+        <h4>Crear Cuenta</h4>
       <form id=\"registerForm\">
         <div class=\"form-group\">
-          <label >nombre</label>
+          <label >Nombre</label>
           <input name=\"name\" type=\"text\" class=\"form-control\" >
         </div>
         <div class=\"form-group\">
-          <label >apellido</label>
+          <label >Apellido</label>
           <input name=\"last_name\" type=\"text\" class=\"form-control\" >
         </div>
         <div class=\"form-group\">
-          <label >correo</label>
+          <label >Correo</label>
           <input name=\"email\" type=\"email\" class=\"form-control\" >
         </div>
         <div class=\"form-group\">
-          <label >contraseña</label>
+          <label >Contraseña</label>
           <input name=\"password\" type=\"password\" class=\"form-control\">
         </div>
         <div class=\"form-group\">
-          <label>confirmar contraseña</label>
+          <label>Confirmar Contraseña</label>
           <input name=\"password_confirmation\" type=\"password\" class=\"form-control\">
         </div>
         <div class=\"checkbox\">
@@ -194,8 +194,8 @@ class __TwigTemplate_1feefe5dd5d7437ce89831f145388c834f4bcb2c069e4c34c8e43e66ebe
       
       <div style=\"margin-top:100px\">
         <HR>
-          <p>ya tienes una cuenta?</p>
-          <a href=\"{{\"login\"|page}}\" class=\"btn btn-default btn-theme1 col-md-12\">iniciar sesion</a>
+          <p>¿ya tienes una cuenta?</p>
+          <a href=\"{{\"login\"|page}}\" class=\"btn btn-default btn-theme1 col-md-12\">Iniciar Sesión</a>
       </div>
     </div>
     <!-- End Login Form -->

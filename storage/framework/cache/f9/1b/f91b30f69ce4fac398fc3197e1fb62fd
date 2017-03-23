@@ -1,4 +1,4 @@
-1489406824a:1:{s:13:"checkout2.htm";a:10:{s:8:"fileName";s:13:"checkout2.htm";s:7:"content";s:3833:"title = "Checkout2"
+1490262206a:1:{s:13:"checkout2.htm";a:10:{s:8:"fileName";s:13:"checkout2.htm";s:7:"content";s:4394:"title = "Checkout2"
 url = "/checkout2/:id?"
 layout = "layout"
 is_hidden = 0
@@ -18,21 +18,32 @@ function onStart()
     if($exists)
     {
         $cart = Cart::where("user_id",Auth::getUser()->id)->get();
+        $sum = 0;
+        foreach($cart as $c){ $sum += $c->product->price * $c->quantity; }
         $this['products'] = $cart; 
-        $this['address'] = Address::find($this->param('id')); 
+        $this['address'] = Address::find($this->param('id'));
+        $address = "Sector: " . $this['address']->sector . " Calle: " . $this['address']->calle . " Residencial: " . $this['address']->residencial . " No.:" . $this['address']->numero . " Proximo a: " . $this['address']->proximo;
+        
+        $user = Auth::getUser();
         $order = new Order();
-        $order->user_id = Auth::getUser()->id;
-        $order->address_id = $this->param('id');
+        $order->user_id = $user->id;
+        $order->name = $user->name;
+        $order->surname = $user->surname;
+        $order->email = $user->username;
+        $order->address = $address;
+        $order->telefono = $this['address']->telefono;
+        $order->celular = $this['address']->celular;
+        $order->total = $sum + 90;
         $order->status = "Procesando Orden";
         $order->save();
-        $sum = 0;
+        
         foreach($cart as $c)
         {
-            $sum += $c->product->price * $c->quantity;
             DB::table("product_order")->insert(['order_id' => $order->id, 'product_id' => $c->product_id, 'quantity' => $c->quantity]);
         }
         $this['cart_total'] = $sum;
         $this['cart_total_envio'] = $sum + 90;
+        
         $this['cart_counter'] = Cart::where("user_id","=",Auth::getUser()->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
         Cart::where("user_id",Auth::getUser()->id)->delete();
     }
@@ -47,8 +58,8 @@ function onStart()
 <!-- Main Content -->
     <div class="container m-t-3">
       <div class="row">
-        <div class="title"><span>recibo de pago</span></div>
-        <div class="alert alert-success" role="alert">tu pedido fue realizado correctamente</div>
+        <div class="title"><span>Recibo de pago</span></div>
+        <div class="alert alert-success" role="alert">Tu pedido fue realizado correctamente</div>
         <!-- Shopping Cart List -->
         <div class="col-md-8">
 
@@ -85,21 +96,21 @@ function onStart()
         </div>
         <!-- End Shopping Cart List -->
         <div class="col-md-3 cart-detailbox">
-          <h4>orden de compra</h4>
-          <p class="detailbox-items">direccion:<span class="detailbox-content">{{address.sector}} {{address.calle}} {{address.residencial}} {{address.numero}} {{address.telefono}} {{address.celular}} {{address.proximo}}</span></p>
+          <h4>Orden de Compra</h4>
+          <p class="detailbox-items">Dirección:<span class="detailbox-content">{{address.sector}} {{address.calle}} {{address.residencial}} {{address.numero}} {{address.telefono}} {{address.celular}} {{address.proximo}}</span></p>
           <p class="detailbox-items">Total items:<span class="detailbox-content">{{cart_counter}}</span></p>
-          <p class="detailbox-items">costo:<span class="detailbox-content" >RD${{ cart_total|number_format}}</span></p>
-          <p class="detailbox-items">costo de envio:<span class="detailbox-content"> $90</span></p>
-          <p class="detailbox-items">costo total:<span class="detailbox-content">RD${{ cart_total_envio|number_format}}</span></p>
+          <p class="detailbox-items">Costo:<span class="detailbox-content" >RD${{ cart_total|number_format}}</span></p>
+          <p class="detailbox-items">Costo de Envío:<span class="detailbox-content"> $90</span></p>
+          <p class="detailbox-items">Costo Total:<span class="detailbox-content">RD${{ cart_total_envio|number_format}}</span></p>
 
         </div>
 
       </div>
-    </div>";s:5:"mtime";i:1487983860;s:6:"markup";s:2431:"<!-- Main Content -->
+    </div>";s:5:"mtime";i:1489526641;s:6:"markup";s:2433:"<!-- Main Content -->
     <div class="container m-t-3">
       <div class="row">
-        <div class="title"><span>recibo de pago</span></div>
-        <div class="alert alert-success" role="alert">tu pedido fue realizado correctamente</div>
+        <div class="title"><span>Recibo de pago</span></div>
+        <div class="alert alert-success" role="alert">Tu pedido fue realizado correctamente</div>
         <!-- Shopping Cart List -->
         <div class="col-md-8">
 
@@ -136,17 +147,17 @@ function onStart()
         </div>
         <!-- End Shopping Cart List -->
         <div class="col-md-3 cart-detailbox">
-          <h4>orden de compra</h4>
-          <p class="detailbox-items">direccion:<span class="detailbox-content">{{address.sector}} {{address.calle}} {{address.residencial}} {{address.numero}} {{address.telefono}} {{address.celular}} {{address.proximo}}</span></p>
+          <h4>Orden de Compra</h4>
+          <p class="detailbox-items">Dirección:<span class="detailbox-content">{{address.sector}} {{address.calle}} {{address.residencial}} {{address.numero}} {{address.telefono}} {{address.celular}} {{address.proximo}}</span></p>
           <p class="detailbox-items">Total items:<span class="detailbox-content">{{cart_counter}}</span></p>
-          <p class="detailbox-items">costo:<span class="detailbox-content" >RD${{ cart_total|number_format}}</span></p>
-          <p class="detailbox-items">costo de envio:<span class="detailbox-content"> $90</span></p>
-          <p class="detailbox-items">costo total:<span class="detailbox-content">RD${{ cart_total_envio|number_format}}</span></p>
+          <p class="detailbox-items">Costo:<span class="detailbox-content" >RD${{ cart_total|number_format}}</span></p>
+          <p class="detailbox-items">Costo de Envío:<span class="detailbox-content"> $90</span></p>
+          <p class="detailbox-items">Costo Total:<span class="detailbox-content">RD${{ cart_total_envio|number_format}}</span></p>
 
         </div>
 
       </div>
-    </div>";s:4:"code";s:1261:"use Andresalice\Winelivery\Models\Cart;
+    </div>";s:4:"code";s:1820:"use Andresalice\Winelivery\Models\Cart;
 use Andresalice\Winelivery\Models\Address;
 use Andresalice\Winelivery\Models\Order;
 
@@ -156,21 +167,32 @@ function onStart()
     if($exists)
     {
         $cart = Cart::where("user_id",Auth::getUser()->id)->get();
+        $sum = 0;
+        foreach($cart as $c){ $sum += $c->product->price * $c->quantity; }
         $this['products'] = $cart; 
-        $this['address'] = Address::find($this->param('id')); 
+        $this['address'] = Address::find($this->param('id'));
+        $address = "Sector: " . $this['address']->sector . " Calle: " . $this['address']->calle . " Residencial: " . $this['address']->residencial . " No.:" . $this['address']->numero . " Proximo a: " . $this['address']->proximo;
+        
+        $user = Auth::getUser();
         $order = new Order();
-        $order->user_id = Auth::getUser()->id;
-        $order->address_id = $this->param('id');
+        $order->user_id = $user->id;
+        $order->name = $user->name;
+        $order->surname = $user->surname;
+        $order->email = $user->username;
+        $order->address = $address;
+        $order->telefono = $this['address']->telefono;
+        $order->celular = $this['address']->celular;
+        $order->total = $sum + 90;
         $order->status = "Procesando Orden";
         $order->save();
-        $sum = 0;
+        
         foreach($cart as $c)
         {
-            $sum += $c->product->price * $c->quantity;
             DB::table("product_order")->insert(['order_id' => $order->id, 'product_id' => $c->product_id, 'quantity' => $c->quantity]);
         }
         $this['cart_total'] = $sum;
         $this['cart_total_envio'] = $sum + 90;
+        
         $this['cart_counter'] = Cart::where("user_id","=",Auth::getUser()->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
         Cart::where("user_id",Auth::getUser()->id)->delete();
     }

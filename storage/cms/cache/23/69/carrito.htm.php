@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Cart;class Cms58c2ed38b96f7449627645_1094667568Class extends \Cms\Classes\PageCode
+use Andresalice\Winelivery\Models\Cart;class Cms58c862498f3e2938219069_1703470626Class extends \Cms\Classes\PageCode
 {
 
 public function onStart()

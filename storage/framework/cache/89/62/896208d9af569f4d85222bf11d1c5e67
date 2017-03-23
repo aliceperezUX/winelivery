@@ -1,4 +1,4 @@
-1489406824a:1:{s:9:"login.htm";a:9:{s:8:"fileName";s:9:"login.htm";s:7:"content";s:1675:"title = "Login"
+1490262205a:1:{s:9:"login.htm";a:9:{s:8:"fileName";s:9:"login.htm";s:7:"content";s:1679:"title = "Login"
 url = "/login"
 layout = "layout"
 is_hidden = 0
@@ -30,21 +30,21 @@ function onLoginForm()
           <img alt="Logo" src="{{"assets/images/winelivery-01.png"|theme}}" style="width:50%;margin:0 auto;" class="img-responsive" />
       </div>
       <HR>
-        <h4>iniciar sesion</h4>
+        <h4>Iniciar Sesión</h4>
       <form data-request="onLoginForm">
         <div class="form-group">
-          <label for="emailInputLogin">correo</label>
+          <label for="emailInputLogin">Correo</label>
           <input name="email" type="email" class="form-control" >
         </div>
         <div class="form-group">
-          <label for="passwordInputLogin">contraseña</label>
+          <label for="passwordInputLogin">Contraseña</label>
           <input name="password" type="password" class="form-control">
         </div>
-        <button type="submit" class="btn btn-default btn-theme pull-right col-md-12">iniciar sesion</button>
+        <button type="submit" class="btn btn-default btn-theme pull-right col-md-12">Iniciar Sesión</button>
       </form>
       <div style="margin-top:100px">
         <HR>
-          <p>aun no tienes una cuenta?</p>
+          <p>¿Aun no tienes una cuenta?</p>
           <a href="{{"registro"|page}}" class="btn btn-default btn-theme1 col-md-12">Crear Cuenta</a>
       </div>
     </div>
@@ -52,7 +52,7 @@ function onLoginForm()
 
   </div>
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1488369931;s:6:"markup";s:1237:"<!-- Main Content -->
+<!-- End Main Content -->";s:5:"mtime";i:1489526132;s:6:"markup";s:1241:"<!-- Main Content -->
 <div style="width:40%; margin:0 auto;" class="container m-t-3">
   <div style="border:1px solid #ccc;border-radius:5px;padding:20px" class=" row">
     <!-- Login Form -->
@@ -61,21 +61,21 @@ function onLoginForm()
           <img alt="Logo" src="{{"assets/images/winelivery-01.png"|theme}}" style="width:50%;margin:0 auto;" class="img-responsive" />
       </div>
       <HR>
-        <h4>iniciar sesion</h4>
+        <h4>Iniciar Sesión</h4>
       <form data-request="onLoginForm">
         <div class="form-group">
-          <label for="emailInputLogin">correo</label>
+          <label for="emailInputLogin">Correo</label>
           <input name="email" type="email" class="form-control" >
         </div>
         <div class="form-group">
-          <label for="passwordInputLogin">contraseña</label>
+          <label for="passwordInputLogin">Contraseña</label>
           <input name="password" type="password" class="form-control">
         </div>
-        <button type="submit" class="btn btn-default btn-theme pull-right col-md-12">iniciar sesion</button>
+        <button type="submit" class="btn btn-default btn-theme pull-right col-md-12">Iniciar Sesión</button>
       </form>
       <div style="margin-top:100px">
         <HR>
-          <p>aun no tienes una cuenta?</p>
+          <p>¿Aun no tienes una cuenta?</p>
           <a href="{{"registro"|page}}" class="btn btn-default btn-theme1 col-md-12">Crear Cuenta</a>
       </div>
     </div>

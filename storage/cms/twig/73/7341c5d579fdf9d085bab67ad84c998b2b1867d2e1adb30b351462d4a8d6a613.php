@@ -22,20 +22,19 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
         <!-- Image List -->
         <div class=\"col-sm-4 col-md-4 \">
             <div style=\"width: 350px; height:500px\" class=\"image-detail\">
-                <img src=\"";
-        // line 7
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["product"]) ? $context["product"] : null), "featured_image", array()), "getPath", array()), "html", null, true);
-        echo "\" data-zoom-image=\"";
-        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["product"]) ? $context["product"] : null), "featured_image", array()), "getPath", array()), "html", null, true);
-        echo "\" alt=\"\">
                 ";
-        // line 8
+        // line 7
         $context['__cms_partial_params'] = [];
         $context['__cms_partial_params']['p'] = (isset($context["product"]) ? $context["product"] : null)        ;
         echo $this->env->getExtension('CMS')->partialFunction("stock"        , $context['__cms_partial_params']        );
         unset($context['__cms_partial_params']);
-        // line 9
-        echo "            </div>
+        // line 8
+        echo "                <img src=\"";
+        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["product"]) ? $context["product"] : null), "featured_image", array()), "getPath", array()), "html", null, true);
+        echo "\" data-zoom-image=\"";
+        echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute((isset($context["product"]) ? $context["product"] : null), "featured_image", array()), "getPath", array()), "html", null, true);
+        echo "\" alt=\"\">
+            </div>
         </div>
         <!-- End Image List -->
         <div class=\"col-sm-8 col-md-8\">
@@ -395,52 +394,74 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
     <!-- Related Products -->
     <div class=\"row m-t-3\">
         <div class=\"col-xs-12\">
-            <div class=\"title\"><span>Productos relacionados</span></div>
+            <div style=\"padding-top:15px;\" class=\"title\"><span>Vinos Recomendados</span></div>
             <div class=\"related-product-slider owl-controls-top-offset\">
                 ";
         // line 155
         $context['_parent'] = $context;
-        $context['_seq'] = twig_ensure_traversable((isset($context["products"]) ? $context["products"] : null));
+        $context['_seq'] = twig_ensure_traversable((isset($context["randomProducts"]) ? $context["randomProducts"] : null));
         foreach ($context['_seq'] as $context["_key"] => $context["p"]) {
             // line 156
             echo "                    <div class=\"box-product-outer\">
                         <div class=\"box-product\">
                             <div class=\"img-wrapper\">
-                                <a href=\"detail.html\">
+                                <a href=\"";
+            // line 159
+            echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
+            echo "\">
                                     <img alt=\"Product\" src=\"";
             // line 160
             echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["p"], "featured_image", array()), "getPath", array()), "html", null, true);
             echo "\">
                                 </a>
-                                <!-- <div class=\"tags\">
-                                    <span class=\"label-tags\"><span class=\"label label-danger arrowed\">-10%</span></span>
-                                </div> -->
-                            </div>
-                            <h6><a href=\"";
-            // line 166
+                                ";
+            // line 162
+            $context['__cms_partial_params'] = [];
+            $context['__cms_partial_params']['p'] = $context["p"]            ;
+            echo $this->env->getExtension('CMS')->partialFunction("stock"            , $context['__cms_partial_params']            );
+            unset($context['__cms_partial_params']);
+            // line 163
+            echo "                            </div>
+                            <div class=\"name-box\"><h6><a href=\"";
+            // line 164
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
             echo "\">";
             echo twig_escape_filter($this->env, $this->getAttribute($context["p"], "title", array()), "html", null, true);
-            echo "</a></a></h6>
+            echo "</a></h6></div>
                             <div class=\"rating\">
-                                <i class=\"fa fa-star\"></i>
-                                <i class=\"fa fa-star\"></i>
-                                <i class=\"fa fa-star\"></i>
-                                <i class=\"fa fa-star\"></i>
-                                <i class=\"fa fa-star-half-o\"></i>
-                                <a href=\"#\">(5 reviews)</a>
+                                ";
+            // line 166
+            $context['_parent'] = $context;
+            $context['_seq'] = twig_ensure_traversable(range(0, ($this->getAttribute($context["p"], "total_stars", array()) - 1)));
+            foreach ($context['_seq'] as $context["_key"] => $context["i"]) {
+                // line 167
+                echo "                                    <i class=\"fa fa-star\"></i>
+                                ";
+            }
+            $_parent = $context['_parent'];
+            unset($context['_seq'], $context['_iterated'], $context['_key'], $context['i'], $context['_parent'], $context['loop']);
+            $context = array_intersect_key($context, $_parent) + $_parent;
+            // line 169
+            echo "                                <a href=\"#\">(";
+            echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["p"], "comments", array()), "count", array()), "html", null, true);
+            echo " reviews)</a>
                             </div>
-                            <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 2px 30px 5px\">
+                            <div class=\"price-box\">
                                 <div style=\"color:#fff\" class=\"price col-lg-6 \">
                                     <div>RD\$";
-            // line 177
+            // line 173
             echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute($context["p"], "price", array())), "html", null, true);
-            echo "<span class=\"label-tags\"></span></div>
+            echo " <span class=\"label-tags\"></span></div>
                                 </div>
                                 <div class=\"col-lg-6\">
-                                    <a href=\"#\" data-toggle=\"tooltip\" title=\"Agregar a la lista de deseos\" class=\"wishlist\"><i style=\"color:#fff; padding-right:8px; font-size:16px\" class=\"fa fa-heart\"></i></a>
-                                    <a href=\"#\" data-toggle=\"tooltip\" title=\"Agregar al carrito\"><i style=\"color:#fff; font-size:18px\" class=\"fa fa-shopping-cart\"></i></a>
-                                </div>
+                                    ";
+            // line 176
+            $context['__cms_partial_params'] = [];
+            $context['__cms_partial_params']['p'] = $context["p"]            ;
+            echo $this->env->getExtension('CMS')->partialFunction("botones"            , $context['__cms_partial_params']            );
+            unset($context['__cms_partial_params']);
+            // line 177
+            echo "                                </div>
                             </div>
                         </div>
                     </div>
@@ -449,7 +470,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['p'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 187
+        // line 182
         echo "            </div>
         </div>
     </div>
@@ -460,9 +481,9 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
 <!-- End Main Content -->
 
 ";
-        // line 196
+        // line 191
         echo $this->env->getExtension('CMS')->startBlock('scripts'        );
-        // line 197
+        // line 192
         echo "<script>
     function starForm()
     {
@@ -489,7 +510,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
     }
 </script>
 ";
-        // line 196
+        // line 191
         echo $this->env->getExtension('CMS')->endBlock(true        );
     }
 
@@ -505,7 +526,7 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
 
     public function getDebugInfo()
     {
-        return array (  493 => 196,  466 => 197,  464 => 196,  453 => 187,  437 => 177,  421 => 166,  412 => 160,  406 => 156,  402 => 155,  392 => 147,  387 => 146,  374 => 142,  369 => 140,  353 => 132,  341 => 128,  328 => 123,  314 => 117,  299 => 110,  278 => 98,  274 => 97,  266 => 94,  259 => 92,  252 => 90,  245 => 88,  238 => 86,  221 => 71,  209 => 67,  204 => 64,  197 => 62,  193 => 61,  185 => 58,  180 => 55,  176 => 54,  164 => 45,  150 => 33,  145 => 31,  140 => 30,  131 => 28,  122 => 27,  120 => 26,  114 => 23,  110 => 22,  106 => 21,  103 => 20,  68 => 19,  64 => 18,  60 => 17,  56 => 16,  52 => 15,  48 => 14,  44 => 13,  38 => 9,  33 => 8,  27 => 7,  19 => 1,);
+        return array (  514 => 191,  487 => 192,  485 => 191,  474 => 182,  464 => 177,  459 => 176,  453 => 173,  445 => 169,  438 => 167,  434 => 166,  427 => 164,  424 => 163,  419 => 162,  414 => 160,  410 => 159,  405 => 156,  401 => 155,  391 => 147,  386 => 146,  373 => 142,  368 => 140,  352 => 132,  340 => 128,  327 => 123,  313 => 117,  298 => 110,  277 => 98,  273 => 97,  265 => 94,  258 => 92,  251 => 90,  244 => 88,  237 => 86,  220 => 71,  208 => 67,  203 => 64,  196 => 62,  192 => 61,  184 => 58,  179 => 55,  175 => 54,  163 => 45,  149 => 33,  144 => 31,  139 => 30,  130 => 28,  121 => 27,  119 => 26,  113 => 23,  109 => 22,  105 => 21,  102 => 20,  67 => 19,  63 => 18,  59 => 17,  55 => 16,  51 => 15,  47 => 14,  43 => 13,  32 => 8,  27 => 7,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -524,8 +545,8 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
         <!-- Image List -->
         <div class=\"col-sm-4 col-md-4 \">
             <div style=\"width: 350px; height:500px\" class=\"image-detail\">
-                <img src=\"{{product.featured_image.getPath}}\" data-zoom-image=\"{{product.featured_image.getPath}}\" alt=\"\">
                 {% partial \"stock\" p = product %}
+                <img src=\"{{product.featured_image.getPath}}\" data-zoom-image=\"{{product.featured_image.getPath}}\" alt=\"\">
             </div>
         </div>
         <!-- End Image List -->
@@ -670,35 +691,30 @@ class __TwigTemplate_cbc609bfdc822e1d16ed5a7f2b3ebb36b44a493d4641abc98901e7498d2
     <!-- Related Products -->
     <div class=\"row m-t-3\">
         <div class=\"col-xs-12\">
-            <div class=\"title\"><span>Productos relacionados</span></div>
+            <div style=\"padding-top:15px;\" class=\"title\"><span>Vinos Recomendados</span></div>
             <div class=\"related-product-slider owl-controls-top-offset\">
-                {% for p in products %}
+                {% for p in randomProducts %}
                     <div class=\"box-product-outer\">
                         <div class=\"box-product\">
                             <div class=\"img-wrapper\">
-                                <a href=\"detail.html\">
+                                <a href=\"{{\"producto-detalle\"|page({id: p.id})}}\">
                                     <img alt=\"Product\" src=\"{{p.featured_image.getPath}}\">
                                 </a>
-                                <!-- <div class=\"tags\">
-                                    <span class=\"label-tags\"><span class=\"label label-danger arrowed\">-10%</span></span>
-                                </div> -->
+                                {% partial \"stock\" p = p %}
                             </div>
-                            <h6><a href=\"{{\"producto-detalle\"|page({id: p.id})}}\">{{p.title}}</a></a></h6>
+                            <div class=\"name-box\"><h6><a href=\"{{\"producto-detalle\"|page({id: p.id})}}\">{{p.title}}</a></h6></div>
                             <div class=\"rating\">
-                                <i class=\"fa fa-star\"></i>
-                                <i class=\"fa fa-star\"></i>
-                                <i class=\"fa fa-star\"></i>
-                                <i class=\"fa fa-star\"></i>
-                                <i class=\"fa fa-star-half-o\"></i>
-                                <a href=\"#\">(5 reviews)</a>
+                                {% for i in 0..p.total_stars -1 %}
+                                    <i class=\"fa fa-star\"></i>
+                                {% endfor %}
+                                <a href=\"#\">({{p.comments.count}} reviews)</a>
                             </div>
-                            <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 2px 30px 5px\">
+                            <div class=\"price-box\">
                                 <div style=\"color:#fff\" class=\"price col-lg-6 \">
-                                    <div>RD\${{ p.price|number_format}}<span class=\"label-tags\"></span></div>
+                                    <div>RD\${{ p.price|number_format}} <span class=\"label-tags\"></span></div>
                                 </div>
                                 <div class=\"col-lg-6\">
-                                    <a href=\"#\" data-toggle=\"tooltip\" title=\"Agregar a la lista de deseos\" class=\"wishlist\"><i style=\"color:#fff; padding-right:8px; font-size:16px\" class=\"fa fa-heart\"></i></a>
-                                    <a href=\"#\" data-toggle=\"tooltip\" title=\"Agregar al carrito\"><i style=\"color:#fff; font-size:18px\" class=\"fa fa-shopping-cart\"></i></a>
+                                    {% partial \"botones\" p = p %}
                                 </div>
                             </div>
                         </div>

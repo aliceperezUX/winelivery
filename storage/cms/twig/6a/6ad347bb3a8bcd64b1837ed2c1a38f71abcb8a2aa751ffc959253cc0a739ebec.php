@@ -28,21 +28,21 @@ class __TwigTemplate_77375bdbe43e8a869992e59249066c0008d65304d4a2ae749540823766d
         echo "\" style=\"width:50%;margin:0 auto;\" class=\"img-responsive\" />
       </div>
       <HR>
-        <h4>iniciar sesion</h4>
+        <h4>Iniciar Sesión</h4>
       <form data-request=\"onLoginForm\">
         <div class=\"form-group\">
-          <label for=\"emailInputLogin\">correo</label>
+          <label for=\"emailInputLogin\">Correo</label>
           <input name=\"email\" type=\"email\" class=\"form-control\" >
         </div>
         <div class=\"form-group\">
-          <label for=\"passwordInputLogin\">contraseña</label>
+          <label for=\"passwordInputLogin\">Contraseña</label>
           <input name=\"password\" type=\"password\" class=\"form-control\">
         </div>
-        <button type=\"submit\" class=\"btn btn-default btn-theme pull-right col-md-12\">iniciar sesion</button>
+        <button type=\"submit\" class=\"btn btn-default btn-theme pull-right col-md-12\">Iniciar Sesión</button>
       </form>
       <div style=\"margin-top:100px\">
         <HR>
-          <p>aun no tienes una cuenta?</p>
+          <p>¿Aun no tienes una cuenta?</p>
           <a href=\"";
         // line 25
         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("registro");
@@ -90,21 +90,21 @@ class __TwigTemplate_77375bdbe43e8a869992e59249066c0008d65304d4a2ae749540823766d
           <img alt=\"Logo\" src=\"{{\"assets/images/winelivery-01.png\"|theme}}\" style=\"width:50%;margin:0 auto;\" class=\"img-responsive\" />
       </div>
       <HR>
-        <h4>iniciar sesion</h4>
+        <h4>Iniciar Sesión</h4>
       <form data-request=\"onLoginForm\">
         <div class=\"form-group\">
-          <label for=\"emailInputLogin\">correo</label>
+          <label for=\"emailInputLogin\">Correo</label>
           <input name=\"email\" type=\"email\" class=\"form-control\" >
         </div>
         <div class=\"form-group\">
-          <label for=\"passwordInputLogin\">contraseña</label>
+          <label for=\"passwordInputLogin\">Contraseña</label>
           <input name=\"password\" type=\"password\" class=\"form-control\">
         </div>
-        <button type=\"submit\" class=\"btn btn-default btn-theme pull-right col-md-12\">iniciar sesion</button>
+        <button type=\"submit\" class=\"btn btn-default btn-theme pull-right col-md-12\">Iniciar Sesión</button>
       </form>
       <div style=\"margin-top:100px\">
         <HR>
-          <p>aun no tienes una cuenta?</p>
+          <p>¿Aun no tienes una cuenta?</p>
           <a href=\"{{\"registro\"|page}}\" class=\"btn btn-default btn-theme1 col-md-12\">Crear Cuenta</a>
       </div>
     </div>

@@ -16,7 +16,15 @@ class __TwigTemplate_ed9803a2a54c28fe8b6f545f77f15ff1db7a4ab02cecc52e560588a5885
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        echo "<!-- Main Content -->
+        echo "<header class=\"image-bg-fluid-height\">
+    <div class=\"row\">
+        <div class=\"col-lg-12\">
+            <h1 class=\"section-heading\">¡Disfrutar un buen vino nunca fue tan fácil!</h1>
+            <p class=\"lead section-lead\">Winelivery es la primera plataforma online del país que te ofrece la facilidad de ordenar el vino que estas acostumbrado a disfrutar de formar comoda y segura.</p>
+        </div>
+    </div>
+</header>
+<!-- Main Content -->
     <section>
         <div class=\"container\">
             <div class=\"row\">
@@ -26,7 +34,7 @@ class __TwigTemplate_ed9803a2a54c28fe8b6f545f77f15ff1db7a4ab02cecc52e560588a5885
                      <div class=\"col-sm-6 col-md-3\">
                         <div style=\"text-align: center;\">
                           <img src=\"";
-        // line 10
+        // line 18
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/1.png");
         echo "\" alt=\"...\">
                           <div class=\"caption\">
@@ -40,7 +48,7 @@ class __TwigTemplate_ed9803a2a54c28fe8b6f545f77f15ff1db7a4ab02cecc52e560588a5885
                     <div class=\"col-sm-6 col-md-3\">
                         <div style=\"text-align: center;\">
                           <img src=\"";
-        // line 21
+        // line 29
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/2.png");
         echo "\" alt=\"...\">
                           <div class=\"caption\">
@@ -53,7 +61,7 @@ class __TwigTemplate_ed9803a2a54c28fe8b6f545f77f15ff1db7a4ab02cecc52e560588a5885
                       <div class=\"col-sm-6 col-md-3\">
                         <div style=\"text-align: center;\">
                           <img src=\"";
-        // line 31
+        // line 39
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/3.png");
         echo "\" alt=\"...\">
                           <div class=\"caption\">
@@ -66,7 +74,7 @@ class __TwigTemplate_ed9803a2a54c28fe8b6f545f77f15ff1db7a4ab02cecc52e560588a5885
                     <div class=\"col-sm-6 col-md-3\">
                         <div style=\"text-align: center;\">
                           <img src=\"";
-        // line 41
+        // line 49
         echo $this->env->getExtension('Cms\Twig\Extension')->themeFilter("assets/images/4.png");
         echo "\" alt=\"...\">
                           <div class=\"caption\">
@@ -95,7 +103,7 @@ class __TwigTemplate_ed9803a2a54c28fe8b6f545f77f15ff1db7a4ab02cecc52e560588a5885
 
     public function getDebugInfo()
     {
-        return array (  70 => 41,  57 => 31,  44 => 21,  30 => 10,  19 => 1,);
+        return array (  78 => 49,  65 => 39,  52 => 29,  38 => 18,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -108,7 +116,15 @@ class __TwigTemplate_ed9803a2a54c28fe8b6f545f77f15ff1db7a4ab02cecc52e560588a5885
 
     public function getSourceContext()
     {
-        return new Twig_Source("<!-- Main Content -->
+        return new Twig_Source("<header class=\"image-bg-fluid-height\">
+    <div class=\"row\">
+        <div class=\"col-lg-12\">
+            <h1 class=\"section-heading\">¡Disfrutar un buen vino nunca fue tan fácil!</h1>
+            <p class=\"lead section-lead\">Winelivery es la primera plataforma online del país que te ofrece la facilidad de ordenar el vino que estas acostumbrado a disfrutar de formar comoda y segura.</p>
+        </div>
+    </div>
+</header>
+<!-- Main Content -->
     <section>
         <div class=\"container\">
             <div class=\"row\">

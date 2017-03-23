@@ -18,12 +18,12 @@ body {
 }
 
 .image-bg-fluid-height {
-	background: url("../images/Portada1.png") no-repeat center center scroll;
+	background: url("../images/portada1.png") no-repeat center center scroll;
     padding: 100px 0;
 }
 
 .image-bg-fixed-height {
-	background: url("../images/Portada1.png") no-repeat center center scroll;
+	background: url("../images/portada1.png") no-repeat center center scroll;
     height: 500px;
 }
 

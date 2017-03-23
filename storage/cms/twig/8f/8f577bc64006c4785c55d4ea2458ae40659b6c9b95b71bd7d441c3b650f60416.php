@@ -143,12 +143,12 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
                         unset($context['__cms_partial_params']);
                         // line 67
                         echo "                          </div>
-                          <h6><a href=\"";
+                          <div class=\"name-box\"><h6><a href=\"";
                         // line 68
                         echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
                         echo "\">";
                         echo twig_escape_filter($this->env, $this->getAttribute($context["p"], "title", array()), "html", null, true);
-                        echo "</a></h6>
+                        echo "</a></h6></div>
                           <div class=\"rating\">
                               ";
                         // line 70
@@ -167,23 +167,23 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
                         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($context["p"], "comments", array()), "count", array()), "html", null, true);
                         echo " reviews)</a>
                           </div>
-                          <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px\">
-                              <div style=\"color:#fff\" class=\"price col-lg-6 \">
-                                  <div>RD\$";
+                          <div class=\"price-box\">
+                            <div style=\"color:#fff\" class=\"price col-lg-6 \">
+                                <div>RD\$";
                         // line 77
                         echo twig_escape_filter($this->env, twig_number_format_filter($this->env, $this->getAttribute($context["p"], "price", array())), "html", null, true);
                         echo " <span class=\"label-tags\"></span></div>
-                              </div>
-                              <div class=\"col-lg-6\">
-                                  ";
+                            </div>
+                            <div class=\"col-lg-6\">
+                                ";
                         // line 80
                         $context['__cms_partial_params'] = [];
                         $context['__cms_partial_params']['p'] = $context["p"]                        ;
                         echo $this->env->getExtension('CMS')->partialFunction("botones"                        , $context['__cms_partial_params']                        );
                         unset($context['__cms_partial_params']);
                         // line 81
-                        echo "                              </div>
-                          </div>
+                        echo "                            </div>
+                        </div>
                       </div>
                     </div>
                 ";
@@ -355,21 +355,21 @@ class __TwigTemplate_be0bb8a85d0fa4f12e0a8786d9261318e4cca0dbf9e45cc06186c92bd7f
                               </a>
                               {% partial \"stock\" p = p %}
                           </div>
-                          <h6><a href=\"{{\"producto-detalle\"|page({id:p.id})}}\">{{p.title}}</a></h6>
+                          <div class=\"name-box\"><h6><a href=\"{{\"producto-detalle\"|page({id: p.id})}}\">{{p.title}}</a></h6></div>
                           <div class=\"rating\">
                               {% for i in 0..p.total_stars -1 %}
                                     <i class=\"fa fa-star\"></i>
                               {% endfor %}
                               <a href=\"#\">({{p.comments.count}} reviews)</a>
                           </div>
-                          <div style=\"background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px\">
-                              <div style=\"color:#fff\" class=\"price col-lg-6 \">
-                                  <div>RD\${{p.price|number_format}} <span class=\"label-tags\"></span></div>
-                              </div>
-                              <div class=\"col-lg-6\">
-                                  {% partial \"botones\" p = p %}
-                              </div>
-                          </div>
+                          <div class=\"price-box\">
+                            <div style=\"color:#fff\" class=\"price col-lg-6 \">
+                                <div>RD\${{ p.price|number_format}} <span class=\"label-tags\"></span></div>
+                            </div>
+                            <div class=\"col-lg-6\">
+                                {% partial \"botones\" p = p %}
+                            </div>
+                        </div>
                       </div>
                     </div>
                 {% endif %}

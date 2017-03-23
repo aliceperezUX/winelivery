@@ -1,4 +1,4 @@
-1489406824a:1:{s:13:"productos.htm";a:9:{s:8:"fileName";s:13:"productos.htm";s:7:"content";s:7501:"title = "Productos"
+1490262205a:1:{s:13:"productos.htm";a:9:{s:8:"fileName";s:13:"productos.htm";s:7:"content";s:7476:"title = "Productos"
 url = "/productos/:country/:category/:region?"
 layout = "layout"
 is_hidden = 0
@@ -115,7 +115,7 @@ function onStart()
               {% for p in pp%}
                 {% for r in regions %}
                 {% if r.id == p.region_id %}
-                    <div class="col-sm-4 col-lg-3 box-product-outer">
+                    <div class="col-sm-4 col-lg-3 box-product-outer box-product-fixed">
                       <div class="box-product">
                           <div class="img-wrapper">
                               <a href="{{"producto-detalle"|page({id:p.id})}}">
@@ -123,21 +123,21 @@ function onStart()
                               </a>
                               {% partial "stock" p = p %}
                           </div>
-                          <h6><a href="{{"producto-detalle"|page({id:p.id})}}">{{p.title}}</a></h6>
+                          <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                           <div class="rating">
                               {% for i in 0..p.total_stars -1 %}
                                     <i class="fa fa-star"></i>
                               {% endfor %}
                               <a href="#">({{p.comments.count}} reviews)</a>
                           </div>
-                          <div style="background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px">
-                              <div style="color:#fff" class="price col-lg-6 ">
-                                  <div>RD${{p.price|number_format}} <span class="label-tags"></span></div>
-                              </div>
-                              <div class="col-lg-6">
-                                  {% partial "botones" p = p %}
-                              </div>
-                          </div>
+                          <div class="price-box">
+                            <div style="color:#fff" class="price col-lg-6 ">
+                                <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                {% partial "botones" p = p %}
+                            </div>
+                        </div>
                       </div>
                     </div>
                 {% endif %}
@@ -170,7 +170,7 @@ $('#priceRangeFilter').on('change', function() {
     location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}'+this.value;
 })
 </script>
-{% endput %}";s:5:"mtime";i:1488875069;s:6:"markup";s:5195:"<!-- Main Content -->
+{% endput %}";s:5:"mtime";i:1489528089;s:6:"markup";s:5170:"<!-- Main Content -->
     <div class="container m-t-3">
       <div class="row">
         <!-- Filter Sidebar -->
@@ -229,7 +229,7 @@ $('#priceRangeFilter').on('change', function() {
               {% for p in pp%}
                 {% for r in regions %}
                 {% if r.id == p.region_id %}
-                    <div class="col-sm-4 col-lg-3 box-product-outer">
+                    <div class="col-sm-4 col-lg-3 box-product-outer box-product-fixed">
                       <div class="box-product">
                           <div class="img-wrapper">
                               <a href="{{"producto-detalle"|page({id:p.id})}}">
@@ -237,21 +237,21 @@ $('#priceRangeFilter').on('change', function() {
                               </a>
                               {% partial "stock" p = p %}
                           </div>
-                          <h6><a href="{{"producto-detalle"|page({id:p.id})}}">{{p.title}}</a></h6>
+                          <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                           <div class="rating">
                               {% for i in 0..p.total_stars -1 %}
                                     <i class="fa fa-star"></i>
                               {% endfor %}
                               <a href="#">({{p.comments.count}} reviews)</a>
                           </div>
-                          <div style="background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px">
-                              <div style="color:#fff" class="price col-lg-6 ">
-                                  <div>RD${{p.price|number_format}} <span class="label-tags"></span></div>
-                              </div>
-                              <div class="col-lg-6">
-                                  {% partial "botones" p = p %}
-                              </div>
-                          </div>
+                          <div class="price-box">
+                            <div style="color:#fff" class="price col-lg-6 ">
+                                <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                {% partial "botones" p = p %}
+                            </div>
+                        </div>
                       </div>
                     </div>
                 {% endif %}

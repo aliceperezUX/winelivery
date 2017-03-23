@@ -1,8 +1,16 @@
-1489406824a:1:{s:12:"servicio.htm";a:9:{s:8:"fileName";s:12:"servicio.htm";s:7:"content";s:3040:"title = "Servicio"
+1490262207a:1:{s:12:"servicio.htm";a:9:{s:8:"fileName";s:12:"servicio.htm";s:7:"content";s:3475:"title = "Servicio"
 url = "/servicio"
 layout = "layout"
 is_hidden = 0
 ==
+<header class="image-bg-fluid-height">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="section-heading">¡Disfrutar un buen vino nunca fue tan fácil!</h1>
+            <p class="lead section-lead">Winelivery es la primera plataforma online del país que te ofrece la facilidad de ordenar el vino que estas acostumbrado a disfrutar de formar comoda y segura.</p>
+        </div>
+    </div>
+</header>
 <!-- Main Content -->
     <section>
         <div class="container">
@@ -55,7 +63,15 @@ is_hidden = 0
         </div>
     </section>
 
-    <!-- End Main Content -->";s:5:"mtime";i:1489172302;s:6:"markup";s:2968:"<!-- Main Content -->
+    <!-- End Main Content -->";s:5:"mtime";i:1489427902;s:6:"markup";s:3403:"<header class="image-bg-fluid-height">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="section-heading">¡Disfrutar un buen vino nunca fue tan fácil!</h1>
+            <p class="lead section-lead">Winelivery es la primera plataforma online del país que te ofrece la facilidad de ordenar el vino que estas acostumbrado a disfrutar de formar comoda y segura.</p>
+        </div>
+    </div>
+</header>
+<!-- Main Content -->
     <section>
         <div class="container">
             <div class="row">

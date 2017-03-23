@@ -18,5 +18,6 @@ class Order extends Controller
     public function __construct()
     {
         parent::__construct();
+        BackendMenu::setContext('Andresalice.Winelivery', 'content', 'orders');
     }
 }

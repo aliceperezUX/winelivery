@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Cart;class Cms58be6ad25a366521164883_4115552236Class extends \Cms\Classes\PageCode
+use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Cart;class Cms58c85cf7f1618632880076_1802588924Class extends \Cms\Classes\PageCode
 {
 
 

@@ -129,7 +129,7 @@ function onStart()
             <!-- Featured -->
             <div class="title"><span>NUEVOS EN LA BODEGA</span></div>
             {% for p in recentProducts %}
-                <div class="col-sm-4 col-lg-3 box-product-outer">
+                <div class="col-sm-4 col-lg-3 box-product-outer box-product-fixed">
                     <div class="box-product">
                         <div class="img-wrapper">
                             <a href="{{"producto-detalle"|page({id: p.id})}}">
@@ -137,14 +137,14 @@ function onStart()
                             </a>
                             {% partial "stock" p = p %}
                         </div>
-                        <h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6>
+                        <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                         <div class="rating">
                             {% for i in 0..p.total_stars -1 %}
                                 <i class="fa fa-star"></i>
                             {% endfor %}
                             <a href="#">({{p.comments.count}} reviews)</a>
                         </div>
-                        <div style="background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px">
+                        <div class="price-box">
                             <div style="color:#fff" class="price col-lg-6 ">
                                 <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
                             </div>
@@ -163,21 +163,21 @@ function onStart()
             <!-- Collection -->
             <div class="title"><span>OFERTAS ESPECIALES</span></div>
             {% for p in specialProducts %}
-                <div class="col-sm-4 col-lg-3 box-product-outer">
+                <div class="col-sm-4 col-lg-3 box-product-outer box-product-fixed">
                     <div class="box-product">
                         <div class="img-wrapper">
                             <a href="{{"producto-detalle"|page({id: p.id})}}">
                                 <img class="wine-box" alt="Product" src="{{p.featured_image.getPath}}">
                             </a>
                         </div>
-                        <h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6>
+                        <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                         <div class="rating">
                             {% for i in 0..p.total_stars -1 %}
                                 <i class="fa fa-star"></i>
                             {% endfor %}
                             <a href="#">({{p.comments.count}} reviews)</a>
                         </div>
-                        <div style="background-color:#c1272d; margin-top:10px; padding:10px 5px 30px 5px">
+                        <div class="price-box">
                             <div style="color:#fff" class="price col-lg-6 ">
                                 <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
                             </div>
@@ -245,7 +245,7 @@ function onStart()
     <div class="row m-t-3">
         <div class="col-xs-12">
             <div style="padding-top:15px;" class="title"><span>Vinos Recomendados</span></div>
-            <div class="related-product-slider owl-controls-top-offset">
+            <div class="related-product-slider owl-controls-top-offset box-product-fixed">
                 {% for p in randomProducts %}
                     <div class="box-product-outer">
                         <div class="box-product">
@@ -255,21 +255,21 @@ function onStart()
                                 </a>
                                 {% partial "stock" p = p %}
                             </div>
-                            <h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></a></h6>
+                            <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
                             <div class="rating">
                                 {% for i in 0..p.total_stars -1 %}
                                     <i class="fa fa-star"></i>
                                 {% endfor %}
                                 <a href="#">({{p.comments.count}} reviews)</a>
                             </div>
-                            <div style="background-color:#c1272d; margin-top:10px; padding:10px 2px 30px 5px">
-                                <div style="color:#fff" class="price col-lg-6 ">
-                                    <div>RD${{ p.price|number_format}}<span class="label-tags"></span></div>
-                                </div>
-                                <div class="col-lg-6">
-                                    {% partial "botones" p = p %}
-                                </div>
+                            <div class="price-box">
+                            <div style="color:#fff" class="price col-lg-6 ">
+                                <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
                             </div>
+                            <div class="col-lg-6">
+                                {% partial "botones" p = p %}
+                            </div>
+                        </div>
                         </div>
                     </div>
                 {% endfor %}

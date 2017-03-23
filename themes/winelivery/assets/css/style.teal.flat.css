@@ -773,12 +773,21 @@ input[type=radio]:checked + span::before {
   right: 0;
   margin-top: -35px;
 }
+.name-box
+{
+  height: 40px;
+}
+
+.fa-star
+{
+  color: orange;
+}
 
 .box-product-outer {
   margin-bottom: 5px;
   padding: 15px;
-  border: 1px solid transparent;
   border-radius: 0;
+
   /* &:hover {
     @include box-shadow(0 6px 12px rgba(0, 0, 0, .175));
   } */
@@ -885,10 +894,11 @@ input[type=radio]:checked + span::before {
   content: '';
   border-bottom: 1px solid #666;
 }
-
-.rating i {
-  color: red;
-  border-color: black;
+.fa-star .star-no {
+  color: #ccc;
+}
+.fa-star {
+  color: orange;
 }
 
 .brand-slider {
@@ -1570,6 +1580,27 @@ input[type=radio]:checked + span::before {
     height: 30px;
   }
 }
+.second-header
+{
+  float: right;
+}
+.wishlist-icon
+{
+  color:#fff; 
+  padding-right:8px; 
+  font-size:16px
+}
+.cart-icon
+{
+  color:#fff; 
+  font-size:18px
+}
+.price-box
+{
+  background-color:#c1272d; 
+  margin-top:10px; 
+  padding:10px 5px 30px 5px;
+}
 @media (max-width: 768px) {
   .dropdown-submenu > .dropdown-menu {
     padding-left: 15px;
@@ -1594,6 +1625,16 @@ input[type=radio]:checked + span::before {
   }
 }
 @media (max-width: 480px) {
+  .second-header
+{
+  float: left;
+}
+  .wine-box
+  {
+    width:70px;
+    height:320px;
+    padding:0px 50px;
+  }
   .box-product-outer {
     padding: 0 !important;
   }

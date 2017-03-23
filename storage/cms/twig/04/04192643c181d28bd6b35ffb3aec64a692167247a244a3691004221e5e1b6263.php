@@ -90,12 +90,12 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
                                     <span class=\"label-tags\"><span class=\"label label-danger arrowed\">-10%</span></span>
                                 </div> -->
                             </div>
-                            <h6><a href=\"";
+                            <div class=\"name-box\"><h6><a href=\"";
             // line 38
             echo $this->env->getExtension('Cms\Twig\Extension')->pageFilter("producto-detalle", array("id" => $this->getAttribute($context["p"], "id", array())));
             echo "\">";
             echo twig_escape_filter($this->env, $this->getAttribute($context["p"], "title", array()), "html", null, true);
-            echo "</a></a></h6>
+            echo "</a></h6></div>
                             <div class=\"rating\">
                                 ";
             // line 40
@@ -248,7 +248,7 @@ class __TwigTemplate_c1305b1dad09922dbd7a678f873450d03d42258da3b711015008fdac9fb
                                     <span class=\"label-tags\"><span class=\"label label-danger arrowed\">-10%</span></span>
                                 </div> -->
                             </div>
-                            <h6><a href=\"{{\"producto-detalle\"|page({id: p.id})}}\">{{p.title}}</a></a></h6>
+                            <div class=\"name-box\"><h6><a href=\"{{\"producto-detalle\"|page({id: p.id})}}\">{{p.title}}</a></h6></div>
                             <div class=\"rating\">
                                 {% for i in 0..p.total_stars -1 %}
                                     <i class=\"fa fa-star\"></i>

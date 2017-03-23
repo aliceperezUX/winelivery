@@ -1,4 +1,4 @@
-1489398514a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:21912:"==
+1490262207a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:21948:"==
 <?php
 use Andresalice\Winelivery\Models\Category;
 use Andresalice\Winelivery\Models\Newsletter;
@@ -195,7 +195,8 @@ function onLogout()
         'assets/css/owl.carousel.css',
         'assets/css/owl.theme.default.css',
         'assets/css/style.teal.flat.css',
-        'assets/css/animate.css'
+        'assets/css/animate.css',
+        'assets/css/full-width-pics.css'
     ]|theme }}" rel="stylesheet">
     {% endif %}
     <style>
@@ -347,7 +348,7 @@ function onLogout()
                     {% endfor %}
                 </ul>
             </div>
-            <div style="float:right;" class="col-md-6">
+            <div class="col-md-6 second-header">
                 <ul class="list-inline nav navbar-nav">
                     {% if loggedIn %}
                     <li class="dropdown">
@@ -510,7 +511,7 @@ function onLogout()
     }
     </script>
 </body>
-</html>";s:5:"mtime";i:1489172484;s:6:"markup";s:15783:"<!DOCTYPE html>
+</html>";s:5:"mtime";i:1489527950;s:6:"markup";s:15819:"<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -540,7 +541,8 @@ function onLogout()
         'assets/css/owl.carousel.css',
         'assets/css/owl.theme.default.css',
         'assets/css/style.teal.flat.css',
-        'assets/css/animate.css'
+        'assets/css/animate.css',
+        'assets/css/full-width-pics.css'
     ]|theme }}" rel="stylesheet">
     {% endif %}
     <style>
@@ -692,7 +694,7 @@ function onLogout()
                     {% endfor %}
                 </ul>
             </div>
-            <div style="float:right;" class="col-md-6">
+            <div class="col-md-6 second-header">
                 <ul class="list-inline nav navbar-nav">
                     {% if loggedIn %}
                     <li class="dropdown">
