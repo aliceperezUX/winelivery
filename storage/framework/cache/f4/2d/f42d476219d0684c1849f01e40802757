@@ -1,4 +1,4 @@
-1490308028a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:21948:"==
+1490933419a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:22030:"==
 <?php
 use Andresalice\Winelivery\Models\Category;
 use Andresalice\Winelivery\Models\Newsletter;
@@ -382,7 +382,7 @@ function onLogout()
     <!-- End Navigation Bar -->
 
     {% page %}
-
+    {% if this.page.id != "login" and this.page.id != "registro" %}
     <!-- Footer -->
     <div class="footer">
         <div class="container">
@@ -460,7 +460,7 @@ function onLogout()
         </div>
     </div>
     <!-- End Footer -->
-
+    {% endif %}
     <a href="#top" class="back-top text-center" onclick="$('body,html').animate({scrollTop:0},500); return false">
         <i class="fa fa-angle-double-up"></i>
     </a>
@@ -511,7 +511,7 @@ function onLogout()
     }
     </script>
 </body>
-</html>";s:5:"mtime";i:1489527950;s:6:"markup";s:15819:"<!DOCTYPE html>
+</html>";s:5:"mtime";i:1490932818;s:6:"markup";s:15901:"<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -728,7 +728,7 @@ function onLogout()
     <!-- End Navigation Bar -->
 
     {% page %}
-
+    {% if this.page.id != "login" and this.page.id != "registro" %}
     <!-- Footer -->
     <div class="footer">
         <div class="container">
@@ -806,7 +806,7 @@ function onLogout()
         </div>
     </div>
     <!-- End Footer -->
-
+    {% endif %}
     <a href="#top" class="back-top text-center" onclick="$('body,html').animate({scrollTop:0},500); return false">
         <i class="fa fa-angle-double-up"></i>
     </a>

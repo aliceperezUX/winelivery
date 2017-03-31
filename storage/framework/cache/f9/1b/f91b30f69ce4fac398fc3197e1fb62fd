@@ -1,4 +1,4 @@
-1490308028a:1:{s:13:"checkout2.htm";a:10:{s:8:"fileName";s:13:"checkout2.htm";s:7:"content";s:4394:"title = "Checkout2"
+1490932961a:1:{s:13:"checkout2.htm";a:10:{s:8:"fileName";s:13:"checkout2.htm";s:7:"content";s:4424:"title = "Checkout2"
 url = "/checkout2/:id?"
 layout = "layout"
 is_hidden = 0
@@ -24,6 +24,7 @@ function onStart()
         $this['address'] = Address::find($this->param('id'));
         $address = "Sector: " . $this['address']->sector . " Calle: " . $this['address']->calle . " Residencial: " . $this['address']->residencial . " No.:" . $this['address']->numero . " Proximo a: " . $this['address']->proximo;
         
+        $sum = $sum + 90;
         $user = Auth::getUser();
         $order = new Order();
         $order->user_id = $user->id;
@@ -33,7 +34,7 @@ function onStart()
         $order->address = $address;
         $order->telefono = $this['address']->telefono;
         $order->celular = $this['address']->celular;
-        $order->total = $sum + 90;
+        $order->total = "RD$" . $sum;
         $order->status = "Procesando Orden";
         $order->save();
         
@@ -106,7 +107,7 @@ function onStart()
         </div>
 
       </div>
-    </div>";s:5:"mtime";i:1489526641;s:6:"markup";s:2433:"<!-- Main Content -->
+    </div>";s:5:"mtime";i:1490418581;s:6:"markup";s:2433:"<!-- Main Content -->
     <div class="container m-t-3">
       <div class="row">
         <div class="title"><span>Recibo de pago</span></div>
@@ -157,7 +158,7 @@ function onStart()
         </div>
 
       </div>
-    </div>";s:4:"code";s:1820:"use Andresalice\Winelivery\Models\Cart;
+    </div>";s:4:"code";s:1850:"use Andresalice\Winelivery\Models\Cart;
 use Andresalice\Winelivery\Models\Address;
 use Andresalice\Winelivery\Models\Order;
 
@@ -173,6 +174,7 @@ function onStart()
         $this['address'] = Address::find($this->param('id'));
         $address = "Sector: " . $this['address']->sector . " Calle: " . $this['address']->calle . " Residencial: " . $this['address']->residencial . " No.:" . $this['address']->numero . " Proximo a: " . $this['address']->proximo;
         
+        $sum = $sum + 90;
         $user = Auth::getUser();
         $order = new Order();
         $order->user_id = $user->id;
@@ -182,7 +184,7 @@ function onStart()
         $order->address = $address;
         $order->telefono = $this['address']->telefono;
         $order->celular = $this['address']->celular;
-        $order->total = $sum + 90;
+        $order->total = "RD$" . $sum;
         $order->status = "Procesando Orden";
         $order->save();
         

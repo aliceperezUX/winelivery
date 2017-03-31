@@ -1,4 +1,4 @@
-1490308028a:1:{s:12:"registro.htm";a:9:{s:8:"fileName";s:12:"registro.htm";s:7:"content";s:4335:"title = "Registro"
+1490932961a:1:{s:12:"registro.htm";a:9:{s:8:"fileName";s:12:"registro.htm";s:7:"content";s:4346:"title = "Registro"
 url = "/registro"
 layout = "layout"
 is_hidden = 0
@@ -29,7 +29,7 @@ function onRegisterForm()
 ?>
 ==
 <!-- Main Content -->
-<div style="width:40%; margin:0 auto;" class="container m-t-3">
+<div class="container m-t-3 col-md-offset-4 col-md-4 col-sm-12 col-xs-12">
   <div style="border:1px solid #ccc;border-radius:5px;padding:20px" class=" row">
     <!-- Login Form -->
       <div class="">
@@ -117,8 +117,8 @@ function onRegisterForm()
     	else { return false; }
     }
 </script>
-{% endput %}";s:5:"mtime";i:1489526218;s:6:"markup";s:3731:"<!-- Main Content -->
-<div style="width:40%; margin:0 auto;" class="container m-t-3">
+{% endput %}";s:5:"mtime";i:1490930980;s:6:"markup";s:3742:"<!-- Main Content -->
+<div class="container m-t-3 col-md-offset-4 col-md-4 col-sm-12 col-xs-12">
   <div style="border:1px solid #ccc;border-radius:5px;padding:20px" class=" row">
     <!-- Login Form -->
       <div class="">

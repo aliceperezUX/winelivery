@@ -1,0 +1,12 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+columns:
+    quantity:
+        label: CANTIDAD
+        clickable: false
+    product:
+        label: NOMBRE
+        relation: product
+        select: title
+        clickable: false

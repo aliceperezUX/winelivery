@@ -30,4 +30,17 @@ class Order extends Model
         'user' => 'RainLab\User\Models\User',
         'address' => 'Andresalice\Winelivery\Models\Address'
     ];
+
+    public $hasMany = [
+        'porder' => 'Andresalice\Winelivery\Models\Porder'
+    ];
+
+    // public function getSymbolsAttribute()
+    // {
+    //     if(!empty($this["attributes"]["symbol"]))
+    //     {
+    //        $symbol = Symbols::find($this["attributes"]["symbol"]);
+    //        return $symbol->symbols->getThumb(50, 50, 'crop');
+    //     }
+    // }
 }

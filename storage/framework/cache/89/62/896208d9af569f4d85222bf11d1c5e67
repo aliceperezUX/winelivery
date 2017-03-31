@@ -1,4 +1,4 @@
-1490308028a:1:{s:9:"login.htm";a:9:{s:8:"fileName";s:9:"login.htm";s:7:"content";s:1679:"title = "Login"
+1490933360a:1:{s:9:"login.htm";a:9:{s:8:"fileName";s:9:"login.htm";s:7:"content";s:1690:"title = "Login"
 url = "/login"
 layout = "layout"
 is_hidden = 0
@@ -22,7 +22,7 @@ function onLoginForm()
 ?>
 ==
 <!-- Main Content -->
-<div style="width:40%; margin:0 auto;" class="container m-t-3">
+<div class="container m-t-3 col-md-offset-4 col-md-4 col-sm-12 col-xs-12">
   <div style="border:1px solid #ccc;border-radius:5px;padding:20px" class=" row">
     <!-- Login Form -->
 
@@ -52,8 +52,8 @@ function onLoginForm()
 
   </div>
 </div>
-<!-- End Main Content -->";s:5:"mtime";i:1489526132;s:6:"markup";s:1241:"<!-- Main Content -->
-<div style="width:40%; margin:0 auto;" class="container m-t-3">
+<!-- End Main Content -->";s:5:"mtime";i:1490932759;s:6:"markup";s:1252:"<!-- Main Content -->
+<div class="container m-t-3 col-md-offset-4 col-md-4 col-sm-12 col-xs-12">
   <div style="border:1px solid #ccc;border-radius:5px;padding:20px" class=" row">
     <!-- Login Form -->
 

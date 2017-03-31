@@ -26,4 +26,7 @@ class Porder extends Model
      */
     public $table = 'product_order';
 
+    public $belongsTo = [
+        'product' => 'Andresalice\Winelivery\Models\Product'
+    ];
 }

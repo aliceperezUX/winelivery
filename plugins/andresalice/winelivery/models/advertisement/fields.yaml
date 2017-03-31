@@ -11,7 +11,19 @@ fields:
         span: full
         type: text
     featured_image:
-        label: 'ANUNCIO 1'
+        label: 'IMAGEN'
+        oc.commentPosition: ''
+        mode: image
+        imageWidth: 100
+        imageHeight: 100
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: full
+        type: fileupload
+    featured_image_mobile:
+        label: 'IMAGEN MOBILE'
         oc.commentPosition: ''
         mode: image
         imageWidth: 100

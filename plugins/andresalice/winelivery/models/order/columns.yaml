@@ -9,7 +9,7 @@ columns:
         type: text
         searchable: true
         sortable: true
-    address:
+    address_id:
         label: address
         type: text
         searchable: true

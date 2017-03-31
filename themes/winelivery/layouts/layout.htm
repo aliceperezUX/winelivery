@@ -382,7 +382,7 @@ function onLogout()
     <!-- End Navigation Bar -->
 
     {% page %}
-
+    {% if this.page.id != "login" and this.page.id != "registro" %}
     <!-- Footer -->
     <div class="footer">
         <div class="container">
@@ -460,7 +460,7 @@ function onLogout()
         </div>
     </div>
     <!-- End Footer -->
-
+    {% endif %}
     <a href="#top" class="back-top text-center" onclick="$('body,html').animate({scrollTop:0},500); return false">
         <i class="fa fa-angle-double-up"></i>
     </a>

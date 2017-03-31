@@ -26,5 +26,5 @@ class Advertisement extends Model
      */
     public $table = 'andresalice_winelivery_advertisements';
 
-    public $attachOne = ['featured_image' => 'System\Models\File'];
+    public $attachOne = ['featured_image' => 'System\Models\File', 'featured_image_mobile' => 'System\Models\File'];
 }

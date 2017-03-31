@@ -24,6 +24,7 @@ function onStart()
         $this['address'] = Address::find($this->param('id'));
         $address = "Sector: " . $this['address']->sector . " Calle: " . $this['address']->calle . " Residencial: " . $this['address']->residencial . " No.:" . $this['address']->numero . " Proximo a: " . $this['address']->proximo;
         
+        $sum = $sum + 90;
         $user = Auth::getUser();
         $order = new Order();
         $order->user_id = $user->id;
@@ -33,7 +34,7 @@ function onStart()
         $order->address = $address;
         $order->telefono = $this['address']->telefono;
         $order->celular = $this['address']->celular;
-        $order->total = $sum + 90;
+        $order->total = "RD$" . $sum;
         $order->status = "Procesando Orden";
         $order->save();
         
