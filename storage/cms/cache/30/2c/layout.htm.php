@@ -1,5 +1,5 @@
 <?php 
-use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Address;use Andresalice\Winelivery\Models\Sector;class Cms58ddd4537a0c8458914816_587bb78897d8ec95b591f57674665b66Class extends \Cms\Classes\LayoutCode
+use Andresalice\Winelivery\Models\Category;use Andresalice\Winelivery\Models\Newsletter;use Andresalice\Winelivery\Models\Cart;use Andresalice\Winelivery\Models\Wishlist;use Andresalice\Winelivery\Models\Product;use Andresalice\Winelivery\Models\Address;use Andresalice\Winelivery\Models\Sector;class Cms58df26805496f692746459_2d15f238af0cf5167bfa46b25ef8a065Class extends \Cms\Classes\LayoutCode
 {
 
 
