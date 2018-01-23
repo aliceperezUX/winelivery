@@ -26,5 +26,5 @@ class Slideshow extends Model
      */
     public $table = 'andresalice_winelivery_slideshows';
 
-    public $attachOne = ['images' => ['System\Models\File']];
+    public $attachOne = ['images' => ['System\Models\File'], 'images_m' => ['System\Models\File']];
 }

@@ -3,7 +3,7 @@
 <a href="javascript:;" data-toggle="tooltip" {% if p.stock > 0 %} onClick="addToWishlist('{{p.id}}');" {% endif %} title="{% if p.stock < 1 %}No Disponible {% else %} Agregar a la lista de deseos {% endif %} " class="wishlist">
     <i style="{% if p.stock < 1 %} color:#ccc; {% else %} color:#fff; {%endif%} padding-right:8px; font-size:16px" class="fa fa-heart"></i>
 </a>
-<a href="javascript:;" data-toggle="tooltip" {% if p.stock > 0 %} onClick="addToCart('{{p.id}}');" {% endif %} title="{% if p.stock < 1 %}No Disponible {% else %} Agregar al carrito {% endif %}">
+<a href="javascript:;" data-toggle="tooltip" {% if p.stock > 0 %} onClick="addToCart('{{p.id}}'); {% if cart is empty and this.page.id == "carrito" %}setTimeout(function(){ location.reload(); }, 1000); {% endif %}" {% endif %} title="{% if p.stock < 1 %}No Disponible {% else %} Agregar al carrito {% endif %}">
     <i style="{% if p.stock < 1 %} color:#ccc; {% else %} color:#fff; {%endif%} font-size:18px" class="fa fa-shopping-cart"></i>
 </a>
 {% else %}

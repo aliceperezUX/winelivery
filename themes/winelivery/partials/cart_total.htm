@@ -1,0 +1,13 @@
+==
+<div class="col-md-3 cart-detailbox">
+  <h4>Orden de Compra</h4>
+  <p class="detailbox-items">Total Productos:<span class="detailbox-content">  {{cart_counter}}</span></p>
+  <p class="detailbox-items">Costo:<span class="detailbox-content" > RD${{ cart_total|number_format}}</span></p>
+  <p class="detailbox-items">Costo de Envío:<span class="detailbox-content"> RD$90</span></p>
+  <p class="detailbox-items">Costo Total:<span class="detailbox-content"> RD${{ cart_total_envio|number_format}}</span></p>
+  <p></p>IMPUESTOS INCLUIDOS</p>
+  <a id="procesar_orden_button" {% if now %} class="btn btn-theme" data-toggle="modal" data-target="#horario_minimo" {% elseif cart_total < 1100 %} data-toggle="modal" data-target="#consumo_minimo" {% elseif cart_total > 19999 %} data-toggle="modal" data-target="#consumo_maximo" {% else %} href="{{"checkout"|page}}" {% endif %} class="btn btn-theme col-md-12">Procesar Orden</a>
+    <br><br><div id="quantity_min" class="alert alert-warning" style="display:none;">
+        Debe pedir como mínimo 1 de cada producto. 
+    </div>
+</div>

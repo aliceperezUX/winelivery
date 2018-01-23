@@ -631,6 +631,7 @@ input[type=radio]:checked + span::before {
 
 .middle-header {
   background-color: #fff;
+  margin-top:-50px;
 }
 .middle-header > .container > .row {
   padding: 20px;
@@ -719,7 +720,6 @@ input[type=radio]:checked + span::before {
   margin-left: 15px;
   padding: 5px 7px;
   border-radius: 0;
-  background-color: #f3f3f3;
 }
 .navbar .btn-cart-xs {
   font-size: 13px;
@@ -1645,4 +1645,27 @@ input[type=radio]:checked + span::before {
   .box-product .img-wrapper > .option {
     bottom: 0;
   }
+}
+ .submenu
+    {
+       display:none;
+    }
+  .second-header
+     {
+       display:none;
+     }
+@media (max-width: 768px) {
+     .submenu
+      {
+         display:block;
+      }
+
+}
+@media (min-width: 769px) {
+
+    .second-header
+    {
+        display:inline;
+    }
+
 }

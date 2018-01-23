@@ -249,7 +249,7 @@ if (typeof Object.create !== 'function') {
                     'filter: alpha(opacity = ' + (self.options.lensOpacity * 100) + ');' +
                     'zoom: 1;' +
                     'cursor:' + (self.options.cursor) + ';' +
-                    'z-index: 999;' +
+                    'z-indes:999'
                     'overflow: hidden;';
             }
 
@@ -302,8 +302,7 @@ if (typeof Object.create !== 'function') {
                 'top: ' + self.nzOffset.top + 'px;' +
                 'left: ' + self.nzOffset.left + 'px;' +
                 'height: ' + self.nzHeight + 'px;' + '' +
-                'width: ' + self.nzWidth + 'px;' +
-                'z-index: ' + self.options.zIndex + '"></div>');
+                'width: ' + self.nzWidth + 'px;' +'"></div>');
             if (self.$elem.attr('id')) {
                 self.zoomContainer.attr('id', self.$elem.attr('id') + '-zoomContainer');
             }

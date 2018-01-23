@@ -114,3 +114,15 @@
 1.0.39:
     - 'Created table andresalice_winelivery_comments'
     - builder_table_create_andresalice_winelivery_comments.php
+1.0.40:
+    - 'Updated table andresalice_winelivery_slideshows'
+    - builder_table_update_andresalice_winelivery_slideshows.php
+1.0.41:
+    - 'Updated table andresalice_winelivery_products'
+    - builder_table_update_andresalice_winelivery_products_13.php
+1.0.42:
+    - 'Updated table andresalice_winelivery_slideshows'
+    - builder_table_update_andresalice_winelivery_slideshows_2.php
+1.0.43:
+    - 'Created table andresalice_winelivery_modals'
+    - builder_table_create_andresalice_winelivery_modals.php

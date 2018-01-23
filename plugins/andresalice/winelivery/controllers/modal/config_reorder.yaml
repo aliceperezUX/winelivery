@@ -1,0 +1,4 @@
+title: Modal
+modelClass: Andresalice\Winelivery\Models\Modal
+toolbar:
+    buttons: reorder_toolbar

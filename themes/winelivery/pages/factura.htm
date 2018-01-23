@@ -1,0 +1,24 @@
+title = "factura"
+url = "/factura/:id"
+is_hidden = 0
+==
+<?php
+use Renatio\DynamicPDF\Classes\PDF;
+use Andresalice\Winelivery\Models\Order;
+use Andresalice\Winelivery\Models\Porder;
+
+
+function onStart()
+{
+    
+    $order = Order::find($this->param('id'));
+    $products = Porder::where("order_id", $order->id)->get();
+    $total = 0;
+    foreach($products as $p)
+    {
+        $total += $p->product->price * $p->quantity;
+    }
+    return PDF::loadTemplate('prueba', ["order" => $order, "products" => $products, "total" => $total])->stream();
+}
+?>
+==

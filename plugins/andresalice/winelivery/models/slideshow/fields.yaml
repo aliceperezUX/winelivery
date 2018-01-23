@@ -5,7 +5,7 @@ fields:
         span: full
         type: text
     images:
-        label: 'IMAGENES'
+        label: IMAGEN WEB
         oc.commentPosition: ''
         mode: image
         imageWidth: 100
@@ -16,3 +16,25 @@ fields:
             extension: auto
         span: full
         type: fileupload
+    url:
+        label: URL WEB
+        oc.commentPosition: ''
+        span: full
+        type: text
+    images_m:
+        label: IMAGEN APPS
+        oc.commentPosition: ''
+        mode: image
+        imageWidth: 100
+        imageHeight: 100
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: full
+        type: fileupload
+    url_m:
+        label: URL APPS
+        oc.commentPosition: ''
+        span: full
+        type: text

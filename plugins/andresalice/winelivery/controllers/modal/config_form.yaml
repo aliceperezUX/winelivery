@@ -1,0 +1,10 @@
+name: Modal
+form: $/andresalice/winelivery/models/modal/fields.yaml
+modelClass: Andresalice\Winelivery\Models\Modal
+defaultRedirect: andresalice/winelivery/modal
+create:
+    redirect: 'andresalice/winelivery/modal/update/:id'
+    redirectClose: andresalice/winelivery/modal
+update:
+    redirect: andresalice/winelivery/modal
+    redirectClose: andresalice/winelivery/modal

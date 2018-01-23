@@ -12,10 +12,12 @@ use Andresalice\Winelivery\Models\Order;
 
 function onStart()
 {
-    $orders = Order::where('user_id', Auth::getUser()->id)->get();
-    foreach($orders as $order){
+    $orders = Order::where('user_id', Auth::getUser()->id)->orderBy("id","DESC")->get();
+    foreach($orders as $order)
+    {
         $order->quantity = 0;
-        foreach($order->porder as $porder){
+        foreach($order->porder as $porder)
+        {
             $order->quantity += $porder->quantity;
         }
     }
@@ -51,8 +53,16 @@ function onStart()
                 <tr>
                   <td>{{o.quantity}} Vinos</td>
                   <td>{{o.created_at|date("Y-M-d")}}</td>
-                  <td class="text-right">RD${{o.total|number_format}}</td>
-                  <td class="text-center"><span class="label label-warning">{{o.status}}</span></td>
+                  <td class="text-right">{{o.total}}</td>
+                  <td class="text-center">
+                      <span class="label label-{% if o.status == "Pendiente" %}warning{% elseif o.status == "Procesando Orden" %}info{% elseif o.status == "Completada" %}success{% elseif o.status == "Declinada" %}danger{%endif%}">
+                          {% if o.status == "Pendiente" %}
+                              <a style="text-decoration:none; color:white;" href="{{"detalle-orden"|page({id:o.id})}}">{{o.status}}</a>
+                          {% else %}
+                              {{o.status}} 
+                          {% endif %}
+                    </span>
+                  </td>
                 </tr>
                 {% endfor %} 
               </tbody>

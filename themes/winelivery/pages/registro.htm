@@ -4,6 +4,9 @@ layout = "layout"
 is_hidden = 0
 ==
 <?php
+use Andresalice\Winelivery\Models\Product;
+use RainLab\User\Models\User;
+
 function onStart()
 {
     session()->put('from', URL::previous());
@@ -11,6 +14,7 @@ function onStart()
 
 function onRegisterForm()
 {
+    $code = rand(100000,999999);
     $user = Auth::register([
     'name' => post('name'),
     'surname' => post('last_name'),
@@ -19,9 +23,21 @@ function onRegisterForm()
     'password_confirmation' => post('password_confirmation')
     ],true);
     
+    $user->reset_code = rand(100000,999999);
+    $user->save();
+    $products = Product::where("offer","!=",1)->take(3)->get();
+    
+    $mailvars = ['name' => post('name'), 'surname' => post('last_name'), 'products' => $products];
+    Mail::send('welcome_mail', $mailvars, function($message) {
+    	$message->to(post('email'), post('name'));
+    });
+    
     Auth::login($user);
     if(Auth::check())
     {
+        $user = User::find(Auth::getUser()->id);
+        $user->reset_code = $code;
+        $user->save();
         //return redirect(session()->pull('from',$this->redirectTo));
         return Redirect::to('/');
     }
@@ -72,7 +88,7 @@ function onRegisterForm()
       <div id="years18" style="display:none;" class="alert alert-danger"><strong>Lo sentimos, debes ser mayor de edad para poder registrarte.</strong></div>
       <div id="termsc" style="display:none;" class="alert alert-danger"><strong>Debes aceptar los terminos y condiciones.</strong></div>
       </form>
-      
+      <div id="registerFailMessage" style="display:none;" class="alert alert-danger" role="alert">Las contraseñas no coinciden, por favor intenta de nuevo.</div>
       <div style="margin-top:100px">
         <HR>
           <p>¿Ya tienes una cuenta?</p>
@@ -98,6 +114,14 @@ function onRegisterForm()
     	if(!regex.test($('input[name=email]').val())){$('input[name=email]').css('border', '1px solid red');error = false;} 
     	else {$('input[name=email]').css('border', '');}
     	
+    	if($('input[name=password]').val() !== "" & $('input[name=password]').val() !== $('input[name=password_confirmation]').val())
+    	{
+    	    $('#registerFailMessage').fadeIn();
+    	}
+    	else
+    	{
+    	    $('#registerFailMessage').fadeOut();
+    	}
     	if (!$('#blankCheckbox').is(':checked'))
     	{
     	    $('#years18').fadeIn();

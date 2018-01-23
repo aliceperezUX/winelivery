@@ -1,49 +1,64 @@
 fields:
+    user:
+        label: CLIENTE
+        oc.commentPosition: ''
+        nameFrom: name
+        descriptionFrom: description
+        span: auto
+        type: relation
     name:
         label: NOMBRE
         oc.commentPosition: ''
         span: auto
-        disabled: 1
         type: text
     surname:
         label: APELLIDO
         oc.commentPosition: ''
         span: auto
-        disabled: 1
         type: text
     email:
         label: EMAIL
         oc.commentPosition: ''
         span: auto
-        disabled: 1
         type: text
     telefono:
         label: TELEFONO
         oc.commentPosition: ''
         span: auto
-        disabled: 1
         type: text
     celular:
         label: CELULAR
         oc.commentPosition: ''
         span: auto
-        disabled: 1
         type: text
     total:
         label: TOTAL
         oc.commentPosition: ''
         span: auto
-        disabled: 1
+        type: text
+    rnc:
+        label: RNC
+        oc.commentPosition: ''
+        span: auto
+        type: text
+    cambio:
+        label: CAMBIO
+        oc.commentPosition: ''
+        span: auto
         type: text
     address_id:
         label: DIRECCION
-        size: 'large'
+        size: large
         oc.commentPosition: ''
         span: full
-        disabled: 1
         type: textarea
     porder:
         type: partial
         context: update
         label: Products
         path: $/andresalice/winelivery/controllers/order/_order_products.htm
+    id:
+        type: partial
+        context: update
+        label: null
+        path: $/andresalice/winelivery/controllers/order/pdf.htm

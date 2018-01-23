@@ -1,0 +1,790 @@
+1516742245a:1:{s:10:"inicio.htm";a:9:{s:8:"fileName";s:10:"inicio.htm";s:7:"content";s:19783:"title = "Inicio"
+url = "/"
+layout = "layout"
+is_hidden = 0
+==
+<?php
+use Andresalice\Winelivery\Models\Slideshow;
+use Andresalice\Winelivery\Models\Product;
+use Andresalice\Winelivery\Models\Advertisement;
+use Andresalice\Winelivery\Models\Modal;
+
+function onStart()
+{
+    $this['modal'] = Modal::orderBy("id","DESC")->first();
+    $this['slideshows'] = Slideshow::get();
+    $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
+    //$rp = Product::where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
+    $sp = Product::where("status",0)->where("type","!=", 2)->where("offer","=",1)->take(8)->get();
+    $wm = Product::where("status",0)->where("type","!=", 2)->where("month","=",1)->first();
+    //VINO DEL MES CALCULO DE ESTRELLAS
+    $wm->s5 = $wm->stars()->where("stars",5)->count();
+    $wm->s4 = $wm->stars()->where("stars",4)->count();
+    $wm->s3 = $wm->stars()->where("stars",3)->count();
+    $wm->s2 = $wm->stars()->where("stars",2)->count();
+    $wm->s1 = $wm->stars()->where("stars",1)->count();
+    $sc = 5 * $wm->s5 + 4 * $wm->s4 + 3 * $wm->s3 + 2 * $wm->s2 + 1 * $wm->s1;
+    if($sc == 0){$wm->total_stars = 5;}
+    else{$wm->total_stars = substr($sc/($wm->s5+$wm->s4+$wm->s3+$wm->s2+$wm->s1), 0, 1);}
+    //PRODUCTOS RECIENTES CALCULO DE ESTRELLAS
+    /*foreach($rp as $r)
+    {
+        $r->s5 = $r->stars()->where("stars",5)->count();
+        $r->s4 = $r->stars()->where("stars",4)->count();
+        $r->s3 = $r->stars()->where("stars",3)->count();
+        $r->s2 = $r->stars()->where("stars",2)->count();
+        $r->s1 = $r->stars()->where("stars",1)->count();
+        $sc = 5 * $r->s5 + 4 * $r->s4 + 3 * $r->s3 + 2 * $r->s2 + 1 * $r->s1;
+        if($sc == 0){$r->total_stars = 5;}
+        else{$r->total_stars = substr($sc/($r->s5+$r->s4+$r->s3+$r->s2+$r->s1), 0, 1);}
+    }*/
+    //PRODUCTOS ESPECIALES CALCULO DE ESTRELLAS
+    foreach($sp as $s)
+    {
+        $s->s5 = $s->stars()->where("stars",5)->count();
+        $s->s4 = $s->stars()->where("stars",4)->count();
+        $s->s3 = $s->stars()->where("stars",3)->count();
+        $s->s2 = $s->stars()->where("stars",2)->count();
+        $s->s1 = $s->stars()->where("stars",1)->count();
+        $sc = 5 * $s->s5 + 4 * $s->s4 + 3 * $s->s3 + 2 * $s->s2 + 1 * $s->s1;
+        if($sc == 0){$s->total_stars = 5;}
+        else{$s->total_stars = substr($sc/($s->s5+$s->s4+$s->s3+$s->s2+$s->s1), 0, 1);}
+    }
+    $this['mwine'] = $wm;
+    //$this['recentProducts'] = $rp;
+    $this['specialProducts'] = $sp;
+}
+?>
+==
+<!-- Full Slider -->
+<div class="container-fluid">
+    <div class="row">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            {% for s in slideshows %}
+            <div class="item {% if loop.index == 1 %} active {% endif %}">
+              <a href="{{s.url}}">
+              <img src="{{s.images.getPath}}" alt="...">
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+    </div>
+</div>
+<!-- End Full Slider -->
+
+<!-- Main Content -->
+<div class="container m-t-2">
+    <div class="row">
+
+        <!-- New Arrivals & Best Selling -->
+        <div style="margin-top:50px" class="col-md-3  m-b-1">
+            <div class="col-sm-12 col-xs-6">
+                <div class="box-product-outer ">
+                    <div class="box-product">
+                        <div class="img-wrapper">
+                            <a target="_blank" href="{{advertisements.0.url}}">
+                                <img alt="Product" src="{{advertisements.0.featured_image.Path}}">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xs-6">
+                <div class="box-product-outer">
+                    <div class="box-product">
+                        <div class="img-wrapper">
+                            <a target="_blank" href="{{advertisements.1.url}}">
+                                <img alt="Product" src="{{advertisements.1.featured_image.Path}}">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End New Arrivals & Best Selling -->
+
+        <div class="clearfix visible-sm visible-xs"></div>
+
+        <div style="margin-top:50px;" class="col-md-9">
+
+            <!-- Featured -->
+            <!--
+            <div class="title"><span>NUEVOS EN LA BODEGA</span></div>
+            {% for p in recentProducts %}
+                <div class="col-sm-4 col-lg-3 box-product-outer box-product-fixed">
+                    <div class="box-product">
+                        <div class="img-wrapper">
+                            <a href="{{"producto-detalle"|page({id: p.id})}}">
+                                <img class="wine-box wine-thumbnail" alt="Product" src="{{p.featured_image.getPath}}">
+                            </a>
+                            {% partial "stock" p = p %}
+                        </div>
+                        <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
+                        <div class="rating">
+                            {% for i in 1..p.total_stars %}
+                                <i class="fa fa-star"></i>
+                            {% endfor %}
+                            {% if p.total_stars < 5 %}
+                            {% for j in p.total_stars..5 - 1 %}
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            {% endfor %}
+                            {% endif %}
+                            <a href="#">({{p.comments.count}} reviews)</a>
+                        </div>
+                        <div class="price-box">
+                            <div style="color:#fff" class="price col-lg-6 ">
+                                <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                {% partial "botones" p = p %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            -->
+            <!-- End Featured -->
+
+            <div class="clearfix visible-sm visible-xs"></div>
+
+            <!-- Collection -->
+            <div class="title"><span>OFERTAS ESPECIALES</span></div>
+            {% for p in specialProducts %}
+                <div class="col-sm-4 col-lg-3 box-product-outer box-product-fixed">
+                    <div class="box-product">
+                        <div class="img-wrapper">
+                            <a href="{{"producto-detalle"|page({id: p.id})}}">
+                                <img class="wine-box" alt="Product" src="{{p.featured_image.getPath}}">
+                            </a>
+                        </div>
+                        <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
+                        <div class="rating">
+                            {% for i in 1..p.total_stars %}
+                                <i class="fa fa-star"></i>
+                            {% endfor %}
+                            {% if p.total_stars < 5 %}
+                            {% for j in p.total_stars..5 - 1 %}
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            {% endfor %}
+                            {% endif %}
+                            <a href="#">({{p.comments.count}} reviews)</a>
+                        </div>
+                        <div class="price-box">
+                            <div style="color:#fff" class="price col-lg-6 ">
+                                <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                {% partial "botones" p = p %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <!-- End Collection -->
+
+        </div>
+
+    </div>
+    <div class="title"><span>VINO DEL MES</span></div>
+    <div class="col-md-9 col-sm-6" style="margin-top:20px;border:5px solid #000">
+        <div class="col-md-2 image-wrapper" style="width: 200px; text-align: center;">
+           <a href="{{"producto-detalle"|page({id: mwine.id})}}"><img style="width:230px; height: 300px" alt="Product" src="{{mwine.featured_image.thumb(350,250)}}"></a>
+        </div>
+        {% partial "stock" p = mwine %}
+        <div class="col-md-8" style="padding:20px 0px 20px 0px">
+            <h3><a href="{{"producto-detalle"|page({id: mwine.id})}}">{{mwine.title}}</a></h3>
+            <p style="padding-top:10px">{{mwine.description|raw}}</p>
+            <div class="rating">
+                {% for i in 1..mwine.total_stars %}
+                    <i class="fa fa-star"></i>
+                {% endfor %}
+                {% if mwine.total_stars < 5 %}
+                {% for j in mwine.total_stars..5 - 1 %}
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                {% endfor %}
+                {% endif %}
+                <a href="#">({{mwine.comments.count}} reviews)</a>
+            </div>
+            <!-- <p style="padding-top:10px; font-style:Italic">{{mwine.description|raw}}</p> -->
+            <div class="col-md-4" style="background-color:#c1272d; margin-top:10px; padding:10px 5px 10px 5px; float:right">
+                <div style="color:#fff" class="price col-lg-6 ">
+                    <div>RD${{ mwine.price|number_format}}<span class="label-tags"></span></div>
+                </div>
+                <div class="col-lg-6">
+                    {% if loggedIn %}
+                    <a onClick="addToWishlist('{{mwine.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                    <a onClick="addToCart('{{mwine.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                    {% else %}
+                    <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                    <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 m-b-1">
+        <div class="owl-controls-top-offset m-b-2">
+            <div class="box-product-outer">
+                <div class="box-product">
+                    <div class="img-wrapper">
+                        <a target="_blank" href="{{advertisements.2.url}}">
+                            <img alt="Product" src="{{advertisements.2.featured_image.Path}}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+         <!-- Related Products -->
+    <div class="row m-t-3" style="display:;">
+        <div class="col-xs-12">
+            <div style="padding-top:15px;" class="title"><span>Embutidos Recomendados</span></div>
+            <div class="related-product-slider owl-controls-top-offset box-product-fixed">
+                {% for p in embutidos %}
+                    <div class="box-product-outer">
+                        <div class="box-product">
+                            <div class="img-wrapper">
+                                <a href="{{"producto-detalle"|page({id: p.id})}}">
+                                    <img alt="Product" src="{{p.featured_image.getPath}}">
+                                </a>
+                                {% partial "stock" p = p %}
+                            </div>
+                            <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
+                            <div class="rating">
+                                {% for i in 1..p.total_stars %}
+                                    <i class="fa fa-star"></i>
+                                {% endfor %}
+                                {% if p.total_stars < 5 %}
+                                {% for j in p.total_stars..5 - 1 %}
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                {% endfor %}
+                                {% endif %}
+                                <a href="#">({{p.comments.count}} reviews)</a>
+                            </div>
+                            <div class="price-box">
+                            <div style="color:#fff" class="price col-lg-6 ">
+                                <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                {% partial "botones" p = p %}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+<!-- End Related Products -->
+
+
+    <!-- Related Products -->
+    <div class="row m-t-3">
+        <div class="col-xs-12">
+            <div style="padding-top:15px;" class="title"><span>Productos Recomendados</span></div>
+            <div class="related-product-slider owl-controls-top-offset box-product-fixed">
+                {% for p in randomProducts %}
+                    <div class="box-product-outer">
+                        <div class="box-product">
+                            <div class="img-wrapper">
+                                <a href="{{"producto-detalle"|page({id: p.id})}}">
+                                    <img alt="Product" src="{{p.featured_image.getPath}}">
+                                </a>
+                                {% partial "stock" p = p %}
+                            </div>
+                            <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
+                            <div class="rating">
+                                {% for i in 1..p.total_stars %}
+                                    <i class="fa fa-star"></i>
+                                {% endfor %}
+                                {% if p.total_stars < 5 %}
+                                {% for j in p.total_stars..5 - 1 %}
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                {% endfor %}
+                                {% endif %}
+                                <a href="#">({{p.comments.count}} reviews)</a>
+                            </div>
+                            <div class="price-box">
+                            <div style="color:#fff" class="price col-lg-6 ">
+                                <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                {% partial "botones" p = p %}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Related Products -->
+</div>
+
+</div>
+<!-- End Main Content -->
+
+
+<!-- Modal Banner -->
+{% if modal.type == 0 %}
+<div id="bannersModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <a href="{{modal.url}}" style="text-decoration:none;"><h4 class="modal-title text-center">{{modal.title}}</h4></a>
+      </div>
+      <div class="modal-body">
+          <a href="{{modal.url}}" style="text-decoration:none;"><img class="img-responsive" src="{{modal.featured_image.thumb(560, 460)}}" alt=""></a>
+      </div>
+      <div class="modal-body text-center">
+        <a href="{{modal.url}}" style="text-decoration:none;"><p>{{modal.description}}</p></a>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div id="bannersModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <!-- <a href="{{"producto-detalle"|page({id: modal.product.id})}}" style="text-decoration:none;"><h4 class="modal-title text-center">{{modal.product.title}}</h4></a> -->
+            <h2 style="color:#c1272d;text-align:center " >¡Oferta del día!</h2>
+        </div>
+        <div class="modal-body">
+          <center><a href="{{"producto-detalle"|page({id: modal.product.id})}}"><img class="img-responsive" src="{{modal.product.featured_image.thumb(400, 400)}}" alt=""></a></center>
+           <a href="{{"producto-detalle"|page({id: modal.product.id})}}" style="text-decoration:none;"><h4 class="modal-title text-center">{{modal.product.title}}</h4></a>  
+        </div>
+         <center><h5 style="color:#c1272d;font-size:20px;"><div>RD${{ modal.product.price|number_format}} <span class="label-tags"></span></div></h5></center>
+        <div class="modal-body text-center">
+            <center><a href="{{"producto-detalle"|page({id: modal.product.id})}}" style="text-decoration:none;"><p>{{modal.product.description|raw}}</p></a>
+        </div>
+        <div class="modal-body">
+           
+            <div class="price-box">
+                <div style="color:#fff; width:43%;" class="price col-lg-6">
+                    <!-- <div>RD${{ modal.product.price|number_format}} <span class="label-tags"></span></div> -->
+                </div>
+                <div style="color:#fff;"  class="col-lg-6 price">
+                    {% partial "botones" p = modal.product %}
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endif %}";s:5:"mtime";i:1516220060;s:6:"markup";s:17229:"<!-- Full Slider -->
+<div class="container-fluid">
+    <div class="row">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            {% for s in slideshows %}
+            <div class="item {% if loop.index == 1 %} active {% endif %}">
+              <a href="{{s.url}}">
+              <img src="{{s.images.getPath}}" alt="...">
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+    </div>
+</div>
+<!-- End Full Slider -->
+
+<!-- Main Content -->
+<div class="container m-t-2">
+    <div class="row">
+
+        <!-- New Arrivals & Best Selling -->
+        <div style="margin-top:50px" class="col-md-3  m-b-1">
+            <div class="col-sm-12 col-xs-6">
+                <div class="box-product-outer ">
+                    <div class="box-product">
+                        <div class="img-wrapper">
+                            <a target="_blank" href="{{advertisements.0.url}}">
+                                <img alt="Product" src="{{advertisements.0.featured_image.Path}}">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xs-6">
+                <div class="box-product-outer">
+                    <div class="box-product">
+                        <div class="img-wrapper">
+                            <a target="_blank" href="{{advertisements.1.url}}">
+                                <img alt="Product" src="{{advertisements.1.featured_image.Path}}">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End New Arrivals & Best Selling -->
+
+        <div class="clearfix visible-sm visible-xs"></div>
+
+        <div style="margin-top:50px;" class="col-md-9">
+
+            <!-- Featured -->
+            <!--
+            <div class="title"><span>NUEVOS EN LA BODEGA</span></div>
+            {% for p in recentProducts %}
+                <div class="col-sm-4 col-lg-3 box-product-outer box-product-fixed">
+                    <div class="box-product">
+                        <div class="img-wrapper">
+                            <a href="{{"producto-detalle"|page({id: p.id})}}">
+                                <img class="wine-box wine-thumbnail" alt="Product" src="{{p.featured_image.getPath}}">
+                            </a>
+                            {% partial "stock" p = p %}
+                        </div>
+                        <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
+                        <div class="rating">
+                            {% for i in 1..p.total_stars %}
+                                <i class="fa fa-star"></i>
+                            {% endfor %}
+                            {% if p.total_stars < 5 %}
+                            {% for j in p.total_stars..5 - 1 %}
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            {% endfor %}
+                            {% endif %}
+                            <a href="#">({{p.comments.count}} reviews)</a>
+                        </div>
+                        <div class="price-box">
+                            <div style="color:#fff" class="price col-lg-6 ">
+                                <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                {% partial "botones" p = p %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            -->
+            <!-- End Featured -->
+
+            <div class="clearfix visible-sm visible-xs"></div>
+
+            <!-- Collection -->
+            <div class="title"><span>OFERTAS ESPECIALES</span></div>
+            {% for p in specialProducts %}
+                <div class="col-sm-4 col-lg-3 box-product-outer box-product-fixed">
+                    <div class="box-product">
+                        <div class="img-wrapper">
+                            <a href="{{"producto-detalle"|page({id: p.id})}}">
+                                <img class="wine-box" alt="Product" src="{{p.featured_image.getPath}}">
+                            </a>
+                        </div>
+                        <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
+                        <div class="rating">
+                            {% for i in 1..p.total_stars %}
+                                <i class="fa fa-star"></i>
+                            {% endfor %}
+                            {% if p.total_stars < 5 %}
+                            {% for j in p.total_stars..5 - 1 %}
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                            {% endfor %}
+                            {% endif %}
+                            <a href="#">({{p.comments.count}} reviews)</a>
+                        </div>
+                        <div class="price-box">
+                            <div style="color:#fff" class="price col-lg-6 ">
+                                <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                {% partial "botones" p = p %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <!-- End Collection -->
+
+        </div>
+
+    </div>
+    <div class="title"><span>VINO DEL MES</span></div>
+    <div class="col-md-9 col-sm-6" style="margin-top:20px;border:5px solid #000">
+        <div class="col-md-2 image-wrapper" style="width: 200px; text-align: center;">
+           <a href="{{"producto-detalle"|page({id: mwine.id})}}"><img style="width:230px; height: 300px" alt="Product" src="{{mwine.featured_image.thumb(350,250)}}"></a>
+        </div>
+        {% partial "stock" p = mwine %}
+        <div class="col-md-8" style="padding:20px 0px 20px 0px">
+            <h3><a href="{{"producto-detalle"|page({id: mwine.id})}}">{{mwine.title}}</a></h3>
+            <p style="padding-top:10px">{{mwine.description|raw}}</p>
+            <div class="rating">
+                {% for i in 1..mwine.total_stars %}
+                    <i class="fa fa-star"></i>
+                {% endfor %}
+                {% if mwine.total_stars < 5 %}
+                {% for j in mwine.total_stars..5 - 1 %}
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                {% endfor %}
+                {% endif %}
+                <a href="#">({{mwine.comments.count}} reviews)</a>
+            </div>
+            <!-- <p style="padding-top:10px; font-style:Italic">{{mwine.description|raw}}</p> -->
+            <div class="col-md-4" style="background-color:#c1272d; margin-top:10px; padding:10px 5px 10px 5px; float:right">
+                <div style="color:#fff" class="price col-lg-6 ">
+                    <div>RD${{ mwine.price|number_format}}<span class="label-tags"></span></div>
+                </div>
+                <div class="col-lg-6">
+                    {% if loggedIn %}
+                    <a onClick="addToWishlist('{{mwine.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                    <a onClick="addToCart('{{mwine.id}}');" href="javascript:;" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                    {% else %}
+                    <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar a la lista de deseos" class="wishlist"><i style="color:#fff; padding-right:8px; font-size:16px" class="fa fa-heart"></i></a>
+                    <a href="{{"login"|page}}" data-toggle="tooltip" title="Agregar al carrito"><i style="color:#fff; font-size:18px" class="fa fa-shopping-cart"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 m-b-1">
+        <div class="owl-controls-top-offset m-b-2">
+            <div class="box-product-outer">
+                <div class="box-product">
+                    <div class="img-wrapper">
+                        <a target="_blank" href="{{advertisements.2.url}}">
+                            <img alt="Product" src="{{advertisements.2.featured_image.Path}}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+         <!-- Related Products -->
+    <div class="row m-t-3" style="display:;">
+        <div class="col-xs-12">
+            <div style="padding-top:15px;" class="title"><span>Embutidos Recomendados</span></div>
+            <div class="related-product-slider owl-controls-top-offset box-product-fixed">
+                {% for p in embutidos %}
+                    <div class="box-product-outer">
+                        <div class="box-product">
+                            <div class="img-wrapper">
+                                <a href="{{"producto-detalle"|page({id: p.id})}}">
+                                    <img alt="Product" src="{{p.featured_image.getPath}}">
+                                </a>
+                                {% partial "stock" p = p %}
+                            </div>
+                            <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
+                            <div class="rating">
+                                {% for i in 1..p.total_stars %}
+                                    <i class="fa fa-star"></i>
+                                {% endfor %}
+                                {% if p.total_stars < 5 %}
+                                {% for j in p.total_stars..5 - 1 %}
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                {% endfor %}
+                                {% endif %}
+                                <a href="#">({{p.comments.count}} reviews)</a>
+                            </div>
+                            <div class="price-box">
+                            <div style="color:#fff" class="price col-lg-6 ">
+                                <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                {% partial "botones" p = p %}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+<!-- End Related Products -->
+
+
+    <!-- Related Products -->
+    <div class="row m-t-3">
+        <div class="col-xs-12">
+            <div style="padding-top:15px;" class="title"><span>Productos Recomendados</span></div>
+            <div class="related-product-slider owl-controls-top-offset box-product-fixed">
+                {% for p in randomProducts %}
+                    <div class="box-product-outer">
+                        <div class="box-product">
+                            <div class="img-wrapper">
+                                <a href="{{"producto-detalle"|page({id: p.id})}}">
+                                    <img alt="Product" src="{{p.featured_image.getPath}}">
+                                </a>
+                                {% partial "stock" p = p %}
+                            </div>
+                            <div class="name-box"><h6><a href="{{"producto-detalle"|page({id: p.id})}}">{{p.title}}</a></h6></div>
+                            <div class="rating">
+                                {% for i in 1..p.total_stars %}
+                                    <i class="fa fa-star"></i>
+                                {% endfor %}
+                                {% if p.total_stars < 5 %}
+                                {% for j in p.total_stars..5 - 1 %}
+                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                {% endfor %}
+                                {% endif %}
+                                <a href="#">({{p.comments.count}} reviews)</a>
+                            </div>
+                            <div class="price-box">
+                            <div style="color:#fff" class="price col-lg-6 ">
+                                <div>RD${{ p.price|number_format}} <span class="label-tags"></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                {% partial "botones" p = p %}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Related Products -->
+</div>
+
+</div>
+<!-- End Main Content -->
+
+
+<!-- Modal Banner -->
+{% if modal.type == 0 %}
+<div id="bannersModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <a href="{{modal.url}}" style="text-decoration:none;"><h4 class="modal-title text-center">{{modal.title}}</h4></a>
+      </div>
+      <div class="modal-body">
+          <a href="{{modal.url}}" style="text-decoration:none;"><img class="img-responsive" src="{{modal.featured_image.thumb(560, 460)}}" alt=""></a>
+      </div>
+      <div class="modal-body text-center">
+        <a href="{{modal.url}}" style="text-decoration:none;"><p>{{modal.description}}</p></a>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div id="bannersModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <!-- <a href="{{"producto-detalle"|page({id: modal.product.id})}}" style="text-decoration:none;"><h4 class="modal-title text-center">{{modal.product.title}}</h4></a> -->
+            <h2 style="color:#c1272d;text-align:center " >¡Oferta del día!</h2>
+        </div>
+        <div class="modal-body">
+          <center><a href="{{"producto-detalle"|page({id: modal.product.id})}}"><img class="img-responsive" src="{{modal.product.featured_image.thumb(400, 400)}}" alt=""></a></center>
+           <a href="{{"producto-detalle"|page({id: modal.product.id})}}" style="text-decoration:none;"><h4 class="modal-title text-center">{{modal.product.title}}</h4></a>  
+        </div>
+         <center><h5 style="color:#c1272d;font-size:20px;"><div>RD${{ modal.product.price|number_format}} <span class="label-tags"></span></div></h5></center>
+        <div class="modal-body text-center">
+            <center><a href="{{"producto-detalle"|page({id: modal.product.id})}}" style="text-decoration:none;"><p>{{modal.product.description|raw}}</p></a>
+        </div>
+        <div class="modal-body">
+           
+            <div class="price-box">
+                <div style="color:#fff; width:43%;" class="price col-lg-6">
+                    <!-- <div>RD${{ modal.product.price|number_format}} <span class="label-tags"></span></div> -->
+                </div>
+                <div style="color:#fff;"  class="col-lg-6 price">
+                    {% partial "botones" p = modal.product %}
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+{% endif %}";s:4:"code";s:2479:"use Andresalice\Winelivery\Models\Slideshow;
+use Andresalice\Winelivery\Models\Product;
+use Andresalice\Winelivery\Models\Advertisement;
+use Andresalice\Winelivery\Models\Modal;
+
+function onStart()
+{
+    $this['modal'] = Modal::orderBy("id","DESC")->first();
+    $this['slideshows'] = Slideshow::get();
+    $this['advertisements'] = Advertisement::orderBy("id","ASC")->get();
+    //$rp = Product::where("offer","!=",1)->orderBy("id","DESC")->take(4)->get();
+    $sp = Product::where("status",0)->where("type","!=", 2)->where("offer","=",1)->take(8)->get();
+    $wm = Product::where("status",0)->where("type","!=", 2)->where("month","=",1)->first();
+    //VINO DEL MES CALCULO DE ESTRELLAS
+    $wm->s5 = $wm->stars()->where("stars",5)->count();
+    $wm->s4 = $wm->stars()->where("stars",4)->count();
+    $wm->s3 = $wm->stars()->where("stars",3)->count();
+    $wm->s2 = $wm->stars()->where("stars",2)->count();
+    $wm->s1 = $wm->stars()->where("stars",1)->count();
+    $sc = 5 * $wm->s5 + 4 * $wm->s4 + 3 * $wm->s3 + 2 * $wm->s2 + 1 * $wm->s1;
+    if($sc == 0){$wm->total_stars = 5;}
+    else{$wm->total_stars = substr($sc/($wm->s5+$wm->s4+$wm->s3+$wm->s2+$wm->s1), 0, 1);}
+    //PRODUCTOS RECIENTES CALCULO DE ESTRELLAS
+    /*foreach($rp as $r)
+    {
+        $r->s5 = $r->stars()->where("stars",5)->count();
+        $r->s4 = $r->stars()->where("stars",4)->count();
+        $r->s3 = $r->stars()->where("stars",3)->count();
+        $r->s2 = $r->stars()->where("stars",2)->count();
+        $r->s1 = $r->stars()->where("stars",1)->count();
+        $sc = 5 * $r->s5 + 4 * $r->s4 + 3 * $r->s3 + 2 * $r->s2 + 1 * $r->s1;
+        if($sc == 0){$r->total_stars = 5;}
+        else{$r->total_stars = substr($sc/($r->s5+$r->s4+$r->s3+$r->s2+$r->s1), 0, 1);}
+    }*/
+    //PRODUCTOS ESPECIALES CALCULO DE ESTRELLAS
+    foreach($sp as $s)
+    {
+        $s->s5 = $s->stars()->where("stars",5)->count();
+        $s->s4 = $s->stars()->where("stars",4)->count();
+        $s->s3 = $s->stars()->where("stars",3)->count();
+        $s->s2 = $s->stars()->where("stars",2)->count();
+        $s->s1 = $s->stars()->where("stars",1)->count();
+        $sc = 5 * $s->s5 + 4 * $s->s4 + 3 * $s->s3 + 2 * $s->s2 + 1 * $s->s1;
+        if($sc == 0){$s->total_stars = 5;}
+        else{$s->total_stars = substr($sc/($s->s5+$s->s4+$s->s3+$s->s2+$s->s1), 0, 1);}
+    }
+    $this['mwine'] = $wm;
+    //$this['recentProducts'] = $rp;
+    $this['specialProducts'] = $sp;
+}";s:5:"title";s:6:"Inicio";s:3:"url";s:1:"/";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";}}

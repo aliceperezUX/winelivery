@@ -24,3 +24,18 @@ columns:
         type: date
         searchable: true
         sortable: true
+    status:
+        label: ESTADO
+        type: text
+        searchable: true
+        sortable: true
+    pago:
+        label: TIPO DE PAGO
+        type: text
+        searchable: true
+        sortable: true
+    cambio:
+        label: CAMBIO
+        type: text
+        searchable: true
+        sortable: true

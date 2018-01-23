@@ -11,9 +11,17 @@ permissions:
 navigation:
     content:
         label: Contenido
-        url: andresalice/winelivery/region
+        url: andresalice/winelivery/order
         icon: icon-asterisk
         sideMenu:
+            orders:
+                label: Ordenes
+                url: andresalice/winelivery/order
+                icon: icon-cart-arrow-down
+            products:
+                label: Productos
+                url: andresalice/winelivery/product
+                icon: icon-cart-plus
             categories:
                 label: Categoria
                 url: andresalice/winelivery/category
@@ -22,18 +30,22 @@ navigation:
                 label: Regiones
                 url: andresalice/winelivery/region
                 icon: icon-map-marker
-            products:
-                label: Productos
-                url: andresalice/winelivery/product
-                icon: icon-cart-plus
-            uvas:
-                label: Uvas
-                url: andresalice/winelivery/uva
-                icon: icon-heartbeat
+            slideshows:
+                label: Slideshows (Portada)
+                url: andresalice/winelivery/slideshow
+                icon: icon-image
+            modals:
+                label: Banners (Apps)
+                url: andresalice/winelivery/modal
+                icon: icon-image
             advertisements:
                 label: 'Anuncios (Publicidad)'
                 url: andresalice/winelivery/advertisement
                 icon: icon-image
+            Newsletter:
+                label: Newsletter
+                url: andresalice/winelivery/newsletter
+                icon: icon-newspaper-o
             sector:
                 label: Sectores
                 url: andresalice/winelivery/sector
@@ -42,19 +54,11 @@ navigation:
                 label: Catadores
                 url: andresalice/winelivery/taste
                 icon: icon-star
-            'Review de Vinos':
-                label: reviews
+            Review de Vinos:
+                label: Reviews
                 url: andresalice/winelivery/review
                 icon: icon-star-half-empty
-            Newsletter:
-                label: Newsletter
-                url: andresalice/winelivery/newsletter
-                icon: icon-newspaper-o
-            slideshows:
-                label: Slideshows
-                url: andresalice/winelivery/slideshow
-                icon: icon-image
-            orders:
-                label: Ordenes
-                url: andresalice/winelivery/order
-                icon: icon-cart-arrow-down
+            uvas:
+                label: Uvas
+                url: andresalice/winelivery/uva
+                icon: icon-heartbeat

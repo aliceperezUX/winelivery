@@ -1,0 +1,260 @@
+1516742245a:1:{s:15:"direcciones.htm";a:10:{s:8:"fileName";s:15:"direcciones.htm";s:7:"content";s:5463:"title = "Direcciones"
+url = "/direcciones/:id?"
+layout = "layout"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "inicio"
+==
+<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+
+   {% partial "perfilmenu" %}
+   
+    <!-- My Address Content -->
+    <div class="col-sm-8 col-md-9">
+      <div class="title m-b-2"><span>Nueva direcci&oacute;n</span></div>
+      <div class="alert alert-info" role="alert"><i class="fa fa-info-circle" aria-hidden="true"></i>  Si tu sector no esta en la lista es porque se sale de nuestro poligono de entregas. <strong>Disculpa los incovenientes.</strong></div>
+      <div class="row">
+        <div class="col-xs-12">
+          <form id="addressesForm">
+            <div class="form-group">
+              <label >Sector</label>
+              <select id="sectors" name="sector" class="form-control">
+                {% for s in sectors %}
+                    <option {% if s.title == address.sector %} selected {% endif %} value="{{s.title}}">{{s.title}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Calle</label>
+              <input value="{{address.calle}}" name="calle" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Residencial y Edificio</label>
+              <input value="{{address.residencial}}" name="residencial" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Apto/No</label>
+              <input value="{{address.numero}}" name="numero" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Telefono</label>
+              <input name="telefono" value="{{address.telefono}}" type="text" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Celular</label>
+              <input name="celular" type="text" value="{{address.celular}}" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Proximo a</label>
+              <textarea name="proximo" class="form-control" rows="5">{{address.proximo}}</textarea>
+            </div>
+            <input name="id_control" type="hidden" value="{{address.id}}">
+            {% if address %}
+                <a href="{{"checkout"|page}}" class="btn btn-theme pull-left">Volver al Checkout</a>
+            {% endif %}
+            <button onClick="addressesForm();" type="button" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> Guardar direcci&oacute;n</button>
+          </form>
+        </div>
+      </div><br>
+      <div style="display:none;" id="addressesFormMessage" class="alert alert-success">
+          Direcci&oacute;n agregada correctamente.
+      </div>
+    </div>
+    <!-- End My Address Content -->
+    <!-- My Address Content -->
+    <div class="col-sm-8 col-md-12">
+      <div class="title m-b-2"><span>Direcciones guardadas</span></div>
+      <div id="updateAddresses" class="row">
+          {% partial "addresses" addresses = addresses %}
+      </div>
+    </div>
+    <!-- End My Address Content -->
+
+  </div>
+</div>
+<!-- End Main Content -->
+{% put scripts %}
+<script>
+    $( document ).ready(function() {
+        $('.phone').mask('000-000-0000');
+    });
+    
+    function eliminarAddress(id)
+    {
+        $.request('onDeleteAddress', {data: {id:id}});
+    }
+    
+    function editAddress(id, sector, calle, residencial, numero, telefono, celular, proximo)
+    {
+        console.log(id);
+        console.log(sector);
+        console.log(calle);
+        console.log(residencial);
+        console.log(numero);
+        console.log(telefono);
+        console.log(celular);
+        console.log(proximo);
+        $("input[name=id_control]").val(id);
+        $("#sectors").val(sector);
+        $("input[name=calle]").val(calle);
+        $("input[name=residencial]").val(residencial);
+        $("input[name=numero]").val(numero);
+        $("input[name=telefono]").val(telefono);
+        $("input[name=celular]").val(celular);
+        $("textarea[name=proximo]").val(proximo);
+        //$("#addressesForm").reset();
+    }
+    function addressesForm()
+    {
+        var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        
+    	if($('input[name=calle]').val() === ''){$('input[name=calle]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=calle]').css('border', '');}
+    	
+    	if($('input[name=numero]').val() === ''){$('input[name=numero]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=numero]').css('border', '');}
+    	
+    	if($('input[name=telefono]').val() === ''){$('input[name=telefono]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=telefono]').css('border', '');}
+    	
+    	if($('textarea[name=proximo]').val() === ''){$('textarea[name=proximo]').css('border', '1px solid red');error = false;} 
+    	else{$('textarea[name=proximo]').css('border', '');}
+    
+    	if(error)
+    	{
+    		$('#addressesForm').request('onAddressesForm', {data: $('#addressesForm').serialize()});
+    		$("#addressesFormMessage").fadeIn("fast");
+    	} 
+    	else { return false; }
+    }
+</script>
+{% endput %}";s:5:"mtime";i:1494821376;s:6:"markup";s:5331:"<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+
+   {% partial "perfilmenu" %}
+   
+    <!-- My Address Content -->
+    <div class="col-sm-8 col-md-9">
+      <div class="title m-b-2"><span>Nueva direcci&oacute;n</span></div>
+      <div class="alert alert-info" role="alert"><i class="fa fa-info-circle" aria-hidden="true"></i>  Si tu sector no esta en la lista es porque se sale de nuestro poligono de entregas. <strong>Disculpa los incovenientes.</strong></div>
+      <div class="row">
+        <div class="col-xs-12">
+          <form id="addressesForm">
+            <div class="form-group">
+              <label >Sector</label>
+              <select id="sectors" name="sector" class="form-control">
+                {% for s in sectors %}
+                    <option {% if s.title == address.sector %} selected {% endif %} value="{{s.title}}">{{s.title}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Calle</label>
+              <input value="{{address.calle}}" name="calle" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Residencial y Edificio</label>
+              <input value="{{address.residencial}}" name="residencial" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Apto/No</label>
+              <input value="{{address.numero}}" name="numero" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Telefono</label>
+              <input name="telefono" value="{{address.telefono}}" type="text" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Celular</label>
+              <input name="celular" type="text" value="{{address.celular}}" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Proximo a</label>
+              <textarea name="proximo" class="form-control" rows="5">{{address.proximo}}</textarea>
+            </div>
+            <input name="id_control" type="hidden" value="{{address.id}}">
+            {% if address %}
+                <a href="{{"checkout"|page}}" class="btn btn-theme pull-left">Volver al Checkout</a>
+            {% endif %}
+            <button onClick="addressesForm();" type="button" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> Guardar direcci&oacute;n</button>
+          </form>
+        </div>
+      </div><br>
+      <div style="display:none;" id="addressesFormMessage" class="alert alert-success">
+          Direcci&oacute;n agregada correctamente.
+      </div>
+    </div>
+    <!-- End My Address Content -->
+    <!-- My Address Content -->
+    <div class="col-sm-8 col-md-12">
+      <div class="title m-b-2"><span>Direcciones guardadas</span></div>
+      <div id="updateAddresses" class="row">
+          {% partial "addresses" addresses = addresses %}
+      </div>
+    </div>
+    <!-- End My Address Content -->
+
+  </div>
+</div>
+<!-- End Main Content -->
+{% put scripts %}
+<script>
+    $( document ).ready(function() {
+        $('.phone').mask('000-000-0000');
+    });
+    
+    function eliminarAddress(id)
+    {
+        $.request('onDeleteAddress', {data: {id:id}});
+    }
+    
+    function editAddress(id, sector, calle, residencial, numero, telefono, celular, proximo)
+    {
+        console.log(id);
+        console.log(sector);
+        console.log(calle);
+        console.log(residencial);
+        console.log(numero);
+        console.log(telefono);
+        console.log(celular);
+        console.log(proximo);
+        $("input[name=id_control]").val(id);
+        $("#sectors").val(sector);
+        $("input[name=calle]").val(calle);
+        $("input[name=residencial]").val(residencial);
+        $("input[name=numero]").val(numero);
+        $("input[name=telefono]").val(telefono);
+        $("input[name=celular]").val(celular);
+        $("textarea[name=proximo]").val(proximo);
+        //$("#addressesForm").reset();
+    }
+    function addressesForm()
+    {
+        var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        
+    	if($('input[name=calle]').val() === ''){$('input[name=calle]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=calle]').css('border', '');}
+    	
+    	if($('input[name=numero]').val() === ''){$('input[name=numero]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=numero]').css('border', '');}
+    	
+    	if($('input[name=telefono]').val() === ''){$('input[name=telefono]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=telefono]').css('border', '');}
+    	
+    	if($('textarea[name=proximo]').val() === ''){$('textarea[name=proximo]').css('border', '1px solid red');error = false;} 
+    	else{$('textarea[name=proximo]').css('border', '');}
+    
+    	if(error)
+    	{
+    		$('#addressesForm').request('onAddressesForm', {data: $('#addressesForm').serialize()});
+    		$("#addressesFormMessage").fadeIn("fast");
+    	} 
+    	else { return false; }
+    }
+</script>
+{% endput %}";s:4:"code";N;s:5:"title";s:11:"Direcciones";s:3:"url";s:17:"/direcciones/:id?";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";s:7:"session";a:2:{s:8:"security";s:4:"user";s:8:"redirect";s:6:"inicio";}}}

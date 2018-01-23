@@ -1,0 +1,146 @@
+==
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{"assets/images/favicon.ico"|theme}}" type="image/x-icon">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Home - Winelivery</title>
+    {% if this.page.title == "" %}
+    <link href="{{ [
+        'assets/bootstrap/css/bootstrap.css',
+        'assets/css/font-awesome.css',
+        'assets/css/bootstrap-select.css',
+        'assets/css/owl.carousel.css',
+        'assets/css/owl.theme.default.css',
+        'assets/css/style.teal.flat.css',
+        'assets/css/animate.css',
+        'assets/css/full-width-pics.css'
+        
+    ]|theme }}" rel="stylesheet">
+    {% else %}
+    <link href="{{ [
+        'assets/bootstrap/css/bootstrap.css',
+        'assets/css/font-awesome.css',
+        'assets/css/bootstrap-select.css',
+        'assets/css/owl.carousel.css',
+        'assets/css/owl.theme.default.css',
+        'assets/css/style.teal.flat.css',
+        'assets/css/animate.css',
+        'assets/css/full-width-pics.css'
+    ]|theme }}" rel="stylesheet">
+    {% endif %}
+    <style>
+        Size para miniatura
+        .wine-thumbnail
+        {
+        	width: 160px; 
+        	height: 200px;
+        }
+        
+        Size para detail
+        .wine-detail-box
+        {
+        	margin-bottom: 50px; 
+        	padding: 20px;
+        }
+        .size-img-detail
+        {
+        	width: 350px; 
+        	height:500px;
+        }
+        .evaluacion {
+          width: 160px;
+          height: 20px;
+        }
+       .evaluacion p {
+        }
+
+        .evaluacion label {
+          font-size:14px;
+          padding-right: 1px;
+     
+        }
+
+        input[type="radio"] {
+          display: none;
+        }
+        .clasificacion {
+          direction: rtl;
+          unicode-bidi: bidi-override;
+          float: left;
+        }
+
+        label {
+          color: #ccc;
+
+        }
+
+        label:hover,
+        label:hover ~ label {
+          color: orange;
+        }
+
+        input[type="radio"]:checked ~ label {
+          color: orange;
+        }
+        
+        .evaluacion-detalle {
+              width: 160px;
+              height: 20px;
+            }
+
+            .evaluacion-detalle label {
+              font-size:20px;
+              padding-right: 3px;
+         
+            }
+              .evaluacion-detalle p {
+              
+            }
+
+            input[type="radio"] {
+              display: none;
+            }
+            .clasificacion {
+              direction: rtl;
+              unicode-bidi: bidi-override;
+              float: left;
+            }
+
+            label {
+              color: #ccc;
+
+            }
+
+            label:hover,
+            label:hover ~ label {
+              color: orange;
+            }
+
+            input[type="radio"]:checked ~ label {
+              color: orange;
+            }
+    </style>
+</head>
+<body>
+    {% page %}
+    <script src="{{ ['@jquery','@framework','@framework.extras']|theme }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.ez-plus.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.bootstrap-touchspin.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.raty-fa.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/bootstrap/js/bootstrap.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/bootstrap-select.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/owl.carousel.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/nouislider.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.detail.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.filter-sidebar.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.mask.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jqFunctions.js?v=1"|theme}}"></script>
+    {% scripts %}
+</body>
+</html>

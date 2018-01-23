@@ -1,0 +1,344 @@
+1516742245a:1:{s:18:"checkout-movil.htm";a:9:{s:8:"fileName";s:18:"checkout-movil.htm";s:7:"content";s:8005:"title = "Checkout Movil"
+url = "/checkout-movil/:id/:token"
+layout = "layout_mobile"
+is_hidden = 0
+==
+<?php
+use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Order;
+use Andresalice\Winelivery\Models\Porder;
+use Andresalice\Winelivery\Models\Product;
+use RainLab\User\Models\User;
+
+function onStart()
+{
+    $order = Order::find($this->param('id'));
+    $OrderNumber = Input::get('OrderNumber');
+	$Amount = Input::get('Amount');
+	$AuthorizationCode = Input::get('AuthorizationCode');
+	$DateTime = Input::get('DateTime');
+	$ResponseCode = Input::get('ResponseCode');
+	$IsoCode = Input::get('IsoCode');
+	$ResponseMessage = Input::get('ResponseMessage');
+	$ErrorDescription = Input::get('ErrorDescription');
+	$RRN = Input::get('RRN');
+	$ResponseAuthHash = Input::get('AuthHash');
+    $isValid = $this->check_response_hash($OrderNumber, $Amount, $AuthorizationCode, $DateTime, $ResponseCode, $IsoCode, $ResponseMessage, $ErrorDescription, $RRN, $ResponseAuthHash);
+    if($order->status != "Completada")
+    {
+        $status = $this['order'] = Order::where('id', $this->param('id'))->where('order_token', $this->param('token'))->first();
+        if($status){
+            $status->status = "Completada";
+            $status->save();
+            $products = Porder::where("order_id", $this['order']->id)->get();
+            $sum = 0;
+            foreach($products as $c){ 
+                $sum += $c->product->price * $c->quantity;
+                $uproduct = Product::find($c->product_id);
+                $uproduct->stock = $uproduct->stock - $c->quantity;
+                $uproduct->save();
+            }
+        	$this['products'] = $products; 
+            $this['cart_total'] = $sum;
+            $this['cart_total_envio'] = $sum + 90;
+            $this['cart_counter'] = Porder::where("order_id",$this['order']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+            
+             //EMAIL TO CLIENT
+            $user = User::find($status->user_id);
+            $mailvars = ['cart' => $products, 'address' => $this['order']->address_id, 'cart_total' => $this['cart_total'], 'cart_total_envio' => $this['cart_total_envio'], 'cart_counter' => $this['cart_counter']];
+            
+            Mail::send('Orders', $mailvars, function($message) use ($user) {
+            	$message->to($user->email, $user->username);
+            });
+            //EMAIL TO ADMIN
+            $mailvars2 = ['cart' => 'cart'];
+            Mail::send('Orders_admin', $mailvars2, function($message) use ($user) {
+            	$message->to("wineliveryrd@gmail.com", "Luis Peña");
+            });
+        }
+    }
+    else
+    {
+        die("¡DETENTE AHI! ANIMAL FEROZ");
+    }
+}
+
+function check_response_hash($OrderNumber, $Amount, $AuthorizationCode, $DateTime, $ResponseCode, $IsoCode, $ResponseMessage, $ErrorDescription, $RRN, $ResponseAuthHash)
+{
+	$AuthKey = '6VQhjDMmD2aM6yE1J3RarMxvxqkEuTzQg8UIycGAjVg0gZOhLwU1bBQ0pWpoaDkbOQpBQqJTxm8yno7XDF9msjAkL7E6CG7HF148LD3WgdyPizN9PWK6tQjRBiwDyqyk';
+	$AuthHash = $OrderNumber . $Amount . $AuthorizationCode . $DateTime . $ResponseCode . $IsoCode . $ResponseMessage . $ErrorDescription . $RRN. $AuthKey;
+	$AuthHash = mb_convert_encoding($AuthHash, 'UTF-16LE', 'ASCII');
+	$AuthHash = hash('sha512', $AuthHash);
+	if($AuthHash === $ResponseAuthHash)
+	{
+		return true;
+	} 
+	else 
+	{
+		return false;
+	}
+}
+?>
+==
+<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+    <div class="title"><span>Recibo de pago</span></div>
+    <div class="alert alert-success" role="alert">Tu pedido fue realizado correctamente. Para reclamaciones o devoluciones llamanos al 809-636-1208 o escribenos a  wineliveryrd@gmail.com</div>
+    <!-- Shopping Cart List -->
+    <div class="col-md-8">
+
+      <div class="table-responsive">
+        <table class="table table-cart">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>SubTotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in products %}
+            <tr>
+              <td class="img-cart">
+                <img alt="Product" src="{{p.product.featured_image.getPath}}" class="img-thumbnail">
+              </td>
+              <td>
+                <p>{{p.product.title}}</p>
+              </td>
+               <td>{{p.quantity}}</td>
+               <td class="unit">RD${{p.product.price|number_format}}</td>
+               <td class="sub">{% set sub = p.product.price * p.quantity %}RD${{sub|number_format}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="alert alert-warning">
+         <p style="font-size: 15px">*Nuestro horario de entrega es de martes a domingo de 12:00 PM a 12:00 AM, si realizas tu orden fuera de este horario será entregada inmediatamente nuestro servicio de delivery este disponible.</p>
+        </div>
+      </div>
+    </div>
+    <!-- End Shopping Cart List -->
+    <div class="col-md-3 cart-detailbox">
+      <h4>Orden de Compra</h4>
+      <p class="detailbox-items">Dirección:<span class="detailbox-content">  {{order.address_id}}</span></p>
+      <p class="detailbox-items">Total items:<span class="detailbox-content"> {{cart_counter}}</span></p>
+      <p class="detailbox-items">Costo:<span class="detailbox-content" > RD$ {{ cart_total|number_format}}</span></p>
+      <p class="detailbox-items">Costo de Envío:<span class="detailbox-content"> $90</span></p>
+      <p class="detailbox-items">Costo Total:<span class="detailbox-content"> RD$ {{ cart_total_envio|number_format}}</span></p>
+      <p class="detailbox-items" style="font-size: 14px; color:black">Servicio al cliente: <i class="fa fa-whatsapp" aria-hidden="true"></i> (849)-259-4658</p>
+    </div>
+
+  </div>
+<div class="col-xs-12" style="border: 1px solid #ccc; background-color: #ccc;">
+  <div class="panel-body">
+    <p>Estamos ubicados en Gazcue, Calle César Nicolás Penson 76, Santo Domingo 10205. Puedes contactarnos al 809-636-1208 o escribenos al wineliveryrd@gmail.com.</p>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #C1272D">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color: white">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="height: 240px;">
+        <div class="col-md-12">
+          <div class="col-xs-9">
+              <h6 style="color:#C1272D; font-size: 16px;">TU ORDEN HA SIDO REALIZADA EXITOSAMENTE</h6>   
+              {% if order.pago == "Tarjeta" %}
+              <p>Nuestro delivery se presentará al lugar de destino con un verifone, debe estar presente el titular del plastico para realizar la transacción.</p>
+              {% else %}
+              <p>Nuestro delivery se presentará al lugar de destino con los productos y dinero efectivo para devolverle.</p>
+              {% endif %}
+          </div>
+          <div class="col-xs-3">
+              <img class="img-responsive" style="height: 100px" src="{{"assets/images/wine.png"|theme}}">
+          </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: #FEB500; border-radius: 100px; padding: 5px 25px 5px 25px; font-weight: 700; color: black; font-size: 12px">ENTENDIDO</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% put scripts %}
+<script>
+    $( document ).ready(function() {
+        $("#successModal").modal('show');
+    });
+</script>
+{% endput %}";s:5:"mtime";i:1516734988;s:6:"markup";s:4507:"<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+    <div class="title"><span>Recibo de pago</span></div>
+    <div class="alert alert-success" role="alert">Tu pedido fue realizado correctamente. Para reclamaciones o devoluciones llamanos al 809-636-1208 o escribenos a  wineliveryrd@gmail.com</div>
+    <!-- Shopping Cart List -->
+    <div class="col-md-8">
+
+      <div class="table-responsive">
+        <table class="table table-cart">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>SubTotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in products %}
+            <tr>
+              <td class="img-cart">
+                <img alt="Product" src="{{p.product.featured_image.getPath}}" class="img-thumbnail">
+              </td>
+              <td>
+                <p>{{p.product.title}}</p>
+              </td>
+               <td>{{p.quantity}}</td>
+               <td class="unit">RD${{p.product.price|number_format}}</td>
+               <td class="sub">{% set sub = p.product.price * p.quantity %}RD${{sub|number_format}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="alert alert-warning">
+         <p style="font-size: 15px">*Nuestro horario de entrega es de martes a domingo de 12:00 PM a 12:00 AM, si realizas tu orden fuera de este horario será entregada inmediatamente nuestro servicio de delivery este disponible.</p>
+        </div>
+      </div>
+    </div>
+    <!-- End Shopping Cart List -->
+    <div class="col-md-3 cart-detailbox">
+      <h4>Orden de Compra</h4>
+      <p class="detailbox-items">Dirección:<span class="detailbox-content">  {{order.address_id}}</span></p>
+      <p class="detailbox-items">Total items:<span class="detailbox-content"> {{cart_counter}}</span></p>
+      <p class="detailbox-items">Costo:<span class="detailbox-content" > RD$ {{ cart_total|number_format}}</span></p>
+      <p class="detailbox-items">Costo de Envío:<span class="detailbox-content"> $90</span></p>
+      <p class="detailbox-items">Costo Total:<span class="detailbox-content"> RD$ {{ cart_total_envio|number_format}}</span></p>
+      <p class="detailbox-items" style="font-size: 14px; color:black">Servicio al cliente: <i class="fa fa-whatsapp" aria-hidden="true"></i> (849)-259-4658</p>
+    </div>
+
+  </div>
+<div class="col-xs-12" style="border: 1px solid #ccc; background-color: #ccc;">
+  <div class="panel-body">
+    <p>Estamos ubicados en Gazcue, Calle César Nicolás Penson 76, Santo Domingo 10205. Puedes contactarnos al 809-636-1208 o escribenos al wineliveryrd@gmail.com.</p>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #C1272D">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color: white">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="height: 240px;">
+        <div class="col-md-12">
+          <div class="col-xs-9">
+              <h6 style="color:#C1272D; font-size: 16px;">TU ORDEN HA SIDO REALIZADA EXITOSAMENTE</h6>   
+              {% if order.pago == "Tarjeta" %}
+              <p>Nuestro delivery se presentará al lugar de destino con un verifone, debe estar presente el titular del plastico para realizar la transacción.</p>
+              {% else %}
+              <p>Nuestro delivery se presentará al lugar de destino con los productos y dinero efectivo para devolverle.</p>
+              {% endif %}
+          </div>
+          <div class="col-xs-3">
+              <img class="img-responsive" style="height: 100px" src="{{"assets/images/wine.png"|theme}}">
+          </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: #FEB500; border-radius: 100px; padding: 5px 25px 5px 25px; font-weight: 700; color: black; font-size: 12px">ENTENDIDO</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% put scripts %}
+<script>
+    $( document ).ready(function() {
+        $("#successModal").modal('show');
+    });
+</script>
+{% endput %}";s:4:"code";s:3383:"use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Order;
+use Andresalice\Winelivery\Models\Porder;
+use Andresalice\Winelivery\Models\Product;
+use RainLab\User\Models\User;
+
+function onStart()
+{
+    $order = Order::find($this->param('id'));
+    $OrderNumber = Input::get('OrderNumber');
+	$Amount = Input::get('Amount');
+	$AuthorizationCode = Input::get('AuthorizationCode');
+	$DateTime = Input::get('DateTime');
+	$ResponseCode = Input::get('ResponseCode');
+	$IsoCode = Input::get('IsoCode');
+	$ResponseMessage = Input::get('ResponseMessage');
+	$ErrorDescription = Input::get('ErrorDescription');
+	$RRN = Input::get('RRN');
+	$ResponseAuthHash = Input::get('AuthHash');
+    $isValid = $this->check_response_hash($OrderNumber, $Amount, $AuthorizationCode, $DateTime, $ResponseCode, $IsoCode, $ResponseMessage, $ErrorDescription, $RRN, $ResponseAuthHash);
+    if($order->status != "Completada")
+    {
+        $status = $this['order'] = Order::where('id', $this->param('id'))->where('order_token', $this->param('token'))->first();
+        if($status){
+            $status->status = "Completada";
+            $status->save();
+            $products = Porder::where("order_id", $this['order']->id)->get();
+            $sum = 0;
+            foreach($products as $c){ 
+                $sum += $c->product->price * $c->quantity;
+                $uproduct = Product::find($c->product_id);
+                $uproduct->stock = $uproduct->stock - $c->quantity;
+                $uproduct->save();
+            }
+        	$this['products'] = $products; 
+            $this['cart_total'] = $sum;
+            $this['cart_total_envio'] = $sum + 90;
+            $this['cart_counter'] = Porder::where("order_id",$this['order']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+            
+             //EMAIL TO CLIENT
+            $user = User::find($status->user_id);
+            $mailvars = ['cart' => $products, 'address' => $this['order']->address_id, 'cart_total' => $this['cart_total'], 'cart_total_envio' => $this['cart_total_envio'], 'cart_counter' => $this['cart_counter']];
+            
+            Mail::send('Orders', $mailvars, function($message) use ($user) {
+            	$message->to($user->email, $user->username);
+            });
+            //EMAIL TO ADMIN
+            $mailvars2 = ['cart' => 'cart'];
+            Mail::send('Orders_admin', $mailvars2, function($message) use ($user) {
+            	$message->to("wineliveryrd@gmail.com", "Luis Peña");
+            });
+        }
+    }
+    else
+    {
+        die("¡DETENTE AHI! ANIMAL FEROZ");
+    }
+}
+
+function check_response_hash($OrderNumber, $Amount, $AuthorizationCode, $DateTime, $ResponseCode, $IsoCode, $ResponseMessage, $ErrorDescription, $RRN, $ResponseAuthHash)
+{
+	$AuthKey = '6VQhjDMmD2aM6yE1J3RarMxvxqkEuTzQg8UIycGAjVg0gZOhLwU1bBQ0pWpoaDkbOQpBQqJTxm8yno7XDF9msjAkL7E6CG7HF148LD3WgdyPizN9PWK6tQjRBiwDyqyk';
+	$AuthHash = $OrderNumber . $Amount . $AuthorizationCode . $DateTime . $ResponseCode . $IsoCode . $ResponseMessage . $ErrorDescription . $RRN. $AuthKey;
+	$AuthHash = mb_convert_encoding($AuthHash, 'UTF-16LE', 'ASCII');
+	$AuthHash = hash('sha512', $AuthHash);
+	if($AuthHash === $ResponseAuthHash)
+	{
+		return true;
+	} 
+	else 
+	{
+		return false;
+	}
+}";s:5:"title";s:14:"Checkout Movil";s:3:"url";s:26:"/checkout-movil/:id/:token";s:6:"layout";s:13:"layout_mobile";s:9:"is_hidden";s:1:"0";}}

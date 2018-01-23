@@ -7,12 +7,27 @@ use Andresalice\Winelivery\Models\Wishlist;
 use Andresalice\Winelivery\Models\Product;
 use Andresalice\Winelivery\Models\Address;
 use Andresalice\Winelivery\Models\Sector;
+use RainLab\User\Models\User;
 
 function onStart()
 {
     $this['loggedIn'] = Auth::check();
     $this['categories'] = Category::get();
-    $rp = Product::orderByRaw("RAND()")->take(12)->get();
+    $rp = Product::where("status",0)->where("type","!=", 2)->orderByRaw("RAND()")->take(12)->get();
+    $embutidos = Product::where("status",0)->where("type",2)->take(12)->get();
+    //PRODUCTOS RANDOM CALCULO DE ESTRELLAS
+    foreach($embutidos as $r)
+    {
+        $r->s5 = $r->stars()->where("stars",5)->count();
+        $r->s4 = $r->stars()->where("stars",4)->count();
+        $r->s3 = $r->stars()->where("stars",3)->count();
+        $r->s2 = $r->stars()->where("stars",2)->count();
+        $r->s1 = $r->stars()->where("stars",1)->count();
+        $sc = 5 * $r->s5 + 4 * $r->s4 + 3 * $r->s3 + 2 * $r->s2 + 1 * $r->s1;
+        if($sc == 0){$r->total_stars = 5;}
+        else{$r->total_stars = substr($sc/($r->s5+$r->s4+$r->s3+$r->s2+$r->s1), 0, 1);}
+    }
+    $this['embutidos'] = $embutidos;
     //PRODUCTOS RANDOM CALCULO DE ESTRELLAS
     foreach($rp as $r)
     {
@@ -29,6 +44,7 @@ function onStart()
     if($this['loggedIn'])
     {
       $this['user'] = Auth::getUser();
+      $this['cart'] = Cart::where("user_id","=",$this['user']->id)->get();
       $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
       $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
       $this['addresses'] = Address::where("user_id",Auth::getUser()->id)->get();
@@ -40,6 +56,29 @@ function onStart()
     $this['sectors'] = Sector::get();
 }
 
+function onRecuperarForm()
+{
+    $code = User::where("email",post("email"))->first()->reset_code;
+    $mailvars = ['code' => $code, 'email' => post("email")];
+    Mail::send('recovery', $mailvars, function($message) {
+    	$message->to(post("email"));
+    });
+}
+
+function onReiniciarForm()
+{
+    if(User::where("email", post("email"))->where("reset_code", post("code"))->exists())
+    {
+        $id = User::where("email", post("email"))->where("reset_code", post("code"))->first()->id;
+        $user = User::find($id);
+        $user->password = post("password");
+        $user->password_confirmation = post("password_confirmation");
+        $user->reset_code = rand(100000,999999);
+        $user->save();
+        Auth::login($user);
+        return Redirect::to('/');
+    }
+}
 
 function onAddToCart()
 {
@@ -60,8 +99,20 @@ function onAddToCart()
         $w->quantity = 1;
         $w->save();
     }
+    
+    $cart = Cart::where("user_id","=",$user->id)->get();
+    $sum = 0;
+    foreach($cart as $c)
+    {
+      $sum += $c->product->price * $c->quantity;
+    }
+    $cart_total = $sum;
+    $cart_total_envio = $sum + 90;
     $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
-    return ['#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
+    
+    return ['#cart_partial' => $this->renderPartial('cart', ['cart' => $cart, 'cart_total' => $cart_total]), 
+    '.cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter]),
+    '#cart_total_id' => $this->renderPartial('cart_total', ['cart_total' => $cart_total, 'cart_total_envio' => $cart_total_envio, 'cart_counter' => $cart_counter])];
 }
 
 function onAddToWishlist()
@@ -75,8 +126,10 @@ function onAddToWishlist()
         $w->product_id  = $product_id;
         $w->save();
     }
+    
+    
     $wishlist_counter = Wishlist::where("user_id","=",$user->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
-    return ['#wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter])];
+    return ['.wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter])];
 }
 
 function onDeleteFromWishlist()
@@ -146,7 +199,7 @@ function onCheckoutAddressesForm()
     $address->proximo = post("proximo");
     $address->user_id = $user_id;
     $address->save();
-    return Redirect::to("checkout2/".$address->id);
+    return $address->id;
 }
 
 function onDeleteAddress()
@@ -299,7 +352,7 @@ function onLogout()
         <div class="container">
             <div class="row">
                 <div class="col-md-2 ">
-                    <a href="{{"inicio"|page}}"><img alt="Logo" src="{{"assets/images/winelivery-01.png"|theme}}" class="img-responsive" /></a>
+                    <a href="{{"inicio"|page}}"><img alt="Logo" src="{{"assets/images/winelivery-logo.png"|theme}}" class="img-responsive" /></a>
                 </div>
                 <div class="col-sm-8 col-md-6 search-box m-t-2">
                   <form method="POST" action="{{"busqueda"|page}}">
@@ -336,6 +389,33 @@ function onLogout()
             </div>
             <div class="collapse navbar-collapse col-md-6" id="navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
+                    <div class="submenu" >
+                      {% if loggedIn %}
+                    <li class="dropdown" style="padding:10px">
+                        <a href="javascript:;" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user"></i> Hola, {{ user.name }} {{user.surname}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu white">
+                            <li><a href="{{"perfil"|page}}">Editar mi perfil</a></li>
+                            <li><a href="{{"password"|page}}">Cambiar contrase&ntilde;a</a></li>
+                            <li><a href="{{"direcciones"|page}}">Editar informacion de envio</a></li>
+                            <li><a href="{{"historial"|page}}">Historial de compras</a></li>
+                            <li><a data-request="onLogout" data-request-data="redirect: '/good-bye'">Salir</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                       <li>
+                           <a style="border-color:transparent;color:#fff;padding:15px; margin-top:5px; hover:color:#c1272d;" href="{{"login"|page}}"> Iniciar Sesi&oacute;n</a>
+                       </li>
+                    {% endif %}
+                    <!-- <li class="club"><a style="background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="">¡Unete al club de vinos!</a></li> -->
+                    <li style="padding:10px" class="wishlist_update_quantity" class="white">
+                        {% partial "quantity_wishlist" wishlist_counter = wishlist_counter %}
+                    </li>
+                    <li style="padding:10px"  class="cart_update_quantity" class="white">
+                        {% partial "quantity_cart"  cart_counter = cart_counter %}
+                    </li> 
+                    </div>
+
                     {% for c in categories %}
                         <li class="dropdown">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{c.title}}<span class="caret"></span></a>
@@ -348,8 +428,9 @@ function onLogout()
                     {% endfor %}
                 </ul>
             </div>
-            <div class="col-md-6 second-header">
+            <div class="col-md-7 second-header">
                 <ul class="list-inline nav navbar-nav">
+                    
                     {% if loggedIn %}
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -369,10 +450,10 @@ function onLogout()
                     {% endif %}
                      <li><a style="background-color:transparent;border:2px solid #fff; color:#fff; border-radius:25px; padding:3px 15px; margin-top:5px;" href="{{"servicio"|page}}">¿Cómo funciona ?</a></li>
                     <!-- <li class="club"><a style="background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="">¡Unete al club de vinos!</a></li> -->
-                    <li id="wishlist_update_quantity" class="white">
+                    <li class="wishlist_update_quantity" class="white">
                         {% partial "quantity_wishlist" wishlist_counter = wishlist_counter %}
                     </li>
-                    <li id="cart_update_quantity" class="white">
+                    <li class="cart_update_quantity" class="white">
                         {% partial "quantity_cart"  cart_counter = cart_counter %}
                     </li>
                 </ul>
@@ -382,7 +463,7 @@ function onLogout()
     <!-- End Navigation Bar -->
 
     {% page %}
-    {% if this.page.id != "login" and this.page.id != "registro" %}
+    {% if this.page.id != "login" and this.page.id != "registro" and this.page.id != "recuperar" and this.page.id != "reiniciar"%}
     <!-- Footer -->
     <div class="footer">
         <div class="container">
@@ -391,7 +472,7 @@ function onLogout()
                     <div class="title-footer"><span>Sobre nosotros</span></div>
                     <ul>
                         <li>
-                            Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et doloremmagna aliqua. Ut enim ad minim... <a href="#">ver m&aacute;s</a>
+                            Winelivery es una tienda de vinos online con delivery que ofrece una nueva manera de disfrutar el vino desde la comodidad de su hogar sin tener que salir a perder el tiempo en tapones ni gastar gasolina. <a href="{{"nosotros"|page}}">ver m&aacute;s</a>
                         </li>
                     </ul>
                 </div>
@@ -405,14 +486,14 @@ function onLogout()
                     </ul>
                 </div>
                 <div class="clearfix visible-sm-block"></div>
-                <div class="col-md-3 col-sm-6">
+                <!-- <div class="col-md-3 col-sm-6">
                     <div class="title-footer"><span>Categorias</span></div>
                     <ul>
                         {% for c in categories %}
                             <li><i class="fa fa-angle-double-right"></i> <a href="#">{{c.title}}</a></li>
                         {% endfor %}
                     </ul>
-                </div>
+                </div> -->
                 <div class="col-md-3 col-sm-6">
                     <div class="title-footer"><span>Noticias</span></div>
                     <p>
@@ -432,14 +513,15 @@ function onLogout()
                     <div class="title-footer"><span>Contacto</span></div>
                     <ul class="footer-icon">
                         <li><span><i class="fa fa-map-marker"></i></span> Gazcue, Calle César Nicolás Penson 76, Santo Domingo 10205</li>
-                        <li><span><i class="fa fa-phone"></i></span>(809) 689-4027</li>
-                        <li><span><i class="fa fa-envelope"></i></span> <a href="">info@winelivery.com</a></li>
+                        <li><span><i class="fa fa-phone"></i></span> 809-636-1208</li>
+                        <li><span><i class="fa fa-whatsapp" aria-hidden="true"></i></span>849-259-4658</li>
+                        <li><span><i class="fa fa-envelope"></i></span> <a href="">wineliveryrd@gmail.com</a></li>
                     </ul>
                 </div>
                 <div class="clearfix visible-sm-block"></div>
                 <div class="col-md-3 col-sm-6">
                     <div class="title-footer"><span>M&eacute;todos de pago</span></div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, soluta, tempora, ipsa voluptatibus porro vel laboriosam</p>
+                    <p>Hasta el momento solo aceptamos pagos con tarjeta de crédito y mediante nuestra plataforma.</p>
                     <img src="{{"assets/images/payment-1.png"|theme}}" alt="Payment-1">
                     <img src="{{"assets/images/payment-2.png"|theme}}" alt="Payment-2">
                     <img src="{{"assets/images/payment-4.png"|theme}}" alt="Payment-4">
@@ -466,20 +548,24 @@ function onLogout()
     </a>
 
     <script src="{{ ['@jquery','@framework','@framework.extras']|theme }}"></script>
-    <script src="{{"assets/bootstrap/js/bootstrap.js"|theme}}"></script>
-    <script src="{{"assets/js/bootstrap-select.js"|theme}}"></script>
-    <script src="{{"assets/js/owl.carousel.js"|theme}}"></script>
-    <script src="{{"assets/js/jquery.ez-plus.js"|theme}}"></script>
-    <script src="{{"assets/js/jquery.bootstrap-touchspin.js"|theme}}"></script>
-    <script src="{{"assets/js/jquery.raty-fa.js"|theme}}"></script>
-    <script src="{{"assets/js/nouislider.js"|theme}}"></script>
-    <script src="{{"assets/js/mimity.js"|theme}}"></script>
-    <script src="{{"assets/js/mimity.detail.js"|theme}}"></script>
-    <script src="{{"assets/js/mimity.filter-sidebar.js"|theme}}"></script>
-    <script src="{{"assets/js/jquery.mask.js"|theme}}"></script>
-    <script src="{{"assets/js/jqFunctions.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.ez-plus.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.bootstrap-touchspin.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.raty-fa.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/bootstrap/js/bootstrap.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/bootstrap-select.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/owl.carousel.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/nouislider.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.detail.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.filter-sidebar.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.mask.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jqFunctions.js?v=1"|theme}}"></script>
     {% scripts %}
     <script>
+    $(document).ready(function(){
+      $('.phone').mask('000-000-0000');
+      $('#bannersModal').modal('show');
+    });
     $('.fa-shopping-cart').click(function(){
         $(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
         function() {

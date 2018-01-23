@@ -1,0 +1,1194 @@
+1516742245a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:27170:"==
+<?php
+use Andresalice\Winelivery\Models\Category;
+use Andresalice\Winelivery\Models\Newsletter;
+use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Wishlist;
+use Andresalice\Winelivery\Models\Product;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Sector;
+use RainLab\User\Models\User;
+
+function onStart()
+{
+    $this['loggedIn'] = Auth::check();
+    $this['categories'] = Category::get();
+    $rp = Product::where("status",0)->where("type","!=", 2)->orderByRaw("RAND()")->take(12)->get();
+    $embutidos = Product::where("status",0)->where("type",2)->take(12)->get();
+    //PRODUCTOS RANDOM CALCULO DE ESTRELLAS
+    foreach($embutidos as $r)
+    {
+        $r->s5 = $r->stars()->where("stars",5)->count();
+        $r->s4 = $r->stars()->where("stars",4)->count();
+        $r->s3 = $r->stars()->where("stars",3)->count();
+        $r->s2 = $r->stars()->where("stars",2)->count();
+        $r->s1 = $r->stars()->where("stars",1)->count();
+        $sc = 5 * $r->s5 + 4 * $r->s4 + 3 * $r->s3 + 2 * $r->s2 + 1 * $r->s1;
+        if($sc == 0){$r->total_stars = 5;}
+        else{$r->total_stars = substr($sc/($r->s5+$r->s4+$r->s3+$r->s2+$r->s1), 0, 1);}
+    }
+    $this['embutidos'] = $embutidos;
+    //PRODUCTOS RANDOM CALCULO DE ESTRELLAS
+    foreach($rp as $r)
+    {
+        $r->s5 = $r->stars()->where("stars",5)->count();
+        $r->s4 = $r->stars()->where("stars",4)->count();
+        $r->s3 = $r->stars()->where("stars",3)->count();
+        $r->s2 = $r->stars()->where("stars",2)->count();
+        $r->s1 = $r->stars()->where("stars",1)->count();
+        $sc = 5 * $r->s5 + 4 * $r->s4 + 3 * $r->s3 + 2 * $r->s2 + 1 * $r->s1;
+        if($sc == 0){$r->total_stars = 5;}
+        else{$r->total_stars = substr($sc/($r->s5+$r->s4+$r->s3+$r->s2+$r->s1), 0, 1);}
+    }
+    $this['randomProducts'] = $rp;
+    if($this['loggedIn'])
+    {
+      $this['user'] = Auth::getUser();
+      $this['cart'] = Cart::where("user_id","=",$this['user']->id)->get();
+      $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+      $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+      $this['addresses'] = Address::where("user_id",Auth::getUser()->id)->get();
+        if($this->param('id'))
+        {
+            $this['address'] = Address::find($this->param('id'));
+        }
+    }
+    $this['sectors'] = Sector::get();
+}
+
+function onRecuperarForm()
+{
+    $code = User::where("email",post("email"))->first()->reset_code;
+    $mailvars = ['code' => $code, 'email' => post("email")];
+    Mail::send('recovery', $mailvars, function($message) {
+    	$message->to(post("email"));
+    });
+}
+
+function onReiniciarForm()
+{
+    if(User::where("email", post("email"))->where("reset_code", post("code"))->exists())
+    {
+        $id = User::where("email", post("email"))->where("reset_code", post("code"))->first()->id;
+        $user = User::find($id);
+        $user->password = post("password");
+        $user->password_confirmation = post("password_confirmation");
+        $user->reset_code = rand(100000,999999);
+        $user->save();
+        Auth::login($user);
+        return Redirect::to('/');
+    }
+}
+
+function onAddToCart()
+{
+    $product_id = Input::get("product_id");
+    $user = Auth::getUser();
+    if(Cart::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
+    {
+        $id_cart = Cart::where("product_id","=",$product_id)->where("user_id","=",$user->id)->select("id")->first();
+        $w = Cart::find($id_cart->id);
+        $w->quantity += 1;
+        $w->save();
+    }
+    else
+    {
+        $w = new Cart();
+        $w->user_id =  $user->id;
+        $w->product_id  = $product_id;
+        $w->quantity = 1;
+        $w->save();
+    }
+    
+    $cart = Cart::where("user_id","=",$user->id)->get();
+    $sum = 0;
+    foreach($cart as $c)
+    {
+      $sum += $c->product->price * $c->quantity;
+    }
+    $cart_total = $sum;
+    $cart_total_envio = $sum + 90;
+    $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+    
+    return ['#cart_partial' => $this->renderPartial('cart', ['cart' => $cart, 'cart_total' => $cart_total]), 
+    '.cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter]),
+    '#cart_total_id' => $this->renderPartial('cart_total', ['cart_total' => $cart_total, 'cart_total_envio' => $cart_total_envio, 'cart_counter' => $cart_counter])];
+}
+
+function onAddToWishlist()
+{
+    $product_id = Input::get("product_id");
+    $user = Auth::getUser();
+    if(!Wishlist::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = new Wishlist();
+        $w->user_id =  $user->id;
+        $w->product_id  = $product_id;
+        $w->save();
+    }
+    
+    
+    $wishlist_counter = Wishlist::where("user_id","=",$user->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+    return ['.wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter])];
+}
+
+function onDeleteFromWishlist()
+{
+    $user = Auth::getUser();
+    $wishlist_id = Input::get("wishlist_id");
+    if(Wishlist::where("id","=",$wishlist_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = Wishlist::find($wishlist_id);
+        $w->delete();
+    }
+    $wishlist = Wishlist::where("user_id","=",$user->id)->get();
+    $wishlist_counter = Wishlist::where("user_id","=",$user->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+    return ['#wishlist_partial' => $this->renderPartial('wishlist', ['wishlist' => $wishlist]), '#wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter])];
+}
+
+function onNewsletterForm()
+{
+    $exists = Newsletter::where("email","=",post("email_newsletter"))->exists();
+    if($exists)
+    {
+        return false;
+    }
+    else
+    {
+        $n = new Newsletter();
+        $n->email = post('email_newsletter');
+        $n->save();
+    }
+}
+
+function onAddressesForm()
+{
+    $user_id = Auth::getUser()->id;
+    if(Input::has("id_control"))
+    {
+        $address = Address::where("id",post("id_control"))->update(['sector' => post("sector"),'calle' => post("calle"),'residencial' => post("residencial"),'numero' => post("numero"),'telefono' => post("telefono"),'celular' => post("celular"),'proximo' => post("proximo")]);
+    }
+    else
+    {
+        $address = new Address;
+        $address->sector = post("sector");
+        $address->calle = post("calle");
+        $address->residencial = post("residencial");
+        $address->numero = post("numero");
+        $address->telefono = post("telefono");
+        $address->celular = post("celular");
+        $address->proximo = post("proximo");
+        $address->user_id = $user_id;
+        $address->save();
+    }
+   
+    $addresses = Address::where("user_id",$user_id)->get();
+    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
+}
+
+function onCheckoutAddressesForm()
+{
+    $user_id = Auth::getUser()->id;
+    $address = new Address;
+    $address->sector = post("sector");
+    $address->calle = post("calle");
+    $address->residencial = post("residencial");
+    $address->numero = post("numero");
+    $address->telefono = post("telefono");
+    $address->celular = post("celular");
+    $address->proximo = post("proximo");
+    $address->user_id = $user_id;
+    $address->save();
+    return $address->id;
+}
+
+function onDeleteAddress()
+{
+    $id = post("id");
+    $address = Address::find($id);
+    $address->delete();
+    $addresses = Address::where("user_id",Auth::getUser()->id)->get();
+    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
+}
+
+function onLogout()
+{
+    Auth::logout();
+    return Redirect::to('/');
+}
+?>
+==
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{"assets/images/favicon.ico"|theme}}" type="image/x-icon">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Home - Winelivery</title>
+    {% if this.page.title == "" %}
+    <link href="{{ [
+        'assets/bootstrap/css/bootstrap.css',
+        'assets/css/font-awesome.css',
+        'assets/css/bootstrap-select.css',
+        'assets/css/owl.carousel.css',
+        'assets/css/owl.theme.default.css',
+        'assets/css/style.teal.flat.css',
+        'assets/css/animate.css',
+        'assets/css/full-width-pics.css'
+        
+    ]|theme }}" rel="stylesheet">
+    {% else %}
+    <link href="{{ [
+        'assets/bootstrap/css/bootstrap.css',
+        'assets/css/font-awesome.css',
+        'assets/css/bootstrap-select.css',
+        'assets/css/owl.carousel.css',
+        'assets/css/owl.theme.default.css',
+        'assets/css/style.teal.flat.css',
+        'assets/css/animate.css',
+        'assets/css/full-width-pics.css'
+    ]|theme }}" rel="stylesheet">
+    {% endif %}
+    <style>
+        Size para miniatura
+        .wine-thumbnail
+        {
+        	width: 160px; 
+        	height: 200px;
+        }
+        
+        Size para detail
+        .wine-detail-box
+        {
+        	margin-bottom: 50px; 
+        	padding: 20px;
+        }
+        .size-img-detail
+        {
+        	width: 350px; 
+        	height:500px;
+        }
+        .evaluacion {
+          width: 160px;
+          height: 20px;
+        }
+       .evaluacion p {
+        }
+
+        .evaluacion label {
+          font-size:14px;
+          padding-right: 1px;
+     
+        }
+
+        input[type="radio"] {
+          display: none;
+        }
+        .clasificacion {
+          direction: rtl;
+          unicode-bidi: bidi-override;
+          float: left;
+        }
+
+        label {
+          color: #ccc;
+
+        }
+
+        label:hover,
+        label:hover ~ label {
+          color: orange;
+        }
+
+        input[type="radio"]:checked ~ label {
+          color: orange;
+        }
+        
+        .evaluacion-detalle {
+              width: 160px;
+              height: 20px;
+            }
+
+            .evaluacion-detalle label {
+              font-size:20px;
+              padding-right: 3px;
+         
+            }
+              .evaluacion-detalle p {
+              
+            }
+
+            input[type="radio"] {
+              display: none;
+            }
+            .clasificacion {
+              direction: rtl;
+              unicode-bidi: bidi-override;
+              float: left;
+            }
+
+            label {
+              color: #ccc;
+
+            }
+
+            label:hover,
+            label:hover ~ label {
+              color: orange;
+            }
+
+            input[type="radio"]:checked ~ label {
+              color: orange;
+            }
+    </style>
+</head>
+
+<body>
+    <!-- Middle Header -->
+    <div class="middle-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a href="{{"inicio"|page}}"><img alt="Logo" src="{{"assets/images/winelivery-logo.png"|theme}}" class="img-responsive" /></a>
+                </div>
+                <div class="col-sm-8 col-md-6 search-box m-t-2">
+                  <form method="POST" action="{{"busqueda"|page}}">
+                    <div class="input-group">
+                        <input name="search" type="text" class="form-control" aria-label="Encuentra tus vinos..." placeholder="Encuentra tus vinos...">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default btn-search"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-sm-4 col-md-4  hidden-xs m-t-2">
+                    <ul class="list-unstyled; list-inline" style="font-size:12px;">
+                        <li><a href="{{"nosotros"|page}}">Sobre nosotros</a></li>
+                        <li><a href="{{"terminos"|page}}">Terminos y condiciones</a></li>
+                        <li {% if user %} class="hidden" {% endif %}><a style="font-size:12px;background-color:#c1272d;border-color:transparent; color:#fff" class="btn btn-default" href="{{"registro"|page}}">Registrate</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Middle Header -->
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default shadow-navbar" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            </div>
+            <div class="collapse navbar-collapse col-md-6" id="navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <div class="submenu" >
+                      {% if loggedIn %}
+                    <li class="dropdown" style="padding:10px">
+                        <a href="javascript:;" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user"></i> Hola, {{ user.name }} {{user.surname}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu white">
+                            <li><a href="{{"perfil"|page}}">Editar mi perfil</a></li>
+                            <li><a href="{{"password"|page}}">Cambiar contrase&ntilde;a</a></li>
+                            <li><a href="{{"direcciones"|page}}">Editar informacion de envio</a></li>
+                            <li><a href="{{"historial"|page}}">Historial de compras</a></li>
+                            <li><a data-request="onLogout" data-request-data="redirect: '/good-bye'">Salir</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                       <li>
+                           <a style="border-color:transparent;color:#fff;padding:15px; margin-top:5px; hover:color:#c1272d;" href="{{"login"|page}}"> Iniciar Sesi&oacute;n</a>
+                       </li>
+                    {% endif %}
+                    <!-- <li class="club"><a style="background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="">¡Unete al club de vinos!</a></li> -->
+                    <li style="padding:10px" class="wishlist_update_quantity" class="white">
+                        {% partial "quantity_wishlist" wishlist_counter = wishlist_counter %}
+                    </li>
+                    <li style="padding:10px"  class="cart_update_quantity" class="white">
+                        {% partial "quantity_cart"  cart_counter = cart_counter %}
+                    </li> 
+                    </div>
+
+                    {% for c in categories %}
+                        <li class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{c.title}}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {% for r in c.countries %}
+                                    <li><a href="{{"productos"|page({country: r.id, category: c.id})}}">{{r.name}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-7 second-header">
+                <ul class="list-inline nav navbar-nav">
+                    
+                    {% if loggedIn %}
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user"></i> Hola, {{ user.name }} {{user.surname}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu white">
+                            <li><a href="{{"perfil"|page}}">Editar mi perfil</a></li>
+                            <li><a href="{{"password"|page}}">Cambiar contrase&ntilde;a</a></li>
+                            <li><a href="{{"direcciones"|page}}">Editar informacion de envio</a></li>
+                            <li><a href="{{"historial"|page}}">Historial de compras</a></li>
+                            <li><a data-request="onLogout" data-request-data="redirect: '/good-bye'">Salir</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                       <li>
+                           <a style="border-color:transparent;color:#fff;padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="{{"login"|page}}"> Iniciar Sesi&oacute;n</a>
+                       </li>
+                    {% endif %}
+                     <li><a style="background-color:transparent;border:2px solid #fff; color:#fff; border-radius:25px; padding:3px 15px; margin-top:5px;" href="{{"servicio"|page}}">¿Cómo funciona ?</a></li>
+                    <!-- <li class="club"><a style="background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="">¡Unete al club de vinos!</a></li> -->
+                    <li class="wishlist_update_quantity" class="white">
+                        {% partial "quantity_wishlist" wishlist_counter = wishlist_counter %}
+                    </li>
+                    <li class="cart_update_quantity" class="white">
+                        {% partial "quantity_cart"  cart_counter = cart_counter %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navigation Bar -->
+
+    {% page %}
+    {% if this.page.id != "login" and this.page.id != "registro" and this.page.id != "recuperar" and this.page.id != "reiniciar"%}
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Sobre nosotros</span></div>
+                    <ul>
+                        <li>
+                            Winelivery es una tienda de vinos online con delivery que ofrece una nueva manera de disfrutar el vino desde la comodidad de su hogar sin tener que salir a perder el tiempo en tapones ni gastar gasolina. <a href="{{"nosotros"|page}}">ver m&aacute;s</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Informaci&oacute;n</span></div>
+                    <ul>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"preguntas-frecuentes"|page}}">Preguntas frecuentes</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"politicas"|page}}">Politicas de privacidad</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"terminos"|page}}">Terminos y condiciones</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"metodo-de-envio"|page}}">Metodo de envio</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix visible-sm-block"></div>
+                <!-- <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Categorias</span></div>
+                    <ul>
+                        {% for c in categories %}
+                            <li><i class="fa fa-angle-double-right"></i> <a href="#">{{c.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div> -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Noticias</span></div>
+                    <p>
+                        Suscribete y recibe noticias sobre tus vinos favoritos.
+                    </p>
+                    <form id="newsletterForm">
+                        <div class="input-group">
+                            <input name="email_newsletter" class="form-control" type="text" placeholder="Correo">
+                            <span class="input-group-btn"><button onClick="onNewsletterForm();" class="btn btn-default subscribe-button" type="button">Suscribete</button></span>
+                        </div><br>
+                         <div style="display:none;" id="newsletterMessageSuccess" class="alert alert-success">Te has suscrito exitosamente.</div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Contacto</span></div>
+                    <ul class="footer-icon">
+                        <li><span><i class="fa fa-map-marker"></i></span> Gazcue, Calle César Nicolás Penson 76, Santo Domingo 10205</li>
+                        <li><span><i class="fa fa-phone"></i></span> 809-636-1208</li>
+                        <li><span><i class="fa fa-whatsapp" aria-hidden="true"></i></span>849-259-4658</li>
+                        <li><span><i class="fa fa-envelope"></i></span> <a href="">wineliveryrd@gmail.com</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix visible-sm-block"></div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>M&eacute;todos de pago</span></div>
+                    <p>Hasta el momento solo aceptamos pagos con tarjeta de crédito y mediante nuestra plataforma.</p>
+                    <img src="{{"assets/images/payment-1.png"|theme}}" alt="Payment-1">
+                    <img src="{{"assets/images/payment-2.png"|theme}}" alt="Payment-2">
+                    <img src="{{"assets/images/payment-4.png"|theme}}" alt="Payment-4">
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Mi cuenta</span></div>
+                    <ul>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"historial"|page}}">Ordenes</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"direcciones"|page}}">Direcci&oacute;n</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"perfil"|page}}">Perfil</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a data-request="onLogout" data-request-data="redirect: '/good-bye'">Salir</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="text-center copyright">
+            Copyright &copy; {{date|date("Y")}} Winelivery All right reserved
+        </div>
+    </div>
+    <!-- End Footer -->
+    {% endif %}
+    <a href="#top" class="back-top text-center" onclick="$('body,html').animate({scrollTop:0},500); return false">
+        <i class="fa fa-angle-double-up"></i>
+    </a>
+
+    <script src="{{ ['@jquery','@framework','@framework.extras']|theme }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.ez-plus.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.bootstrap-touchspin.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.raty-fa.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/bootstrap/js/bootstrap.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/bootstrap-select.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/owl.carousel.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/nouislider.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.detail.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.filter-sidebar.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.mask.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jqFunctions.js?v=1"|theme}}"></script>
+    {% scripts %}
+    <script>
+    $(document).ready(function(){
+      $('.phone').mask('000-000-0000');
+      $('#bannersModal').modal('show');
+    });
+    $('.fa-shopping-cart').click(function(){
+        $(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function() {
+          $(this).removeClass('animated bounceIn');
+        
+        });;
+    });
+    $('.fa-heart').click(function(){
+        $(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function() {
+          $(this).removeClass('animated bounceIn');
+        
+        });;
+    });
+
+    function onNewsletterForm()
+    {
+        var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        
+    	if(!regex.test($('input[name=email_newsletter]').val())){$('input[name=email_newsletter]').css('border', '1px solid red');error = false;} 
+    	else {$('input[name=email_newsletter]').css('border', '');}
+    	
+    	if(error)
+    	{
+    		$('#newsletterForm').request('onNewsletterForm', {data: $('#newsletterForm').serialize()});
+    		$("#newsletterMessageSuccess").fadeIn("fast");
+    	} 
+    	else { return false; }
+    }
+    </script>
+</body>
+</html>";s:5:"mtime";i:1516220062;s:6:"markup";s:18894:"<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{"assets/images/favicon.ico"|theme}}" type="image/x-icon">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Home - Winelivery</title>
+    {% if this.page.title == "" %}
+    <link href="{{ [
+        'assets/bootstrap/css/bootstrap.css',
+        'assets/css/font-awesome.css',
+        'assets/css/bootstrap-select.css',
+        'assets/css/owl.carousel.css',
+        'assets/css/owl.theme.default.css',
+        'assets/css/style.teal.flat.css',
+        'assets/css/animate.css',
+        'assets/css/full-width-pics.css'
+        
+    ]|theme }}" rel="stylesheet">
+    {% else %}
+    <link href="{{ [
+        'assets/bootstrap/css/bootstrap.css',
+        'assets/css/font-awesome.css',
+        'assets/css/bootstrap-select.css',
+        'assets/css/owl.carousel.css',
+        'assets/css/owl.theme.default.css',
+        'assets/css/style.teal.flat.css',
+        'assets/css/animate.css',
+        'assets/css/full-width-pics.css'
+    ]|theme }}" rel="stylesheet">
+    {% endif %}
+    <style>
+        Size para miniatura
+        .wine-thumbnail
+        {
+        	width: 160px; 
+        	height: 200px;
+        }
+        
+        Size para detail
+        .wine-detail-box
+        {
+        	margin-bottom: 50px; 
+        	padding: 20px;
+        }
+        .size-img-detail
+        {
+        	width: 350px; 
+        	height:500px;
+        }
+        .evaluacion {
+          width: 160px;
+          height: 20px;
+        }
+       .evaluacion p {
+        }
+
+        .evaluacion label {
+          font-size:14px;
+          padding-right: 1px;
+     
+        }
+
+        input[type="radio"] {
+          display: none;
+        }
+        .clasificacion {
+          direction: rtl;
+          unicode-bidi: bidi-override;
+          float: left;
+        }
+
+        label {
+          color: #ccc;
+
+        }
+
+        label:hover,
+        label:hover ~ label {
+          color: orange;
+        }
+
+        input[type="radio"]:checked ~ label {
+          color: orange;
+        }
+        
+        .evaluacion-detalle {
+              width: 160px;
+              height: 20px;
+            }
+
+            .evaluacion-detalle label {
+              font-size:20px;
+              padding-right: 3px;
+         
+            }
+              .evaluacion-detalle p {
+              
+            }
+
+            input[type="radio"] {
+              display: none;
+            }
+            .clasificacion {
+              direction: rtl;
+              unicode-bidi: bidi-override;
+              float: left;
+            }
+
+            label {
+              color: #ccc;
+
+            }
+
+            label:hover,
+            label:hover ~ label {
+              color: orange;
+            }
+
+            input[type="radio"]:checked ~ label {
+              color: orange;
+            }
+    </style>
+</head>
+
+<body>
+    <!-- Middle Header -->
+    <div class="middle-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <a href="{{"inicio"|page}}"><img alt="Logo" src="{{"assets/images/winelivery-logo.png"|theme}}" class="img-responsive" /></a>
+                </div>
+                <div class="col-sm-8 col-md-6 search-box m-t-2">
+                  <form method="POST" action="{{"busqueda"|page}}">
+                    <div class="input-group">
+                        <input name="search" type="text" class="form-control" aria-label="Encuentra tus vinos..." placeholder="Encuentra tus vinos...">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default btn-search"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-sm-4 col-md-4  hidden-xs m-t-2">
+                    <ul class="list-unstyled; list-inline" style="font-size:12px;">
+                        <li><a href="{{"nosotros"|page}}">Sobre nosotros</a></li>
+                        <li><a href="{{"terminos"|page}}">Terminos y condiciones</a></li>
+                        <li {% if user %} class="hidden" {% endif %}><a style="font-size:12px;background-color:#c1272d;border-color:transparent; color:#fff" class="btn btn-default" href="{{"registro"|page}}">Registrate</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Middle Header -->
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default shadow-navbar" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            </div>
+            <div class="collapse navbar-collapse col-md-6" id="navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <div class="submenu" >
+                      {% if loggedIn %}
+                    <li class="dropdown" style="padding:10px">
+                        <a href="javascript:;" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user"></i> Hola, {{ user.name }} {{user.surname}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu white">
+                            <li><a href="{{"perfil"|page}}">Editar mi perfil</a></li>
+                            <li><a href="{{"password"|page}}">Cambiar contrase&ntilde;a</a></li>
+                            <li><a href="{{"direcciones"|page}}">Editar informacion de envio</a></li>
+                            <li><a href="{{"historial"|page}}">Historial de compras</a></li>
+                            <li><a data-request="onLogout" data-request-data="redirect: '/good-bye'">Salir</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                       <li>
+                           <a style="border-color:transparent;color:#fff;padding:15px; margin-top:5px; hover:color:#c1272d;" href="{{"login"|page}}"> Iniciar Sesi&oacute;n</a>
+                       </li>
+                    {% endif %}
+                    <!-- <li class="club"><a style="background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="">¡Unete al club de vinos!</a></li> -->
+                    <li style="padding:10px" class="wishlist_update_quantity" class="white">
+                        {% partial "quantity_wishlist" wishlist_counter = wishlist_counter %}
+                    </li>
+                    <li style="padding:10px"  class="cart_update_quantity" class="white">
+                        {% partial "quantity_cart"  cart_counter = cart_counter %}
+                    </li> 
+                    </div>
+
+                    {% for c in categories %}
+                        <li class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{c.title}}<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {% for r in c.countries %}
+                                    <li><a href="{{"productos"|page({country: r.id, category: c.id})}}">{{r.name}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-7 second-header">
+                <ul class="list-inline nav navbar-nav">
+                    
+                    {% if loggedIn %}
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle white" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user"></i> Hola, {{ user.name }} {{user.surname}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu white">
+                            <li><a href="{{"perfil"|page}}">Editar mi perfil</a></li>
+                            <li><a href="{{"password"|page}}">Cambiar contrase&ntilde;a</a></li>
+                            <li><a href="{{"direcciones"|page}}">Editar informacion de envio</a></li>
+                            <li><a href="{{"historial"|page}}">Historial de compras</a></li>
+                            <li><a data-request="onLogout" data-request-data="redirect: '/good-bye'">Salir</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                       <li>
+                           <a style="border-color:transparent;color:#fff;padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="{{"login"|page}}"> Iniciar Sesi&oacute;n</a>
+                       </li>
+                    {% endif %}
+                     <li><a style="background-color:transparent;border:2px solid #fff; color:#fff; border-radius:25px; padding:3px 15px; margin-top:5px;" href="{{"servicio"|page}}">¿Cómo funciona ?</a></li>
+                    <!-- <li class="club"><a style="background-color:#fff;border-color:transparent;color:#c1272d; border-radius:25px; padding:3px 15px; margin-top:5px; hover:color:#c1272d;" href="">¡Unete al club de vinos!</a></li> -->
+                    <li class="wishlist_update_quantity" class="white">
+                        {% partial "quantity_wishlist" wishlist_counter = wishlist_counter %}
+                    </li>
+                    <li class="cart_update_quantity" class="white">
+                        {% partial "quantity_cart"  cart_counter = cart_counter %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navigation Bar -->
+
+    {% page %}
+    {% if this.page.id != "login" and this.page.id != "registro" and this.page.id != "recuperar" and this.page.id != "reiniciar"%}
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Sobre nosotros</span></div>
+                    <ul>
+                        <li>
+                            Winelivery es una tienda de vinos online con delivery que ofrece una nueva manera de disfrutar el vino desde la comodidad de su hogar sin tener que salir a perder el tiempo en tapones ni gastar gasolina. <a href="{{"nosotros"|page}}">ver m&aacute;s</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Informaci&oacute;n</span></div>
+                    <ul>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"preguntas-frecuentes"|page}}">Preguntas frecuentes</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"politicas"|page}}">Politicas de privacidad</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"terminos"|page}}">Terminos y condiciones</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"metodo-de-envio"|page}}">Metodo de envio</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix visible-sm-block"></div>
+                <!-- <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Categorias</span></div>
+                    <ul>
+                        {% for c in categories %}
+                            <li><i class="fa fa-angle-double-right"></i> <a href="#">{{c.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div> -->
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Noticias</span></div>
+                    <p>
+                        Suscribete y recibe noticias sobre tus vinos favoritos.
+                    </p>
+                    <form id="newsletterForm">
+                        <div class="input-group">
+                            <input name="email_newsletter" class="form-control" type="text" placeholder="Correo">
+                            <span class="input-group-btn"><button onClick="onNewsletterForm();" class="btn btn-default subscribe-button" type="button">Suscribete</button></span>
+                        </div><br>
+                         <div style="display:none;" id="newsletterMessageSuccess" class="alert alert-success">Te has suscrito exitosamente.</div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Contacto</span></div>
+                    <ul class="footer-icon">
+                        <li><span><i class="fa fa-map-marker"></i></span> Gazcue, Calle César Nicolás Penson 76, Santo Domingo 10205</li>
+                        <li><span><i class="fa fa-phone"></i></span> 809-636-1208</li>
+                        <li><span><i class="fa fa-whatsapp" aria-hidden="true"></i></span>849-259-4658</li>
+                        <li><span><i class="fa fa-envelope"></i></span> <a href="">wineliveryrd@gmail.com</a></li>
+                    </ul>
+                </div>
+                <div class="clearfix visible-sm-block"></div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>M&eacute;todos de pago</span></div>
+                    <p>Hasta el momento solo aceptamos pagos con tarjeta de crédito y mediante nuestra plataforma.</p>
+                    <img src="{{"assets/images/payment-1.png"|theme}}" alt="Payment-1">
+                    <img src="{{"assets/images/payment-2.png"|theme}}" alt="Payment-2">
+                    <img src="{{"assets/images/payment-4.png"|theme}}" alt="Payment-4">
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="title-footer"><span>Mi cuenta</span></div>
+                    <ul>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"historial"|page}}">Ordenes</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"direcciones"|page}}">Direcci&oacute;n</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a href="{{"perfil"|page}}">Perfil</a></li>
+                        <li><i class="fa fa-angle-double-right"></i> <a data-request="onLogout" data-request-data="redirect: '/good-bye'">Salir</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="text-center copyright">
+            Copyright &copy; {{date|date("Y")}} Winelivery All right reserved
+        </div>
+    </div>
+    <!-- End Footer -->
+    {% endif %}
+    <a href="#top" class="back-top text-center" onclick="$('body,html').animate({scrollTop:0},500); return false">
+        <i class="fa fa-angle-double-up"></i>
+    </a>
+
+    <script src="{{ ['@jquery','@framework','@framework.extras']|theme }}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.ez-plus.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.bootstrap-touchspin.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.raty-fa.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/bootstrap/js/bootstrap.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/bootstrap-select.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/owl.carousel.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/nouislider.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.detail.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/mimity.filter-sidebar.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jquery.mask.js"|theme}}"></script>
+    <script language="JavaScript" type="text/javascript" src="{{"assets/js/jqFunctions.js?v=1"|theme}}"></script>
+    {% scripts %}
+    <script>
+    $(document).ready(function(){
+      $('.phone').mask('000-000-0000');
+      $('#bannersModal').modal('show');
+    });
+    $('.fa-shopping-cart').click(function(){
+        $(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function() {
+          $(this).removeClass('animated bounceIn');
+        
+        });;
+    });
+    $('.fa-heart').click(function(){
+        $(this).addClass('animated bounceIn').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+        function() {
+          $(this).removeClass('animated bounceIn');
+        
+        });;
+    });
+
+    function onNewsletterForm()
+    {
+        var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        
+    	if(!regex.test($('input[name=email_newsletter]').val())){$('input[name=email_newsletter]').css('border', '1px solid red');error = false;} 
+    	else {$('input[name=email_newsletter]').css('border', '');}
+    	
+    	if(error)
+    	{
+    		$('#newsletterForm').request('onNewsletterForm', {data: $('#newsletterForm').serialize()});
+    		$("#newsletterMessageSuccess").fadeIn("fast");
+    	} 
+    	else { return false; }
+    }
+    </script>
+</body>
+</html>";s:4:"code";s:8260:"use Andresalice\Winelivery\Models\Category;
+use Andresalice\Winelivery\Models\Newsletter;
+use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Wishlist;
+use Andresalice\Winelivery\Models\Product;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Sector;
+use RainLab\User\Models\User;
+
+function onStart()
+{
+    $this['loggedIn'] = Auth::check();
+    $this['categories'] = Category::get();
+    $rp = Product::where("status",0)->where("type","!=", 2)->orderByRaw("RAND()")->take(12)->get();
+    $embutidos = Product::where("status",0)->where("type",2)->take(12)->get();
+    //PRODUCTOS RANDOM CALCULO DE ESTRELLAS
+    foreach($embutidos as $r)
+    {
+        $r->s5 = $r->stars()->where("stars",5)->count();
+        $r->s4 = $r->stars()->where("stars",4)->count();
+        $r->s3 = $r->stars()->where("stars",3)->count();
+        $r->s2 = $r->stars()->where("stars",2)->count();
+        $r->s1 = $r->stars()->where("stars",1)->count();
+        $sc = 5 * $r->s5 + 4 * $r->s4 + 3 * $r->s3 + 2 * $r->s2 + 1 * $r->s1;
+        if($sc == 0){$r->total_stars = 5;}
+        else{$r->total_stars = substr($sc/($r->s5+$r->s4+$r->s3+$r->s2+$r->s1), 0, 1);}
+    }
+    $this['embutidos'] = $embutidos;
+    //PRODUCTOS RANDOM CALCULO DE ESTRELLAS
+    foreach($rp as $r)
+    {
+        $r->s5 = $r->stars()->where("stars",5)->count();
+        $r->s4 = $r->stars()->where("stars",4)->count();
+        $r->s3 = $r->stars()->where("stars",3)->count();
+        $r->s2 = $r->stars()->where("stars",2)->count();
+        $r->s1 = $r->stars()->where("stars",1)->count();
+        $sc = 5 * $r->s5 + 4 * $r->s4 + 3 * $r->s3 + 2 * $r->s2 + 1 * $r->s1;
+        if($sc == 0){$r->total_stars = 5;}
+        else{$r->total_stars = substr($sc/($r->s5+$r->s4+$r->s3+$r->s2+$r->s1), 0, 1);}
+    }
+    $this['randomProducts'] = $rp;
+    if($this['loggedIn'])
+    {
+      $this['user'] = Auth::getUser();
+      $this['cart'] = Cart::where("user_id","=",$this['user']->id)->get();
+      $this['cart_counter'] = Cart::where("user_id","=",$this['user']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+      $this['wishlist_counter'] = Wishlist::where("user_id","=",$this['user']->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+      $this['addresses'] = Address::where("user_id",Auth::getUser()->id)->get();
+        if($this->param('id'))
+        {
+            $this['address'] = Address::find($this->param('id'));
+        }
+    }
+    $this['sectors'] = Sector::get();
+}
+
+function onRecuperarForm()
+{
+    $code = User::where("email",post("email"))->first()->reset_code;
+    $mailvars = ['code' => $code, 'email' => post("email")];
+    Mail::send('recovery', $mailvars, function($message) {
+    	$message->to(post("email"));
+    });
+}
+
+function onReiniciarForm()
+{
+    if(User::where("email", post("email"))->where("reset_code", post("code"))->exists())
+    {
+        $id = User::where("email", post("email"))->where("reset_code", post("code"))->first()->id;
+        $user = User::find($id);
+        $user->password = post("password");
+        $user->password_confirmation = post("password_confirmation");
+        $user->reset_code = rand(100000,999999);
+        $user->save();
+        Auth::login($user);
+        return Redirect::to('/');
+    }
+}
+
+function onAddToCart()
+{
+    $product_id = Input::get("product_id");
+    $user = Auth::getUser();
+    if(Cart::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
+    {
+        $id_cart = Cart::where("product_id","=",$product_id)->where("user_id","=",$user->id)->select("id")->first();
+        $w = Cart::find($id_cart->id);
+        $w->quantity += 1;
+        $w->save();
+    }
+    else
+    {
+        $w = new Cart();
+        $w->user_id =  $user->id;
+        $w->product_id  = $product_id;
+        $w->quantity = 1;
+        $w->save();
+    }
+    
+    $cart = Cart::where("user_id","=",$user->id)->get();
+    $sum = 0;
+    foreach($cart as $c)
+    {
+      $sum += $c->product->price * $c->quantity;
+    }
+    $cart_total = $sum;
+    $cart_total_envio = $sum + 90;
+    $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+    
+    return ['#cart_partial' => $this->renderPartial('cart', ['cart' => $cart, 'cart_total' => $cart_total]), 
+    '.cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter]),
+    '#cart_total_id' => $this->renderPartial('cart_total', ['cart_total' => $cart_total, 'cart_total_envio' => $cart_total_envio, 'cart_counter' => $cart_counter])];
+}
+
+function onAddToWishlist()
+{
+    $product_id = Input::get("product_id");
+    $user = Auth::getUser();
+    if(!Wishlist::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = new Wishlist();
+        $w->user_id =  $user->id;
+        $w->product_id  = $product_id;
+        $w->save();
+    }
+    
+    
+    $wishlist_counter = Wishlist::where("user_id","=",$user->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+    return ['.wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter])];
+}
+
+function onDeleteFromWishlist()
+{
+    $user = Auth::getUser();
+    $wishlist_id = Input::get("wishlist_id");
+    if(Wishlist::where("id","=",$wishlist_id)->where("user_id","=",$user->id)->exists())
+    {
+        $w = Wishlist::find($wishlist_id);
+        $w->delete();
+    }
+    $wishlist = Wishlist::where("user_id","=",$user->id)->get();
+    $wishlist_counter = Wishlist::where("user_id","=",$user->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+    return ['#wishlist_partial' => $this->renderPartial('wishlist', ['wishlist' => $wishlist]), '#wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter])];
+}
+
+function onNewsletterForm()
+{
+    $exists = Newsletter::where("email","=",post("email_newsletter"))->exists();
+    if($exists)
+    {
+        return false;
+    }
+    else
+    {
+        $n = new Newsletter();
+        $n->email = post('email_newsletter');
+        $n->save();
+    }
+}
+
+function onAddressesForm()
+{
+    $user_id = Auth::getUser()->id;
+    if(Input::has("id_control"))
+    {
+        $address = Address::where("id",post("id_control"))->update(['sector' => post("sector"),'calle' => post("calle"),'residencial' => post("residencial"),'numero' => post("numero"),'telefono' => post("telefono"),'celular' => post("celular"),'proximo' => post("proximo")]);
+    }
+    else
+    {
+        $address = new Address;
+        $address->sector = post("sector");
+        $address->calle = post("calle");
+        $address->residencial = post("residencial");
+        $address->numero = post("numero");
+        $address->telefono = post("telefono");
+        $address->celular = post("celular");
+        $address->proximo = post("proximo");
+        $address->user_id = $user_id;
+        $address->save();
+    }
+   
+    $addresses = Address::where("user_id",$user_id)->get();
+    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
+}
+
+function onCheckoutAddressesForm()
+{
+    $user_id = Auth::getUser()->id;
+    $address = new Address;
+    $address->sector = post("sector");
+    $address->calle = post("calle");
+    $address->residencial = post("residencial");
+    $address->numero = post("numero");
+    $address->telefono = post("telefono");
+    $address->celular = post("celular");
+    $address->proximo = post("proximo");
+    $address->user_id = $user_id;
+    $address->save();
+    return $address->id;
+}
+
+function onDeleteAddress()
+{
+    $id = post("id");
+    $address = Address::find($id);
+    $address->delete();
+    $addresses = Address::where("user_id",Auth::getUser()->id)->get();
+    return ['#updateAddresses' => $this->renderPartial('addresses', ['addresses' => $addresses])];
+}
+
+function onLogout()
+{
+    Auth::logout();
+    return Redirect::to('/');
+}";s:17:"_PARSER_ERROR_INI";s:0:"";}}

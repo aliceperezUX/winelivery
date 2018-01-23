@@ -1,11 +1,15 @@
-list: $/andresalice/winelivery/models/order/columns.yaml
-modelClass: Andresalice\Winelivery\Models\Order
 title: Order
+modelClass: Andresalice\Winelivery\Models\Order
+list: $/andresalice/winelivery/models/order/columns.yaml
+recordUrl: 'andresalice/winelivery/order/update/:id'
 noRecordsMessage: 'backend::lang.list.no_records'
+recordsPerPage: '30'
 showSetup: true
 showCheckboxes: true
+defaultSort:
+    column: created_at
+    direction: desc
 toolbar:
     buttons: list_toolbar
     search:
         prompt: 'backend::lang.list.search_prompt'
-recordUrl: 'andresalice/winelivery/order/update/:id'

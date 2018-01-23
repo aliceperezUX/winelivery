@@ -9,6 +9,9 @@ redirect = "inicio"
 ==
 <?php
 use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Order;
+
 function onStart()
 {
     $exists = Cart::where("user_id",Auth::getUser()->id)->exists();
@@ -17,21 +20,77 @@ function onStart()
         return Redirect::to('/');
     }
 }
+
+function onSendToAddress()
+{
+    $address_id = post('address_id');
+    $exists = Cart::where("user_id", Auth::getUser()->id)->exists();
+    if($exists)
+    {
+        $cart = Cart::where("user_id",Auth::getUser()->id)->get();
+        $sum = 0;
+        foreach($cart as $c){ $sum += $c->product->price * $c->quantity; }
+        $this['products'] = $cart; 
+        $this['address'] = Address::find($address_id);
+        
+        $address = "Sector: " . $this['address']->sector . "       Calle: " . $this['address']->calle . "       Residencial: " . $this['address']->residencial . "      No.:" . $this['address']->numero . "       Proximo a: " . $this['address']->proximo;
+        
+        //$sum = $sum + 90;
+        $suma = $sum + 90;
+        $user = Auth::getUser();
+        $order = new Order();
+        $order->user_id = $user->id;
+        $order->name = $user->name;
+        $order->surname = $user->surname;
+        $order->email = $user->username;
+        $order->address = $address;
+        $order->telefono = $this['address']->telefono;
+        $order->celular = $this['address']->celular;
+        $order->total = "RD$" . $suma;
+        $order->status = "Pendiente";
+        $order->order_token = str_random(61);
+        $order->rnc = "NO RNC";
+        $order->pago = "SIN PAGO";
+        $order->cambio = "SIN CAMBIO";
+        $order->save();
+        
+        $this['order_id'] = $order->id;
+        
+        foreach($cart as $c)
+        {
+            DB::table("product_order")->insert(['order_id' => $order->id, 'product_id' => $c->product_id, 'quantity' => $c->quantity]);
+        }
+        $this['cart_total'] = $sum;
+        $this['cart_total_envio'] = $sum + 90;
+        $cte = $sum + 90;
+        
+        $this['cart_counter'] = Cart::where("user_id","=",Auth::getUser()->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+        Cart::where("user_id",Auth::getUser()->id)->delete();
+        return Redirect::to('orden/' . $order->id);
+    }
+    else
+    {
+        return Redirect::to('historial');
+    }
+}
 ?>
 ==
 <!-- Main Content -->
 <div class="container m-t-3">
-
+ 
   <div class="row">
     <!-- My Address Content -->
         <div class="col-sm-12 col-md-12">
+        <div class="alert alert-danger">
+            <p style="font-size: 15px"><STRONG><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>IMPORTANTE:</STRONG> Nuestro horario de entrega es de <strong> Martes a Sábado de 02:00 PM a 12:00 AM y los Domingos de 02:00 PM a 10:00 PM</strong>, si realizas tu orden fuera de este horario será entregada inmediatamente nuestro servicio de delivery este disponible.</p>
+        </div>
           <div class="title m-b-2"><span>Direcciones guardadas</span></div>
           <div class="row">
             {% for a in addresses %}
                 <div class="col-xs-12 col-md-4">
                   <form>
                     <p>{{a.sector}} {{a.calle}} {{a.residencial}} {{a.numero}} {{a.telefono}} {{a.celular}} {{a.proximo}}</p>
-                    <a href="{{"checkout2"|page({id:a.id})}}" style="margin-bottom:10px" class="btn btn-theme col-md-12">Enviar a esta direccion</a>
+                    <a href="javascript:;" onClick="sendToAddress({{a.id}});" style="margin-bottom:10px" class="btn btn-theme col-md-12">Enviar a esta direccion</a>
                     <a class="btn btn-theme1 col-md-12" href="{{"direcciones"|page({id:a.id})}}">Editar</a>
                   </form>
                 </div>
@@ -45,6 +104,7 @@ function onStart()
     <div class="row" style="margin-top:50px">
       <div  class="col-sm-8 col-md-12">
         <div class="title m-b-2"><span>Nueva direcci&oacute;n</span></div>
+        <div class="alert alert-info" role="alert"><i class="fa fa-info-circle" aria-hidden="true"></i>  Si tu sector no esta en la lista es porque se sale de nuestro poligono de entregas. <strong>Disculpa los incovenientes.</strong></div>
       <div class="col-xs-12">
         <form id="addressesForm">
             <div class="form-group">
@@ -117,9 +177,13 @@ function onStart()
     
     	if(error)
     	{
-    		$('#addressesForm').request('onCheckoutAddressesForm', {data: $('#addressesForm').serialize()});
+    		$('#addressesForm').request('onCheckoutAddressesForm', {data: $('#addressesForm').serialize(), success: function(data){sendToAddress(data.result);}});
     	} 
     	else { return false; }
+    }
+    
+    function sendToAddress(address_id){
+        $.request('onSendToAddress', {data: {address_id: address_id}});
     }
 </script>
 {% endput %}

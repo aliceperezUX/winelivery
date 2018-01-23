@@ -16,6 +16,7 @@ function onProfileForm()
     $user->name = post("name");
     $user->surname = post("surname");
     $user->email = post("email");
+    $user->username = post("email");
     $user->save();
 }
 ?>
@@ -50,7 +51,7 @@ function onProfileForm()
       </div>
        <br>
         <div id="profileFormMessage" style="display:none;" class="alert alert-success">
-            LOS DATOS SE ACTUALIZARON CORRECTAMENTE.
+            Los datos se actualizaron correctamente.
         </div>
     </div>
     <!-- End My Profile Content -->

@@ -5,7 +5,8 @@
     </IfModule>
 
     RewriteEngine On
-
+    RewriteCond %{HTTP_HOST} !^www\. [NC]
+    RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
     ##
     ## You may need to uncomment the following line for some hosting environments,
     ## if you have installed to a subdirectory, enter the name here also.

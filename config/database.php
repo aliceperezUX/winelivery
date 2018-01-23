@@ -58,7 +58,7 @@ return [
             'port'      => '',
             'database'  => 'winelivery',
             'username'  => 'root',
-            'password'  => 'oorden',
+            'password'  => 'vinosvinos',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

@@ -13,12 +13,13 @@ use Renatio\DynamicPDF\Classes\PDF;
  */
 class Layouts extends Controller
 {
+
     /**
      * @var array
      */
     public $implement = [
         'Backend.Behaviors.FormController',
-        'Backend.Behaviors.ListController'
+        'Backend.Behaviors.ListController',
     ];
 
     /**
@@ -58,7 +59,11 @@ class Layouts extends Controller
             $this->pageTitle = trans('renatio.dynamicpdf::lang.templates.preview_pdf');
             $model = $this->formFindModelObject($id);
 
-            return PDF::loadLayout($model->code)->stream();
+            return PDF::loadLayout($model->code)
+                ->setOptions([
+                    'logOutputFile' => storage_path('temp/log.htm'),
+                    'isRemoteEnabled' => true,
+                ])->stream();
         } catch (ApplicationException $e) {
             $this->handleError($e);
         }
@@ -76,4 +81,5 @@ class Layouts extends Controller
 
         return response($model->html);
     }
+
 }

@@ -22,7 +22,7 @@
 
     var RecordFinder = function(element, options) {
         this.$el       = $(element)
-        this.options = options || {}
+        this.options   = options || {}
 
         $.oc.foundation.controlUtils.markDisposable(element)
         Base.call(this)
@@ -40,7 +40,7 @@
     RecordFinder.prototype.dispose = function() {
         this.$el.off('dblclick', this.proxy(this.onDoubleClick))
         this.$el.off('dispose-control', this.proxy(this.dispose))
-        this.$el.removeData('oc.someDisposableControl')
+        this.$el.removeData('oc.recordfinder')
 
         this.$el = null
 
@@ -62,14 +62,19 @@
 
     RecordFinder.prototype.updateRecord = function(linkEl, recordId) {
         if (!this.options.dataLocker) return
-        var self = this
-        $(this.options.dataLocker).val(recordId)
+
+        // Selector name must be used because by the time success runs
+        // - this.options will be disposed
+        // - $locker element will be replaced
+        var locker = this.options.dataLocker
+
+        $(locker).val(recordId)
 
         this.$el.loadIndicator({ opaque: true })
         this.$el.request(this.options.refreshHandler, {
             success: function(data) {
                 this.success(data)
-                $(self.options.dataLocker).trigger('change')
+                $(locker).trigger('change')
             }
         })
 

@@ -24,5 +24,5 @@ class Address extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'andresalice_winelivery_addresses';
+    public $table = 'andresalice_winelivery_addresses'; 
 }

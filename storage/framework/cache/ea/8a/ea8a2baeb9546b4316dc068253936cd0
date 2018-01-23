@@ -1,2 +1,0 @@
-1491021199a:1:{s:17:"quantity_cart.htm";a:6:{s:8:"fileName";s:17:"quantity_cart.htm";s:7:"content";s:160:"==
-<a href="{{"carrito"|page}}"><i class="fa fa-shopping-cart white" aria-hidden="true"></i> ({% if cart_counter %}{{cart_counter}}{% else %} 0 {% endif %})</a>";s:5:"mtime";i:1487958954;s:6:"markup";s:157:"<a href="{{"carrito"|page}}"><i class="fa fa-shopping-cart white" aria-hidden="true"></i> ({% if cart_counter %}{{cart_counter}}{% else %} 0 {% endif %})</a>";s:4:"code";N;s:17:"_PARSER_ERROR_INI";s:0:"";}}

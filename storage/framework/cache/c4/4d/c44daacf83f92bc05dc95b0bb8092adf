@@ -1,0 +1,120 @@
+1516742245a:1:{s:10:"deseos.htm";a:10:{s:8:"fileName";s:10:"deseos.htm";s:7:"content";s:2347:"title = "Deseos"
+url = "/deseos"
+layout = "layout"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+==
+<?php
+use Andresalice\Winelivery\Models\Wishlist;
+use Andresalice\Winelivery\Models\Cart;
+
+function onStart()
+{
+    $this['loggedIn'] = Auth::check();
+    if($this['loggedIn'])
+    {
+        $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
+    }
+}
+function onMoveToCart()
+{
+    $wishlist_id = Input::get("wishlist_id");
+    $product_id = Input::get("product_id");
+    $user = Auth::getUser();
+    
+    if(Cart::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
+    {
+        $id_cart = Cart::where("product_id","=",$product_id)->where("user_id","=",$user->id)->select("id")->first();
+        $w = Cart::find($id_cart->id);
+        $w->quantity += 1;
+        $w->save();
+    }
+    else
+    {
+        $w = new Cart();
+        $w->user_id =  $user->id;
+        $w->product_id  = $product_id;
+        $w->quantity = 1;
+        $w->save();
+    }
+    $delete = Wishlist::find($wishlist_id);
+    $delete->delete();
+    $wishlist = Wishlist::where("user_id","=",$user->id)->get();
+    $wishlist_counter = Wishlist::where("user_id","=",$user->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+    $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+    return ['#wishlist_partial' => $this->renderPartial('wishlist', ['wishlist' => $wishlist]), '#wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter]), '#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
+}
+?>
+==
+<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="title"><span>LISTA DE DESEOS</span></div>
+        {% if wishlist is not empty %}
+            <div class="table-responsive">
+                {% partial "wishlist" wishlist = wishlist %}
+            </div>
+        {% else %}
+            <div class="col-md-12" style="text-align: center"><img style="width: 600px" src="{{"assets/images/wish.png"|theme}}"></div>
+        {% endif %}
+    </div>
+  </div>
+</div>
+<!-- End Main Content -->";s:5:"mtime";i:1495822940;s:6:"markup";s:566:"<!-- Main Content -->
+<div class="container m-t-3">
+  <div class="row">
+    <div class="col-xs-12">
+        <div class="title"><span>LISTA DE DESEOS</span></div>
+        {% if wishlist is not empty %}
+            <div class="table-responsive">
+                {% partial "wishlist" wishlist = wishlist %}
+            </div>
+        {% else %}
+            <div class="col-md-12" style="text-align: center"><img style="width: 600px" src="{{"assets/images/wish.png"|theme}}"></div>
+        {% endif %}
+    </div>
+  </div>
+</div>
+<!-- End Main Content -->";s:4:"code";s:1652:"use Andresalice\Winelivery\Models\Wishlist;
+use Andresalice\Winelivery\Models\Cart;
+
+function onStart()
+{
+    $this['loggedIn'] = Auth::check();
+    if($this['loggedIn'])
+    {
+        $this['wishlist'] = Wishlist::where("user_id","=",$this['user']->id)->get();
+    }
+}
+function onMoveToCart()
+{
+    $wishlist_id = Input::get("wishlist_id");
+    $product_id = Input::get("product_id");
+    $user = Auth::getUser();
+    
+    if(Cart::where("product_id","=",$product_id)->where("user_id","=",$user->id)->exists())
+    {
+        $id_cart = Cart::where("product_id","=",$product_id)->where("user_id","=",$user->id)->select("id")->first();
+        $w = Cart::find($id_cart->id);
+        $w->quantity += 1;
+        $w->save();
+    }
+    else
+    {
+        $w = new Cart();
+        $w->user_id =  $user->id;
+        $w->product_id  = $product_id;
+        $w->quantity = 1;
+        $w->save();
+    }
+    $delete = Wishlist::find($wishlist_id);
+    $delete->delete();
+    $wishlist = Wishlist::where("user_id","=",$user->id)->get();
+    $wishlist_counter = Wishlist::where("user_id","=",$user->id)->select(DB::raw('count(id) as wishlist_counter'))->first()->wishlist_counter;
+    $cart_counter = Cart::where("user_id","=",$user->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+    return ['#wishlist_partial' => $this->renderPartial('wishlist', ['wishlist' => $wishlist]), '#wishlist_update_quantity' => $this->renderPartial('quantity_wishlist', ['wishlist_counter' => $wishlist_counter]), '#cart_update_quantity' => $this->renderPartial('quantity_cart', ['cart_counter' => $cart_counter])];
+}";s:5:"title";s:6:"Deseos";s:3:"url";s:7:"/deseos";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";s:7:"session";a:2:{s:8:"security";s:4:"user";s:8:"redirect";s:5:"login";}}}

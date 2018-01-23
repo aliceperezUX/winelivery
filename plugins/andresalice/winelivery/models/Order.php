@@ -32,7 +32,7 @@ class Order extends Model
     ];
 
     public $hasMany = [
-        'porder' => 'Andresalice\Winelivery\Models\Porder'
+        'porder' => ['Andresalice\Winelivery\Models\Porder', 'key' => 'order_id']
     ];
 
     // public function getSymbolsAttribute()

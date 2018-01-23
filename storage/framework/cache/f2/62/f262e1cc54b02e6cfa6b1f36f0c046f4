@@ -1,0 +1,372 @@
+1516742245a:1:{s:17:"detalle-orden.htm";a:10:{s:8:"fileName";s:17:"detalle-orden.htm";s:7:"content";s:9609:"title = "Detalle Orden"
+url = "/orden/:id"
+layout = "layout"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+==
+<?php
+use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Order;
+use Andresalice\Winelivery\Models\Porder;
+
+function onStart()
+{
+    $this['ResponseCode'] = Input::get("ResponseCode");
+    $this['order'] = Order::find($this->param('id'));
+    $this['MerchantId'] = $MerchantId = "39232170019";
+	$this['MerchantName'] = $MerchantName = "WineliveryRD";
+	$this['MerchantType'] = $MerchantType = "Venta de Vinos";
+	$CurrencyCode = "$";
+	$OrderNumber = $this['order']->id;
+	$this['ammount'] = $Amount = str_replace("RD$", "", $this['order']->total) . "00";
+	$Itbis = "0000";
+	$this['ApprovedUrl'] = $ApprovedUrl = "http://www.wineliveryrd.com/checkout2/" . $this['order']->id;
+	$this['DeclinedUrl'] = $DeclinedUrl = "http://www.wineliveryrd.com/orden/" . $this['order']->id;
+	$this['CancelUrl'] = $CancelUrl = "http://www.wineliveryrd.com/orden/" . $this['order']->id;
+	$this['ResponsePostUrl'] = $ResponsePostUrl ="http://www.wineliveryrd.com/orden/" . $this['order']->id;
+	$UseCustomField1 = "0";
+	$CustomField1Label = "Custom1";
+	$CustomField1Value = "Value1";
+	$UseCustomField2 = "0";
+	$CustomField2Label = "Custom2";
+	$CustomField2Value = "Value2";
+	$AuthKey = "6VQhjDMmD2aM6yE1J3RarMxvxqkEuTzQg8UIycGAjVg0gZOhLwU1bBQ0pWpoaDkbOQpBQqJTxm8yno7XDF9msjAkL7E6CG7HF148LD3WgdyPizN9PWK6tQjRBiwDyqyk";
+	$AuthHash = $MerchantId . $MerchantName . $MerchantType . $CurrencyCode . $OrderNumber . $Amount . $Itbis . $ApprovedUrl . $DeclinedUrl . $CancelUrl . $ResponsePostUrl . $UseCustomField1 . $CustomField1Label . $CustomField1Value . $UseCustomField2 . $CustomField2Label . $CustomField2Value . $AuthKey;
+	$this['AuthHash'] = hash('sha512', $AuthHash);
+	 
+	$products = Porder::where("order_id", $this['order']->id)->get();
+    $sum = 0;
+    foreach($products as $c){ $sum += $c->product->price * $c->quantity; }
+	$this['products'] = $products; 
+    $this['cart_total'] = $sum;
+    $this['cart_total_envio'] = $sum + 90;
+    $this['cart_counter'] = Porder::where("order_id",$this['order']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+}
+
+function onRncForm()
+{
+    $o = Order::find($this->param('id'));
+    $o->rnc = Input::get("rnc");
+    $o->cambio = Input::get("cambio");
+    if(Input::get('payment') == "1"){
+        $o->pago = "Tarjeta";
+    } else {
+        $o->pago = "Efectivo";
+    }
+    $o->save();
+}
+?>
+==
+<div class="container m-t-3">
+  <div class="row">
+  <div class="alert alert-danger">
+    	<p style="font-size: 15px"><STRONG><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> IMPORTANTE:</STRONG> Nuestro horario de entrega es de <strong> Martes a Sábado de 02:00 PM a 12:00 AM y los Domingos de 02:00 PM a 10:00 PM</strong>, si realizas tu orden fuera de este horario será entregada inmediatamente nuestro servicio de delivery este disponible.</p>
+    </div>
+    {% if ResponseCode == "ISO8583" %}
+    <div class="alert alert-danger">
+    	<p style="font-size: 15px"><STRONG><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> SU TRANSACCIÓN HA SIDO RECHAZADA.</STRONG></p>
+    </div>
+    {% endif %}
+    <div class="title"><span>Orden Creada, Proceder a Pagar.</span></div>
+    <!-- Shopping Cart List -->
+    <div class="col-md-8">
+
+      <div class="table-responsive">
+        <table class="table table-cart">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+
+              <th>Precio</th>
+              <th>SubTotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in products %}
+                <tr>
+                  <td class="img-cart">
+                      <img alt="Product" src="{{p.product.featured_image.getPath}}" style="max-width: initial;" class="img-thumbnail">
+                  </td>
+                  <td>
+                    <p>{{p.product.title}}</p>
+                  </td>
+                  <td class="unit">RD${{p.product.price|number_format}}</td>
+                  <td class="sub">{% set sub = p.product.price * p.quantity %}RD${{sub|number_format}}</td>
+                </tr>
+             {% endfor %}
+          </tbody>
+        </table>
+        <div class="alert alert-warning">
+        <p style="font-size: 15px">*Nuestro horario de entrega es de Martes a Sábado de 02:00 PM a 12:00 AM y los Domingos de 02:00 PM a 10:00 PM, si realizas tu orden fuera de este horario será entregada inmediatamente nuestro servicio de delivery este disponible.</p>
+        </div>
+       
+      </div>
+    </div>
+    <!-- End Shopping Cart List -->
+    <div class="col-md-3 cart-detailbox">
+      <h4>Orden de Compras</h4>
+      <p class="detailbox-items">Dirección:<span class="detailbox-content"> {{order.address_id}}</span></p>
+      <p class="detailbox-items">Total items:<span class="detailbox-content"> {{cart_counter}}</span></p>
+      <p class="detailbox-items">Costo:<span class="detailbox-content" > RD$ {{ cart_total|number_format}}</span></p>
+      <p class="detailbox-items">Costo de Envío:<span class="detailbox-content"> $90</span></p>
+      <p class="detailbox-items">Costo Total:<span class="detailbox-content"> RD$ {{ cart_total_envio|number_format}}</span></p><br>
+      {% if order.status != "Completada" %}
+      <div class="alert alert-info" style="font-size:12px;">*PARA FACTURAS CON RNC COMPLETAR EL SIGUIENTE CAMPO.</div>
+      <form id="rncForm" method="POST">
+          <input type="text" name="rnc" class="form-control rnc" placeholder="RNC"/> <br>
+          <p class="detailbox-items">Pagar con:</p>
+          <input type="radio" name="payment" value="1" style="display: inline" checked> Tarjeta <br>
+          <input type="radio" name="payment" value="2" style="display: inline"> Efectivo <br>
+          <input type="text" name="cambio" class="form-control rnc" placeholder="Cambio" style="display: none"/> <br>
+          <div class="checkbox">
+          <label>
+            <input type="checkbox" id="scheduleCheckbox"> He leido y acepto el horario de entregas.
+          </label>
+        </div>
+        <div id="scheduleMessage" style="display:none;" class="alert alert-danger">
+          DEBES ACEPTAR EL HORARIO DE ENTREGA
+        </div>
+          <button type="submit" class="btn btn-theme col-md-12" onClick="pagarButton(); return false;">Completar Orden</button>
+      </form>
+      
+        <!-- <form id="azulForm" action="https://pagos.azul.com.do/paymentpage/default.aspx" method="post">
+            <input type="hidden" id="MerchantId" name="MerchantId" value="{{MerchantId}}" >
+            <input type="hidden" id="MerchantName" name="MerchantName" value="{{MerchantName}}" >
+            <input type="hidden" id="MerchantType" name="MerchantType" value="{{MerchantType}}" >
+            <input type="hidden" id="CurrencyCode" name="CurrencyCode" value="$" >
+            <input type="hidden" id="OrderNumber" name="OrderNumber" value="{{order.id}}" >
+            <input type="hidden" id="Amount" name="Amount" value="{{ammount}}" >
+            <input type="hidden" id="Itbis" name="Itbis" value="0000" >
+            <input type="hidden" id="ApprovedUrl" name="ApprovedUrl" value="{{ApprovedUrl}}" >
+            <input type="hidden" id="DeclinedUrl" name="DeclinedUrl" value="{{DeclinedUrl}}" >
+            <input type="hidden" id="CancelUrl" name="CancelUrl" value="{{CancelUrl}}" >
+            <input type="hidden" id="ResponsePostUrl" name="ResponsePostUrl" value="{{ResponsePostUrl}}" >
+            <input type="hidden" id="UseCustomField1" name="UseCustomField1" value="0" >
+            <input type="hidden" id="CustomField1Label" name="CustomField1Label" value="Custom1" >
+            <input type="hidden" id="CustomField1Value" name="CustomField1Value" value="Value1" >
+            <input type="hidden" id="UseCustomField2" name="UseCustomField2" value="0" >
+            <input type="hidden" id="CustomField2Label" name="CustomField2Label" value="Custom2" >
+            <input type="hidden" id="CustomField2Value" name="CustomField2Value" value="Value2" >
+            <input type="hidden" id="AuthHash" name="AuthHash" value="{{ AuthHash }}" >
+            <input type="hidden" id="ShowTransactionResult" name="ShowTransactionResult" value="0">
+            <button type="button" class="btn btn-theme col-md-12" onClick="pagarButton();">Pagar</button>
+        </form> -->
+        {% endif %}
+    </div>
+  </div>
+</div>
+
+{% put scripts %}
+<script>
+    $( document ).ready(function() {
+        $('.rnc').mask('00000000000');
+        $('input[name=payment]').change(function(){
+            if($('input[name=payment]:checked').val() == "2"){
+                $('input[name=cambio]').fadeIn('fast');
+            } else {
+                $('input[name=cambio]').fadeOut('fast');
+            }
+        });
+    });
+
+    function pagarButton()
+    {
+        if($('#scheduleCheckbox').is(":checked")){
+            var r = confirm("¿Esta seguro que desea completar esta orden?");
+            if (r == true) {
+                $('#rncForm').request('onRncForm', {data: $('#rncForm').serialize(),
+            	    success: function(data){
+            	        location.href = "/checkout2/{{ order.id }}";
+            	    }
+        	    });
+            }
+        } else {
+            $("#scheduleMessage").fadeIn("fast");
+        }
+    }
+</script>
+{% endput %}";s:5:"mtime";i:1516373761;s:6:"markup";s:7028:"<div class="container m-t-3">
+  <div class="row">
+  <div class="alert alert-danger">
+    	<p style="font-size: 15px"><STRONG><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> IMPORTANTE:</STRONG> Nuestro horario de entrega es de <strong> Martes a Sábado de 02:00 PM a 12:00 AM y los Domingos de 02:00 PM a 10:00 PM</strong>, si realizas tu orden fuera de este horario será entregada inmediatamente nuestro servicio de delivery este disponible.</p>
+    </div>
+    {% if ResponseCode == "ISO8583" %}
+    <div class="alert alert-danger">
+    	<p style="font-size: 15px"><STRONG><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> SU TRANSACCIÓN HA SIDO RECHAZADA.</STRONG></p>
+    </div>
+    {% endif %}
+    <div class="title"><span>Orden Creada, Proceder a Pagar.</span></div>
+    <!-- Shopping Cart List -->
+    <div class="col-md-8">
+
+      <div class="table-responsive">
+        <table class="table table-cart">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+
+              <th>Precio</th>
+              <th>SubTotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in products %}
+                <tr>
+                  <td class="img-cart">
+                      <img alt="Product" src="{{p.product.featured_image.getPath}}" style="max-width: initial;" class="img-thumbnail">
+                  </td>
+                  <td>
+                    <p>{{p.product.title}}</p>
+                  </td>
+                  <td class="unit">RD${{p.product.price|number_format}}</td>
+                  <td class="sub">{% set sub = p.product.price * p.quantity %}RD${{sub|number_format}}</td>
+                </tr>
+             {% endfor %}
+          </tbody>
+        </table>
+        <div class="alert alert-warning">
+        <p style="font-size: 15px">*Nuestro horario de entrega es de Martes a Sábado de 02:00 PM a 12:00 AM y los Domingos de 02:00 PM a 10:00 PM, si realizas tu orden fuera de este horario será entregada inmediatamente nuestro servicio de delivery este disponible.</p>
+        </div>
+       
+      </div>
+    </div>
+    <!-- End Shopping Cart List -->
+    <div class="col-md-3 cart-detailbox">
+      <h4>Orden de Compras</h4>
+      <p class="detailbox-items">Dirección:<span class="detailbox-content"> {{order.address_id}}</span></p>
+      <p class="detailbox-items">Total items:<span class="detailbox-content"> {{cart_counter}}</span></p>
+      <p class="detailbox-items">Costo:<span class="detailbox-content" > RD$ {{ cart_total|number_format}}</span></p>
+      <p class="detailbox-items">Costo de Envío:<span class="detailbox-content"> $90</span></p>
+      <p class="detailbox-items">Costo Total:<span class="detailbox-content"> RD$ {{ cart_total_envio|number_format}}</span></p><br>
+      {% if order.status != "Completada" %}
+      <div class="alert alert-info" style="font-size:12px;">*PARA FACTURAS CON RNC COMPLETAR EL SIGUIENTE CAMPO.</div>
+      <form id="rncForm" method="POST">
+          <input type="text" name="rnc" class="form-control rnc" placeholder="RNC"/> <br>
+          <p class="detailbox-items">Pagar con:</p>
+          <input type="radio" name="payment" value="1" style="display: inline" checked> Tarjeta <br>
+          <input type="radio" name="payment" value="2" style="display: inline"> Efectivo <br>
+          <input type="text" name="cambio" class="form-control rnc" placeholder="Cambio" style="display: none"/> <br>
+          <div class="checkbox">
+          <label>
+            <input type="checkbox" id="scheduleCheckbox"> He leido y acepto el horario de entregas.
+          </label>
+        </div>
+        <div id="scheduleMessage" style="display:none;" class="alert alert-danger">
+          DEBES ACEPTAR EL HORARIO DE ENTREGA
+        </div>
+          <button type="submit" class="btn btn-theme col-md-12" onClick="pagarButton(); return false;">Completar Orden</button>
+      </form>
+      
+        <!-- <form id="azulForm" action="https://pagos.azul.com.do/paymentpage/default.aspx" method="post">
+            <input type="hidden" id="MerchantId" name="MerchantId" value="{{MerchantId}}" >
+            <input type="hidden" id="MerchantName" name="MerchantName" value="{{MerchantName}}" >
+            <input type="hidden" id="MerchantType" name="MerchantType" value="{{MerchantType}}" >
+            <input type="hidden" id="CurrencyCode" name="CurrencyCode" value="$" >
+            <input type="hidden" id="OrderNumber" name="OrderNumber" value="{{order.id}}" >
+            <input type="hidden" id="Amount" name="Amount" value="{{ammount}}" >
+            <input type="hidden" id="Itbis" name="Itbis" value="0000" >
+            <input type="hidden" id="ApprovedUrl" name="ApprovedUrl" value="{{ApprovedUrl}}" >
+            <input type="hidden" id="DeclinedUrl" name="DeclinedUrl" value="{{DeclinedUrl}}" >
+            <input type="hidden" id="CancelUrl" name="CancelUrl" value="{{CancelUrl}}" >
+            <input type="hidden" id="ResponsePostUrl" name="ResponsePostUrl" value="{{ResponsePostUrl}}" >
+            <input type="hidden" id="UseCustomField1" name="UseCustomField1" value="0" >
+            <input type="hidden" id="CustomField1Label" name="CustomField1Label" value="Custom1" >
+            <input type="hidden" id="CustomField1Value" name="CustomField1Value" value="Value1" >
+            <input type="hidden" id="UseCustomField2" name="UseCustomField2" value="0" >
+            <input type="hidden" id="CustomField2Label" name="CustomField2Label" value="Custom2" >
+            <input type="hidden" id="CustomField2Value" name="CustomField2Value" value="Value2" >
+            <input type="hidden" id="AuthHash" name="AuthHash" value="{{ AuthHash }}" >
+            <input type="hidden" id="ShowTransactionResult" name="ShowTransactionResult" value="0">
+            <button type="button" class="btn btn-theme col-md-12" onClick="pagarButton();">Pagar</button>
+        </form> -->
+        {% endif %}
+    </div>
+  </div>
+</div>
+
+{% put scripts %}
+<script>
+    $( document ).ready(function() {
+        $('.rnc').mask('00000000000');
+        $('input[name=payment]').change(function(){
+            if($('input[name=payment]:checked').val() == "2"){
+                $('input[name=cambio]').fadeIn('fast');
+            } else {
+                $('input[name=cambio]').fadeOut('fast');
+            }
+        });
+    });
+
+    function pagarButton()
+    {
+        if($('#scheduleCheckbox').is(":checked")){
+            var r = confirm("¿Esta seguro que desea completar esta orden?");
+            if (r == true) {
+                $('#rncForm').request('onRncForm', {data: $('#rncForm').serialize(),
+            	    success: function(data){
+            	        location.href = "/checkout2/{{ order.id }}";
+            	    }
+        	    });
+            }
+        } else {
+            $("#scheduleMessage").fadeIn("fast");
+        }
+    }
+</script>
+{% endput %}";s:4:"code";s:2442:"use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Order;
+use Andresalice\Winelivery\Models\Porder;
+
+function onStart()
+{
+    $this['ResponseCode'] = Input::get("ResponseCode");
+    $this['order'] = Order::find($this->param('id'));
+    $this['MerchantId'] = $MerchantId = "39232170019";
+	$this['MerchantName'] = $MerchantName = "WineliveryRD";
+	$this['MerchantType'] = $MerchantType = "Venta de Vinos";
+	$CurrencyCode = "$";
+	$OrderNumber = $this['order']->id;
+	$this['ammount'] = $Amount = str_replace("RD$", "", $this['order']->total) . "00";
+	$Itbis = "0000";
+	$this['ApprovedUrl'] = $ApprovedUrl = "http://www.wineliveryrd.com/checkout2/" . $this['order']->id;
+	$this['DeclinedUrl'] = $DeclinedUrl = "http://www.wineliveryrd.com/orden/" . $this['order']->id;
+	$this['CancelUrl'] = $CancelUrl = "http://www.wineliveryrd.com/orden/" . $this['order']->id;
+	$this['ResponsePostUrl'] = $ResponsePostUrl ="http://www.wineliveryrd.com/orden/" . $this['order']->id;
+	$UseCustomField1 = "0";
+	$CustomField1Label = "Custom1";
+	$CustomField1Value = "Value1";
+	$UseCustomField2 = "0";
+	$CustomField2Label = "Custom2";
+	$CustomField2Value = "Value2";
+	$AuthKey = "6VQhjDMmD2aM6yE1J3RarMxvxqkEuTzQg8UIycGAjVg0gZOhLwU1bBQ0pWpoaDkbOQpBQqJTxm8yno7XDF9msjAkL7E6CG7HF148LD3WgdyPizN9PWK6tQjRBiwDyqyk";
+	$AuthHash = $MerchantId . $MerchantName . $MerchantType . $CurrencyCode . $OrderNumber . $Amount . $Itbis . $ApprovedUrl . $DeclinedUrl . $CancelUrl . $ResponsePostUrl . $UseCustomField1 . $CustomField1Label . $CustomField1Value . $UseCustomField2 . $CustomField2Label . $CustomField2Value . $AuthKey;
+	$this['AuthHash'] = hash('sha512', $AuthHash);
+	 
+	$products = Porder::where("order_id", $this['order']->id)->get();
+    $sum = 0;
+    foreach($products as $c){ $sum += $c->product->price * $c->quantity; }
+	$this['products'] = $products; 
+    $this['cart_total'] = $sum;
+    $this['cart_total_envio'] = $sum + 90;
+    $this['cart_counter'] = Porder::where("order_id",$this['order']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+}
+
+function onRncForm()
+{
+    $o = Order::find($this->param('id'));
+    $o->rnc = Input::get("rnc");
+    $o->cambio = Input::get("cambio");
+    if(Input::get('payment') == "1"){
+        $o->pago = "Tarjeta";
+    } else {
+        $o->pago = "Efectivo";
+    }
+    $o->save();
+}";s:5:"title";s:13:"Detalle Orden";s:3:"url";s:10:"/orden/:id";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";s:7:"session";a:2:{s:8:"security";s:4:"user";s:8:"redirect";s:5:"login";}}}

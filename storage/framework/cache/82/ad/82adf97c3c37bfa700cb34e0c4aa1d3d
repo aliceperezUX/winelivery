@@ -1,0 +1,18 @@
+1516742245a:1:{s:12:"comments.htm";a:6:{s:8:"fileName";s:12:"comments.htm";s:7:"content";s:383:"==
+<div class="comments" style="padding: 20px; margin-bottom: 60px">
+    {% for c in comments %}
+    <div class="col-md-12" style="margin-bottom: 30px" >
+        <p style="font-weight: 700; margin-bottom: -3px">{{c.user.name}}</p>
+        <p style="color:#ccc; font-size: 10px;">{{c.created_at|date("Y-m-d")}}</p>
+        {{c.comment}}
+    </div>
+    {% endfor %}     
+</div>";s:5:"mtime";i:1491185444;s:6:"markup";s:380:"<div class="comments" style="padding: 20px; margin-bottom: 60px">
+    {% for c in comments %}
+    <div class="col-md-12" style="margin-bottom: 30px" >
+        <p style="font-weight: 700; margin-bottom: -3px">{{c.user.name}}</p>
+        <p style="color:#ccc; font-size: 10px;">{{c.created_at|date("Y-m-d")}}</p>
+        {{c.comment}}
+    </div>
+    {% endfor %}     
+</div>";s:4:"code";N;s:17:"_PARSER_ERROR_INI";s:0:"";}}

@@ -20,14 +20,14 @@ function onStart()
     
     if($this->param('region') > 0)
     {
-        $products[] = Product::orderBy("price",$this['orderBy'])->where('region_id','=',$this->param('region'))->where('category_id','=',$category_id)->where(function($query) use ($desde, $hasta) {
+        $products[] = Product::where("status",0)->where("type",1)->orderBy("price",$this['orderBy'])->where('region_id','=',$this->param('region'))->where('category_id','=',$category_id)->where(function($query) use ($desde, $hasta) {
 				if($desde){$query->where("price",">=",$desde);}
 				if($hasta){$query->where("price","<=",$hasta);}
 		})->get();
     }
     else
     {
-        $products[] = Product::orderBy("price",$this['orderBy'])->where('category_id','=',$category_id)->where(function($query) use ($desde, $hasta) {
+        $products[] = Product::where("status",0)->orderBy("price",$this['orderBy'])->where('category_id','=',$category_id)->where(function($query) use ($desde, $hasta) {
 				if($desde){$query->where("price",">=",$desde);}
 				if($hasta){$query->where("price","<=",$hasta);}
 		})->get();
@@ -61,6 +61,7 @@ function onStart()
       <div class="row">
         <!-- Filter Sidebar -->
         <div class="col-sm-3">
+          {% if this.param.category != 3 %}
           <div class="filter-sidebar">
             <div class="title"><span>Regi&oacute;n</span></div>
             <ul>
@@ -74,6 +75,7 @@ function onStart()
               </li>
             </ul>
           </div>
+          {% endif%}
           <div class="filter-sidebar">
             <div class="title"><span>Rango de Precio</span></div>
             <ul>
@@ -163,16 +165,18 @@ function onStart()
     <!-- End Main Content -->
 {% put scripts %}
 <script>
-$('#regionFilter').on('change', function() {
+setTimeout(function(){
+  $('#regionFilter').on('change', function() {
     var value = this.value;
     if(value === 0){value = ""}
     location.href='/productos/{{this.param.country}}/{{this.param.category}}/'+value;
-})
-$('#priceFilter').on('change', function() {
-    location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}?order='+this.value;
-})
-$('#priceRangeFilter').on('change', function() {
-    location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}'+this.value;
-})
+    })
+    $('#priceFilter').on('change', function() {
+        location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}?order='+this.value;
+    })
+    $('#priceRangeFilter').on('change', function() {
+        location.href='/productos/{{this.param.country}}/{{this.param.category}}/{{this.param.region}}'+this.value;
+    })
+}, 1000);
 </script>
 {% endput %}

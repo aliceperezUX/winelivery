@@ -11,10 +11,60 @@ redirect = "inicio"
 use Andresalice\Winelivery\Models\Cart;
 use Andresalice\Winelivery\Models\Address;
 use Andresalice\Winelivery\Models\Order;
+use Andresalice\Winelivery\Models\Porder;
+use Andresalice\Winelivery\Models\Product;
 
 function onStart()
 {
-    $exists = Cart::where("user_id",Auth::getUser()->id)->exists();
+    $this['orderData'] = $order = Order::find($this->param('id'));
+    $OrderNumber = Input::get('OrderNumber');
+	$Amount = Input::get('Amount');
+	$AuthorizationCode = Input::get('AuthorizationCode');
+	$DateTime = Input::get('DateTime');
+	$ResponseCode = Input::get('ResponseCode');
+	$IsoCode = Input::get('IsoCode');
+	$ResponseMessage = Input::get('ResponseMessage');
+	$ErrorDescription = Input::get('ErrorDescription');
+	$RRN = Input::get('RRN');
+	$ResponseAuthHash = Input::get('AuthHash');
+    $isValid = $this->check_response_hash($OrderNumber, $Amount, $AuthorizationCode, $DateTime, $ResponseCode, $IsoCode, $ResponseMessage, $ErrorDescription, $RRN, $ResponseAuthHash);
+    if($order->status != "Completada")
+    {
+        $user = Auth::getUser();
+        $status = $this['order'] = Order::find($this->param('id'));
+        $status->status = "Completada";
+        $status->save();
+        $products = Porder::where("order_id", $this['order']->id)->get();
+        $sum = 0;
+        foreach($products as $c)
+        { 
+            $sum += $c->product->price * $c->quantity; 
+            $uproduct = Product::find($c->product_id);
+            $uproduct->stock = $uproduct->stock - $c->quantity;
+            $uproduct->save();
+        }
+    	$this['products'] = $products; 
+        $this['cart_total'] = $sum;
+        $this['cart_total_envio'] = $sum + 90;
+        $this['cart_counter2'] = Porder::where("order_id",$this['order']->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+        
+         //EMAIL TO CLIENT
+        $mailvars = ['cart' => $products, 'address_id' => $this['order']->address_id, 'cart_total' => $this['cart_total'], 'cart_total_envio' => $this['cart_total_envio'], 'cart_counter' => $this['cart_counter']];
+        
+        Mail::send('Orders', $mailvars, function($message) use ($user) {
+        	$message->to($user->email, $user->username);
+        });
+        //EMAIL TO ADMIN
+        $mailvars2 = ['cart' => 'cart','user_name' => $user->name, 'user_surname' => $user->surname, 'user_phone' => $this['order']->telefono, 'user_address' => $this['order']->address_id];
+        Mail::send('Orders_admin', $mailvars2, function($message) use ($user) {
+        	$message->to("wineliveryrd@gmail.com", "Luis Peña");
+        });
+    }
+    else
+    {
+        return Redirect::to("/");
+    }
+    /*$exists = Cart::where("user_id",Auth::getUser()->id)->exists();
     if($exists)
     {
         $cart = Cart::where("user_id",Auth::getUser()->id)->get();
@@ -22,9 +72,11 @@ function onStart()
         foreach($cart as $c){ $sum += $c->product->price * $c->quantity; }
         $this['products'] = $cart; 
         $this['address'] = Address::find($this->param('id'));
-        $address = "Sector: " . $this['address']->sector . " Calle: " . $this['address']->calle . " Residencial: " . $this['address']->residencial . " No.:" . $this['address']->numero . " Proximo a: " . $this['address']->proximo;
         
-        $sum = $sum + 90;
+        $address = "Sector: " . $this['address']->sector . "       Calle: " . $this['address']->calle . "       Residencial: " . $this['address']->residencial . "      No.:" . $this['address']->numero . "       Proximo a: " . $this['address']->proximo;
+        
+        //$sum = $sum + 90;
+        $suma = $sum + 90;
         $user = Auth::getUser();
         $order = new Order();
         $order->user_id = $user->id;
@@ -34,7 +86,7 @@ function onStart()
         $order->address = $address;
         $order->telefono = $this['address']->telefono;
         $order->celular = $this['address']->celular;
-        $order->total = "RD$" . $sum;
+        $order->total = "RD$" . $suma;
         $order->status = "Procesando Orden";
         $order->save();
         
@@ -44,15 +96,37 @@ function onStart()
         }
         $this['cart_total'] = $sum;
         $this['cart_total_envio'] = $sum + 90;
+        $cte = $sum + 90;
         
         $this['cart_counter'] = Cart::where("user_id","=",Auth::getUser()->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+        //EMAIL TO CLIENT
+        $mailvars = ['cart' => $cart, 'address' => $this['address'], 'cart_total' => $this['cart_total'], 'cart_total_envio' => $cte, 'cart_counter' => $this['cart_counter']];
+        Mail::send('Orders', $mailvars, function($message) use ($user) {
+        	$message->to($user->email, $user->username);
+        });
+        //EMAIL TO ADMIN
+        $mailvars2 = ['cart' => 'cart'];
+        Mail::send('Orders_admin', $mailvars2, function($message) use ($user) {
+        	$message->to("wineliveryrd@gmail.com", "Luis Peña");
+        });
+        
         Cart::where("user_id",Auth::getUser()->id)->delete();
     }
     else
     {
         return Redirect::to('historial');
-    }
+    }*/
     
+}
+
+function check_response_hash($OrderNumber, $Amount, $AuthorizationCode, $DateTime, $ResponseCode, $IsoCode, $ResponseMessage, $ErrorDescription, $RRN, $ResponseAuthHash)
+{
+	$AuthKey = '6VQhjDMmD2aM6yE1J3RarMxvxqkEuTzQg8UIycGAjVg0gZOhLwU1bBQ0pWpoaDkbOQpBQqJTxm8yno7XDF9msjAkL7E6CG7HF148LD3WgdyPizN9PWK6tQjRBiwDyqyk';
+	$AuthHash = $OrderNumber . $Amount . $AuthorizationCode . $DateTime . $ResponseCode . $IsoCode . $ResponseMessage . $ErrorDescription . $RRN. $AuthKey;
+	$AuthHash = mb_convert_encoding($AuthHash, 'UTF-16LE', 'ASCII');
+	$AuthHash = hash('sha512', $AuthHash);
+	if($AuthHash === $ResponseAuthHash){return true;} 
+	else{return false;}
 }
 ?>
 ==
@@ -60,7 +134,7 @@ function onStart()
     <div class="container m-t-3">
       <div class="row">
         <div class="title"><span>Recibo de pago</span></div>
-        <div class="alert alert-success" role="alert">Tu pedido fue realizado correctamente</div>
+        <div class="alert alert-success" role="alert">Tu pedido fue realizado correctamente. Para reclamaciones o devoluciones llamanos al 809-636-1208 o escribenos a  wineliveryrd@gmail.com</div>
         <!-- Shopping Cart List -->
         <div class="col-md-8">
 
@@ -93,18 +167,66 @@ function onStart()
                 {% endfor %}
               </tbody>
             </table>
+            <div class="alert alert-warning">
+            <p style="font-size: 15px">*Nuestro horario de entrega es de Martes a Sábado de 02:00 PM a 12:00 AM y los Domingos de 02:00 PM a 10:00 PM, si realizas tu orden fuera de este horario será entregada inmediatamente nuestro servicio de delivery este disponible.</p>
+            </div>
           </div>
         </div>
         <!-- End Shopping Cart List -->
         <div class="col-md-3 cart-detailbox">
           <h4>Orden de Compra</h4>
-          <p class="detailbox-items">Dirección:<span class="detailbox-content">{{address.sector}} {{address.calle}} {{address.residencial}} {{address.numero}} {{address.telefono}} {{address.celular}} {{address.proximo}}</span></p>
-          <p class="detailbox-items">Total items:<span class="detailbox-content">{{cart_counter}}</span></p>
-          <p class="detailbox-items">Costo:<span class="detailbox-content" >RD${{ cart_total|number_format}}</span></p>
+          <p class="detailbox-items">Dirección:<span class="detailbox-content">  {{order.address_id}}</span></p>
+          <p class="detailbox-items">Total items:<span class="detailbox-content"> {{cart_counter2}}</span></p>
+          <p class="detailbox-items">Costo:<span class="detailbox-content" > RD$ {{ cart_total|number_format}}</span></p>
           <p class="detailbox-items">Costo de Envío:<span class="detailbox-content"> $90</span></p>
-          <p class="detailbox-items">Costo Total:<span class="detailbox-content">RD${{ cart_total_envio|number_format}}</span></p>
-
+          <p class="detailbox-items">Costo Total:<span class="detailbox-content"> RD$ {{ cart_total_envio|number_format}}</span></p>
+          <p class="detailbox-items" style="font-size: 14px; color:black">Servicio al cliente: <i class="fa fa-whatsapp" aria-hidden="true"></i> (849)-259-4658</p>  
         </div>
 
       </div>
     </div>
+    
+
+<!-- Lightbox para la pagina -->
+<div class="modal fade" id="userguidemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #C1272D">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="color: white">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="height: 200px; padding-top:0px">
+        <div class="col-md-9" style="padding-top: 15px">
+          <div>
+            <div class="col-md-1 col-sm-3" style="left;padding: 4px 0px 0px 0px">
+                <img src="{{"assets/images/check.png"|theme}}" style="width: 40px; height: 40px">
+            </div>
+            <div class="col-md-10 col-sm-6">
+              <h6 style="color:#C1272D; font-size: 16px; padding-left: 10px">TU ORDEN HA SIDO REALIZADA EXITOSAMENTE</h6>
+            </div>
+            
+          </div>
+          {% if orderData.pago == "Tarjeta" %}
+          <p>Nuestro delivery se presentará al lugar de destino con un verifone, debe estar presente el titular del plastico para realizar la transacción.</p>
+          {% else %}
+          <p>Nuestro delivery se presentará al lugar de destino con los productos y dinero efectivo para devolverle.</p>
+          {% endif %}
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: #FEB500; border-radius: 100px; padding: 5px 25px 5px 25px; font-weight: 700; color: black; font-size: 12px">ENTENDIDO</button>
+        </div>
+        <div class="col-md-3 hidden-xs">
+          <img class="img-responsive" style="width: 80px;height: 180px" src="{{"assets/images/wine.png"|theme}}">   
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Lightbox para la pagina -->
+
+{% put scripts %}
+<script>
+    $( document ).ready(function() {
+        $("#userguidemodal").modal('show');
+    });
+</script>
+{% endput %}

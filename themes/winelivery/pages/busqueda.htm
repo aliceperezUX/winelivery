@@ -8,7 +8,7 @@ use Andresalice\Winelivery\Models\Product;
 
 function onStart()
 {
-    $rp = Product::where('title', 'LIKE', '%'.Input::get('search').'%')->take(4)->get();
+    $rp = Product::where("status",0)->where('title', 'LIKE', '%'.Input::get('search').'%')->get();
     foreach($rp as $r)
     {
         $r->s5 = $r->stars()->where("stars",5)->count();
@@ -34,6 +34,7 @@ function onStart()
       <!-- End Product Sorting Bar -->
 
       <!-- Collection -->
+      {% if products_search is not empty %}
       {% for p in products_search %}
           <div class="col-sm-4 col-lg-2 box-product-outer">
               <div class="box-product">
@@ -67,6 +68,10 @@ function onStart()
               </div>
           </div>
       {% endfor %}
+      
+      {% else %}
+            <div class="col-md-12" style="text-align: center"><img style="width: 600px" src="{{"assets/images/search.png"|theme}}"></div>
+    {% endif %}
       <!-- End Collection -->
       <div class="col-xs-12 text-center">
         <nav aria-label="Page navigation">

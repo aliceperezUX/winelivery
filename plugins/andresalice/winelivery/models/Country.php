@@ -25,4 +25,8 @@ class Country extends Model
      * @var string The database table used by the model.
      */
     public $table = 'andresalice_winelivery_countries';
+
+    public $hasMany = [
+        'regions' => 'Andresalice\Winelivery\Models\Region'
+    ];
 }

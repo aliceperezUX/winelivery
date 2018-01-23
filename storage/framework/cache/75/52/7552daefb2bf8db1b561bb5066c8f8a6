@@ -1,0 +1,364 @@
+1516742245a:1:{s:12:"checkout.htm";a:10:{s:8:"fileName";s:12:"checkout.htm";s:7:"content";s:7792:"title = "Checkout"
+url = "/checkout"
+layout = "layout"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "inicio"
+==
+<?php
+use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Order;
+
+function onStart()
+{
+    $exists = Cart::where("user_id",Auth::getUser()->id)->exists();
+    if(!$exists)
+    {
+        return Redirect::to('/');
+    }
+}
+
+function onSendToAddress()
+{
+    $address_id = post('address_id');
+    $exists = Cart::where("user_id", Auth::getUser()->id)->exists();
+    if($exists)
+    {
+        $cart = Cart::where("user_id",Auth::getUser()->id)->get();
+        $sum = 0;
+        foreach($cart as $c){ $sum += $c->product->price * $c->quantity; }
+        $this['products'] = $cart; 
+        $this['address'] = Address::find($address_id);
+        
+        $address = "Sector: " . $this['address']->sector . "       Calle: " . $this['address']->calle . "       Residencial: " . $this['address']->residencial . "      No.:" . $this['address']->numero . "       Proximo a: " . $this['address']->proximo;
+        
+        //$sum = $sum + 90;
+        $suma = $sum + 90;
+        $user = Auth::getUser();
+        $order = new Order();
+        $order->user_id = $user->id;
+        $order->name = $user->name;
+        $order->surname = $user->surname;
+        $order->email = $user->username;
+        $order->address = $address;
+        $order->telefono = $this['address']->telefono;
+        $order->celular = $this['address']->celular;
+        $order->total = "RD$" . $suma;
+        $order->status = "Pendiente";
+        $order->order_token = str_random(61);
+        $order->rnc = "NO RNC";
+        $order->pago = "SIN PAGO";
+        $order->cambio = "SIN CAMBIO";
+        $order->save();
+        
+        $this['order_id'] = $order->id;
+        
+        foreach($cart as $c)
+        {
+            DB::table("product_order")->insert(['order_id' => $order->id, 'product_id' => $c->product_id, 'quantity' => $c->quantity]);
+        }
+        $this['cart_total'] = $sum;
+        $this['cart_total_envio'] = $sum + 90;
+        $cte = $sum + 90;
+        
+        $this['cart_counter'] = Cart::where("user_id","=",Auth::getUser()->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+        Cart::where("user_id",Auth::getUser()->id)->delete();
+        return Redirect::to('orden/' . $order->id);
+    }
+    else
+    {
+        return Redirect::to('historial');
+    }
+}
+?>
+==
+<!-- Main Content -->
+<div class="container m-t-3">
+ 
+  <div class="row">
+    <!-- My Address Content -->
+        <div class="col-sm-12 col-md-12">
+        <div class="alert alert-danger">
+            <p style="font-size: 15px"><STRONG><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>IMPORTANTE:</STRONG> Nuestro horario de entrega es de <strong> Martes a Sábado de 02:00 PM a 12:00 AM y los Domingos de 02:00 PM a 10:00 PM</strong>, si realizas tu orden fuera de este horario será entregada inmediatamente nuestro servicio de delivery este disponible.</p>
+        </div>
+          <div class="title m-b-2"><span>Direcciones guardadas</span></div>
+          <div class="row">
+            {% for a in addresses %}
+                <div class="col-xs-12 col-md-4">
+                  <form>
+                    <p>{{a.sector}} {{a.calle}} {{a.residencial}} {{a.numero}} {{a.telefono}} {{a.celular}} {{a.proximo}}</p>
+                    <a href="javascript:;" onClick="sendToAddress({{a.id}});" style="margin-bottom:10px" class="btn btn-theme col-md-12">Enviar a esta direccion</a>
+                    <a class="btn btn-theme1 col-md-12" href="{{"direcciones"|page({id:a.id})}}">Editar</a>
+                  </form>
+                </div>
+            {% endfor %}
+            
+          </div>
+        </div>
+        <!-- End My Address Content -->
+  </div>
+  <!-- My Address Content -->
+    <div class="row" style="margin-top:50px">
+      <div  class="col-sm-8 col-md-12">
+        <div class="title m-b-2"><span>Nueva direcci&oacute;n</span></div>
+        <div class="alert alert-info" role="alert"><i class="fa fa-info-circle" aria-hidden="true"></i>  Si tu sector no esta en la lista es porque se sale de nuestro poligono de entregas. <strong>Disculpa los incovenientes.</strong></div>
+      <div class="col-xs-12">
+        <form id="addressesForm">
+            <div class="form-group">
+              <label >Sector</label>
+              <select id="sectors" name="sector" class="form-control">
+                {% for s in sectors %}
+                    <option value="{{s.title}}">{{s.title}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Calle</label>
+              <input name="calle" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Residencial y Edificio</label>
+              <input name="residencial" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Apto/No</label>
+              <input name="numero" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Telefono</label>
+              <input name="telefono" type="text" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Celular</label>
+              <input name="celular" type="text" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Proximo a</label>
+              <textarea name="proximo" class="form-control" rows="5"></textarea>
+            </div>
+            <!-- <div class="checkbox">
+                <label>
+                  <input name="guardar" type="checkbox" value="1"><span> Guardar esta direcci&oacute;n para usar despues</span>
+                </label>
+            </div> -->
+            <input name="id_control" type="hidden" value="">
+            <button onClick="addressesForm();" type="button" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> enviar  a esta direcci&oacute;n</button>
+          </form>
+      </div>
+    </div>
+  </div>
+  <!-- End My Address Content -->
+</div>
+<!-- End Main Content -->
+{% put scripts %}
+<script>
+    $( document ).ready(function() {
+        $('.phone').mask('000-000-0000');
+    });
+
+    function addressesForm()
+    {
+        var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        
+    	if($('input[name=calle]').val() === ''){$('input[name=calle]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=calle]').css('border', '');}
+    	
+    	if($('input[name=numero]').val() === ''){$('input[name=numero]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=numero]').css('border', '');}
+    	
+    	if($('input[name=telefono]').val() === ''){$('input[name=telefono]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=telefono]').css('border', '');}
+    	
+    	if($('textarea[name=proximo]').val() === ''){$('textarea[name=proximo]').css('border', '1px solid red');error = false;} 
+    	else{$('textarea[name=proximo]').css('border', '');}
+    
+    	if(error)
+    	{
+    		$('#addressesForm').request('onCheckoutAddressesForm', {data: $('#addressesForm').serialize(), success: function(data){sendToAddress(data.result);}});
+    	} 
+    	else { return false; }
+    }
+    
+    function sendToAddress(address_id){
+        $.request('onSendToAddress', {data: {address_id: address_id}});
+    }
+</script>
+{% endput %}";s:5:"mtime";i:1506971379;s:6:"markup";s:5265:"<!-- Main Content -->
+<div class="container m-t-3">
+ 
+  <div class="row">
+    <!-- My Address Content -->
+        <div class="col-sm-12 col-md-12">
+        <div class="alert alert-danger">
+            <p style="font-size: 15px"><STRONG><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>IMPORTANTE:</STRONG> Nuestro horario de entrega es de <strong> Martes a Sábado de 02:00 PM a 12:00 AM y los Domingos de 02:00 PM a 10:00 PM</strong>, si realizas tu orden fuera de este horario será entregada inmediatamente nuestro servicio de delivery este disponible.</p>
+        </div>
+          <div class="title m-b-2"><span>Direcciones guardadas</span></div>
+          <div class="row">
+            {% for a in addresses %}
+                <div class="col-xs-12 col-md-4">
+                  <form>
+                    <p>{{a.sector}} {{a.calle}} {{a.residencial}} {{a.numero}} {{a.telefono}} {{a.celular}} {{a.proximo}}</p>
+                    <a href="javascript:;" onClick="sendToAddress({{a.id}});" style="margin-bottom:10px" class="btn btn-theme col-md-12">Enviar a esta direccion</a>
+                    <a class="btn btn-theme1 col-md-12" href="{{"direcciones"|page({id:a.id})}}">Editar</a>
+                  </form>
+                </div>
+            {% endfor %}
+            
+          </div>
+        </div>
+        <!-- End My Address Content -->
+  </div>
+  <!-- My Address Content -->
+    <div class="row" style="margin-top:50px">
+      <div  class="col-sm-8 col-md-12">
+        <div class="title m-b-2"><span>Nueva direcci&oacute;n</span></div>
+        <div class="alert alert-info" role="alert"><i class="fa fa-info-circle" aria-hidden="true"></i>  Si tu sector no esta en la lista es porque se sale de nuestro poligono de entregas. <strong>Disculpa los incovenientes.</strong></div>
+      <div class="col-xs-12">
+        <form id="addressesForm">
+            <div class="form-group">
+              <label >Sector</label>
+              <select id="sectors" name="sector" class="form-control">
+                {% for s in sectors %}
+                    <option value="{{s.title}}">{{s.title}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Calle</label>
+              <input name="calle" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Residencial y Edificio</label>
+              <input name="residencial" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Apto/No</label>
+              <input name="numero" type="text" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label>Telefono</label>
+              <input name="telefono" type="text" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Celular</label>
+              <input name="celular" type="text" class="form-control phone" >
+            </div>
+            <div class="form-group">
+              <label>Proximo a</label>
+              <textarea name="proximo" class="form-control" rows="5"></textarea>
+            </div>
+            <!-- <div class="checkbox">
+                <label>
+                  <input name="guardar" type="checkbox" value="1"><span> Guardar esta direcci&oacute;n para usar despues</span>
+                </label>
+            </div> -->
+            <input name="id_control" type="hidden" value="">
+            <button onClick="addressesForm();" type="button" class="btn btn-theme pull-right"><i class="fa fa-pencil"></i> enviar  a esta direcci&oacute;n</button>
+          </form>
+      </div>
+    </div>
+  </div>
+  <!-- End My Address Content -->
+</div>
+<!-- End Main Content -->
+{% put scripts %}
+<script>
+    $( document ).ready(function() {
+        $('.phone').mask('000-000-0000');
+    });
+
+    function addressesForm()
+    {
+        var error = true; var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        
+    	if($('input[name=calle]').val() === ''){$('input[name=calle]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=calle]').css('border', '');}
+    	
+    	if($('input[name=numero]').val() === ''){$('input[name=numero]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=numero]').css('border', '');}
+    	
+    	if($('input[name=telefono]').val() === ''){$('input[name=telefono]').css('border', '1px solid red');error = false;} 
+    	else{$('input[name=telefono]').css('border', '');}
+    	
+    	if($('textarea[name=proximo]').val() === ''){$('textarea[name=proximo]').css('border', '1px solid red');error = false;} 
+    	else{$('textarea[name=proximo]').css('border', '');}
+    
+    	if(error)
+    	{
+    		$('#addressesForm').request('onCheckoutAddressesForm', {data: $('#addressesForm').serialize(), success: function(data){sendToAddress(data.result);}});
+    	} 
+    	else { return false; }
+    }
+    
+    function sendToAddress(address_id){
+        $.request('onSendToAddress', {data: {address_id: address_id}});
+    }
+</script>
+{% endput %}";s:4:"code";s:2393:"use Andresalice\Winelivery\Models\Cart;
+use Andresalice\Winelivery\Models\Address;
+use Andresalice\Winelivery\Models\Order;
+
+function onStart()
+{
+    $exists = Cart::where("user_id",Auth::getUser()->id)->exists();
+    if(!$exists)
+    {
+        return Redirect::to('/');
+    }
+}
+
+function onSendToAddress()
+{
+    $address_id = post('address_id');
+    $exists = Cart::where("user_id", Auth::getUser()->id)->exists();
+    if($exists)
+    {
+        $cart = Cart::where("user_id",Auth::getUser()->id)->get();
+        $sum = 0;
+        foreach($cart as $c){ $sum += $c->product->price * $c->quantity; }
+        $this['products'] = $cart; 
+        $this['address'] = Address::find($address_id);
+        
+        $address = "Sector: " . $this['address']->sector . "       Calle: " . $this['address']->calle . "       Residencial: " . $this['address']->residencial . "      No.:" . $this['address']->numero . "       Proximo a: " . $this['address']->proximo;
+        
+        //$sum = $sum + 90;
+        $suma = $sum + 90;
+        $user = Auth::getUser();
+        $order = new Order();
+        $order->user_id = $user->id;
+        $order->name = $user->name;
+        $order->surname = $user->surname;
+        $order->email = $user->username;
+        $order->address = $address;
+        $order->telefono = $this['address']->telefono;
+        $order->celular = $this['address']->celular;
+        $order->total = "RD$" . $suma;
+        $order->status = "Pendiente";
+        $order->order_token = str_random(61);
+        $order->rnc = "NO RNC";
+        $order->pago = "SIN PAGO";
+        $order->cambio = "SIN CAMBIO";
+        $order->save();
+        
+        $this['order_id'] = $order->id;
+        
+        foreach($cart as $c)
+        {
+            DB::table("product_order")->insert(['order_id' => $order->id, 'product_id' => $c->product_id, 'quantity' => $c->quantity]);
+        }
+        $this['cart_total'] = $sum;
+        $this['cart_total_envio'] = $sum + 90;
+        $cte = $sum + 90;
+        
+        $this['cart_counter'] = Cart::where("user_id","=",Auth::getUser()->id)->select(DB::raw('sum(quantity) as cart_counter'))->first()->cart_counter;
+        Cart::where("user_id",Auth::getUser()->id)->delete();
+        return Redirect::to('orden/' . $order->id);
+    }
+    else
+    {
+        return Redirect::to('historial');
+    }
+}";s:5:"title";s:8:"Checkout";s:3:"url";s:9:"/checkout";s:6:"layout";s:6:"layout";s:9:"is_hidden";s:1:"0";s:7:"session";a:2:{s:8:"security";s:4:"user";s:8:"redirect";s:6:"inicio";}}}
