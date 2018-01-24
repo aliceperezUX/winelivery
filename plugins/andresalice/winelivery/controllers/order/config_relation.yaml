@@ -2,5 +2,5 @@ porder:
     label: Products
     view:
         list: $/andresalice/winelivery/models/order/columns_relation.yaml
-        toolbarButtons: create|delete
-    form: $/andresalice/winelivery/models/porder/fields.yaml
+        toolbarButtons: delete
+    form: $/andresalice/winelivery/models/product/fields.yaml

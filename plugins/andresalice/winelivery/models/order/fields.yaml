@@ -1,55 +1,49 @@
 fields:
-    user:
-        label: CLIENTE
-        oc.commentPosition: ''
-        nameFrom: name
-        descriptionFrom: description
-        select: concat(name, ' ', surname)
-        span: full
-        type: relation
     name:
         label: NOMBRE
         oc.commentPosition: ''
         span: auto
         type: text
+        disabled: 1
+        disabled: 1
     surname:
         label: APELLIDO
         oc.commentPosition: ''
         span: auto
         type: text
+        disabled: 1
     email:
         label: EMAIL
         oc.commentPosition: ''
-        span: full
+        span: auto
         type: text
+        disabled: 1
     telefono:
         label: TELEFONO
         oc.commentPosition: ''
         span: auto
         type: text
+        disabled: 1
     celular:
         label: CELULAR
         oc.commentPosition: ''
         span: auto
         type: text
-    pago:
-        label: TIPO DE PAGO
-        oc.commentPosition: ''
-        span: auto
-        type: dropdown
-        options: listPago
-    cambio:
-        label: CAMBIO
+        disabled: 1
+    total:
+        label: TOTAL
         oc.commentPosition: ''
         span: auto
         type: text
+        disabled: 1
     rnc:
         label: RNC
         oc.commentPosition: ''
         span: auto
         type: text
-    total:
-        label: TOTAL
+        disabled: 1
+    cambio:
+        label: CAMBIO
         oc.commentPosition: ''
         span: auto
         type: text
@@ -59,7 +53,8 @@ fields:
         size: large
         oc.commentPosition: ''
         span: full
-        type: textarea
+        type: text
+        disabled: 1area
     porder:
         type: partial
         context: update
