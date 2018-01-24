@@ -1,4 +1,4 @@
-1516742245a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:27170:"==
+1516823152a:1:{s:10:"layout.htm";a:6:{s:8:"fileName";s:10:"layout.htm";s:7:"content";s:27170:"==
 <?php
 use Andresalice\Winelivery\Models\Category;
 use Andresalice\Winelivery\Models\Newsletter;

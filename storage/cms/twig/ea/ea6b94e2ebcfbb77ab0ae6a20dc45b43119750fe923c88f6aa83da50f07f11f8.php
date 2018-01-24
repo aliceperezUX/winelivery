@@ -122,7 +122,7 @@ class __TwigTemplate_827aa3ee877a06d8dd044ab9f132c17efd7b531f94938f02016b5975496
           <span aria-hidden=\"true\" style=\"color: white\">&times;</span>
         </button>
       </div>
-      <div class=\"modal-body\" style=\"height: 250px;\">
+      <div class=\"modal-body\" style=\"height: 240px;\">
         <div class=\"col-md-12\">
           <div class=\"col-xs-9\">
               <h6 style=\"color:#C1272D; font-size: 16px;\">TU ORDEN HA SIDO REALIZADA EXITOSAMENTE</h6>   
@@ -258,7 +258,7 @@ class __TwigTemplate_827aa3ee877a06d8dd044ab9f132c17efd7b531f94938f02016b5975496
           <span aria-hidden=\"true\" style=\"color: white\">&times;</span>
         </button>
       </div>
-      <div class=\"modal-body\" style=\"height: 250px;\">
+      <div class=\"modal-body\" style=\"height: 240px;\">
         <div class=\"col-md-12\">
           <div class=\"col-xs-9\">
               <h6 style=\"color:#C1272D; font-size: 16px;\">TU ORDEN HA SIDO REALIZADA EXITOSAMENTE</h6>   

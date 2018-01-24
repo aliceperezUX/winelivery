@@ -1,4 +1,4 @@
-1516742245a:1:{s:20:"producto-detalle.htm";a:9:{s:8:"fileName";s:20:"producto-detalle.htm";s:7:"content";s:19760:"title = "Producto Detalle"
+1516823152a:1:{s:20:"producto-detalle.htm";a:9:{s:8:"fileName";s:20:"producto-detalle.htm";s:7:"content";s:19760:"title = "Producto Detalle"
 url = "/producto/:id"
 layout = "layout"
 is_hidden = 0

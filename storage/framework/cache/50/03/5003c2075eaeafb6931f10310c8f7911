@@ -1,2 +1,2 @@
-1516742245a:1:{s:21:"quantity_wishlist.htm";a:6:{s:8:"fileName";s:21:"quantity_wishlist.htm";s:7:"content";s:140:"==
+1516823153a:1:{s:21:"quantity_wishlist.htm";a:6:{s:8:"fileName";s:21:"quantity_wishlist.htm";s:7:"content";s:140:"==
 <a href="{{"deseos"|page}}"><i class="fa fa-heart white"></i> ({% if wishlist_counter %}{{wishlist_counter}}{% else %} 0 {% endif %})</a>";s:5:"mtime";i:1491185444;s:6:"markup";s:137:"<a href="{{"deseos"|page}}"><i class="fa fa-heart white"></i> ({% if wishlist_counter %}{{wishlist_counter}}{% else %} 0 {% endif %})</a>";s:4:"code";N;s:17:"_PARSER_ERROR_INI";s:0:"";}}

@@ -4,7 +4,8 @@ fields:
         oc.commentPosition: ''
         nameFrom: name
         descriptionFrom: description
-        span: auto
+        select: concat(name, ' ', surname)
+        span: full
         type: relation
     name:
         label: NOMBRE
@@ -19,7 +20,7 @@ fields:
     email:
         label: EMAIL
         oc.commentPosition: ''
-        span: auto
+        span: full
         type: text
     telefono:
         label: TELEFONO
@@ -31,8 +32,14 @@ fields:
         oc.commentPosition: ''
         span: auto
         type: text
-    total:
-        label: TOTAL
+    pago:
+        label: TIPO DE PAGO
+        oc.commentPosition: ''
+        span: auto
+        type: dropdown
+        options: listPago
+    cambio:
+        label: CAMBIO
         oc.commentPosition: ''
         span: auto
         type: text
@@ -41,11 +48,12 @@ fields:
         oc.commentPosition: ''
         span: auto
         type: text
-    cambio:
-        label: CAMBIO
+    total:
+        label: TOTAL
         oc.commentPosition: ''
         span: auto
         type: text
+        disabled: 1
     address_id:
         label: DIRECCION
         size: large

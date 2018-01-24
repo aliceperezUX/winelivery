@@ -1,0 +1,13 @@
+fields:
+    product:
+        label: Producto
+        oc.commentPosition: ''
+        nameFrom: title
+        descriptionFrom: description
+        span: auto
+        type: relation
+    quantity:
+        label: Cantidad
+        oc.commentPosition: ''
+        span: auto
+        type: number
